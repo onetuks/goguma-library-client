@@ -1,0 +1,135 @@
+:root {
+      --ivory-100: #756357;
+      --ivory-200: #99897D;
+      --ivory-300: #B0A797;
+      --ivory-400: #CEC7B7;
+      --ivory-500: #E1DDCB;
+      --ivory-600: #E8E6D5;
+      --ivory-700: #E9E8DF;
+      --ivory-800: #F4F3EC;
+      --ivory-900: #FEFDF6;
+
+      --gray-100: #282828;
+      --gray-200: #3C3C3C;
+      --gray-300: #505050;
+      --gray-400: #646464;
+      --gray-500: #787878;
+      --gray-600: #8C8C8C;
+      --gray-700: #A0A0A0;
+      --gray-800: #B4B4B4;
+      --gray-900: #C8C8C8;
+      --gray-1000: #DCDCDC;
+
+      --red-brown-100: #2A0A0A;
+      --red-brown-200: #341414;
+      --red-brown-300: #481C15;
+      --red-brown-400: #5C3029;
+      --red-brown-500: #6A3E37;
+      --red-brown-600: #7E524B;
+      --red-brown-700: #92665F;
+      --red-brown-800: #A67A73;
+      --red-brown-900: #BA8E87;
+      --red-brown-1000: #CEA29B;
+
+      --green-100: #001F0E;
+      --green-200: #092918;
+      --green-300: #153524;
+      --green-400: #1D4831;
+      --green-500: #1F5B3A;
+      --green-600: #216B43;
+      --green-700: #267B4D;
+      --green-800: #218850;
+      --green-900: #229958;
+      --green-1000: #36AD6C;
+
+      --black: #000000;
+      --white: #FFFFFF;
+
+      /* Background */
+      --background-primary: var(--ivory-900);
+
+      /* Surface */
+      --surface-primary: var(--red-brown-300);
+      --surface-secondary: var(--green-300);
+      --surface-tertiary: var(--ivory-800);
+      --surface-fourth: var(--ivory-700);
+      --surface-fifth: var(--white);
+      --surface-sixth: var(--ivory-500);
+
+      /* Text */
+      --text-primary: var(--black);
+      --text-secondary: var(--white);
+      --text-tertiary: var(--red-brown-300);
+      --text-fourth: var(--ivory-100);
+      --text-fifth: var(--gray-800);
+
+      /* Border */
+      --border-primary: var(--ivory-600);
+      --border-secondary: var(--ivory-800);
+      --border-tertiary: var(--ivory-100);
+      --border-fourth: var(--ivory-900);
+
+      /* Button */
+      --button-primary: var(--ivory-500);
+      --button-secondary: var(--red-brown-500);
+      --button-tertiary: var(--green-700);
+      --button-fourth: var(--gray-800);
+      --button-fifth: var(--white);
+      --button-sixth: var(--text-primary);
+    }
+
+    body {
+      background-color: var(--background-primary);
+      color: var(--text-primary);
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      background-color: var(--surface-primary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-primary);
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+    }
+
+    .title {
+      color: var(--text-tertiary);
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button-primary {
+      background-color: var(--button-primary);
+      color: var(--text-primary);
+    }
+
+    .button-secondary {
+      background-color: var(--button-secondary);
+      color: var(--white);
+    }
+
+    .button-tertiary {
+      background-color: var(--button-tertiary);
+      color: var(--white);
+    }
+
+    .button-fourth {
+      background-color: var(--button-fourth);
+      color: var(--white);
+    }
+
+    .button-fifth {
+      background-color: var(--button-fifth);
+      color: var(--black);
+    }
+
+    .button-sixth {
+      background-color: var(--button-sixth);
+      color: var(--white);
+    }
