@@ -1,24 +1,30 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+import activeHeartImage from "@/assets/icon/heart/heart_icon_active.png";
+import inactiveHeartImage from "@/assets/icon/heart/heart_icon_inactive.png";
 
 const props = withDefaults(
   defineProps<{
     pickCount: number;
-    picked: boolean;
+    isPicked: boolean;
   }>(),
   {
     pickCount: 0,
-    picked: false,
+    isPicked: false,
   }
 );
 
-const activeHeartImage = "@assets/icon/heart/heart_icon_active.png";
-const inactiveHeartImage = "@/assets/icon/heart/heart_icon_inactive.png";
+const localPickCount = ref(props.pickCount);
+const localIsPicked = ref(props.isPicked);
 
-let isPicked: boolean = ref(props.picked).value;
+const toggleStatus = (): void => {
+  localIsPicked.value = !localIsPicked.value;
 
-const toggleStatus = () => {
-  isPicked = !isPicked;
+  if (localIsPicked.value) {
+    localPickCount.value += 1;
+    return;
+  }
+  localPickCount.value -= 1;
 };
 </script>
 
@@ -26,12 +32,12 @@ const toggleStatus = () => {
   <div class="heart-container">
     <button @click="toggleStatus">
       <img
-        :src="isPicked ? activeHeartImage : inactiveHeartImage"
+        :src="localIsPicked ? activeHeartImage : inactiveHeartImage"
         alt="Heart Icon"
         class="heart-icon"
       />
     </button>
-    <span>{{ pickCount }}</span>
+    <span>{{ localPickCount }}</span>
   </div>
 </template>
 

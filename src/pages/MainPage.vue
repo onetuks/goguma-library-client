@@ -1,7 +1,13 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import PickButton from "@/components/button/PickButton.vue";
+import SubscribeButton from "@/components/button/SubscribeButton.vue";
+import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
+</script>
 
 <template>
-  <div>Main 페이지</div>
+  <PickButton :is-picked="false" :pick-count="0" />
+  <SubscribeButton />
+  <ReviewRegisterButton />
 </template>
 
 <style scoped></style>
