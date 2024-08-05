@@ -3,32 +3,33 @@ import { ref } from "vue";
 
 const props = withDefaults(
   defineProps<{
-    originSubscriptionStatus: boolean;
+    isSubscribed: boolean;
   }>(),
   {
-    originSubscriptionStatus: false,
+    isSubscribed: false,
   }
 );
 
-let isSubscribed: boolean = ref(props.originSubscriptionStatus).value;
+const localIsSubscribed = ref(props.isSubscribed);
 
 const toggleSubscription = () => {
-  isSubscribed = !isSubscribed;
+  localIsSubscribed.value = !localIsSubscribed.value;
 };
 </script>
 
 <template>
   <button
-    :class="['subscription-button', { subscribed: isSubscribed }]"
+    :class="['subscription-button', { subscribed: localIsSubscribed }]"
     @click="toggleSubscription"
   >
-    {{ isSubscribed ? "구독중" : "구독" }}
+    {{ localIsSubscribed ? "구독중" : "구독" }}
   </button>
 </template>
 
 <style scoped>
 .subscription-button {
-  padding: 10px 20px;
+  width: 75px;
+  padding: 10px 0;
   font-size: 16px;
   cursor: pointer;
   background-color: transparent;
