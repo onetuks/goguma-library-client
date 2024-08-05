@@ -6,8 +6,15 @@ import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
 
 <template>
   <PickButton :is-picked="false" :pick-count="0" />
-  <SubscribeButton />
-  <ReviewRegisterButton />
+  <SubscribeButton :is-subscribed="false" />
+  <ReviewRegisterButton
+    :review="{
+      memberId: 1,
+      bookId: 1,
+      reviewTitle: '서평제목',
+      reviewContent: '서평본문',
+    }"
+  />
 </template>
 
 <style scoped></style>

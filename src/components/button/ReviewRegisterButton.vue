@@ -8,18 +8,21 @@ interface Review {
   reviewContent: string;
 }
 
-const registerReview = (review: Review): void => {
-  const response = axios.post("http://localhost:8080/api/reviews", review);
+const props = defineProps<{
+  review: Review;
+}>();
+
+const registerReview = (): void => {
+  const response = axios.post(
+    "http://localhost:8080/api/reviews",
+    props.review
+  );
   console.log(response);
 };
 </script>
 
 <template>
-  <div class="registration-wrapper">
-    <button class="registration-button" @click="registerReview">
-      서평 쓰기
-    </button>
-  </div>
+  <div class="registration-wrapper" @click="registerReview">서평쓰기</div>
 </template>
 
 <style scoped>
@@ -29,9 +32,8 @@ const registerReview = (review: Review): void => {
   align-items: center;
   width: 130px;
   height: 30px;
-}
-
-.registration-button {
+  border: 2px solid var(--red-brown-400);
+  border-radius: 10px;
   color: var(--black);
   background-color: transparent;
 }
