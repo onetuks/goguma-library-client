@@ -8,6 +8,8 @@ import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import BookFeedCard from "@/components/card/BookFeedCard.vue";
 import BookPickedCard from "@/components/card/BookPickedCard.vue";
 import { Book } from "@/dto/Book";
+import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
+import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 
 const book: Book = {
   bookId: 1,
@@ -17,7 +19,7 @@ const book: Book = {
   isbn: "1234567890987",
   publisher: "출판사",
   categories: ["NOVEL", "ART_BOOK"],
-  coverImageUrl: "@/assets/test/picture_test.png",
+  coverImageUrl: require("@/assets/test/picture_test.png"),
   createdAt: new Date(),
   pickCount: 0,
   isIndie: true,
@@ -70,6 +72,10 @@ const book: Book = {
           <BookFeedCard :book="book" :is-picked="true" />
           <h5>도서픽 카드</h5>
           <BookPickedCard :book="book" />
+          <h5>도서 검색 결과 카드</h5>
+          <BookSearchResultCard :book="book" />
+          <h5>추천 도서 카드</h5>
+          <BookRecommendCard :book="book" />
         </div>
       </div>
     </div>
