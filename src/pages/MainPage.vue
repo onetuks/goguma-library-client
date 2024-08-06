@@ -5,6 +5,7 @@ import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
 import CalendarIcon from "@/components/calendar/CalendarIcon.vue";
 import CalendarView from "@/components/calendar/CalendarView.vue";
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
+import BookFeedCard from "@/components/card/BookFeedCard.vue";
 </script>
 
 <template>
@@ -48,6 +49,24 @@ import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
         <div>
           <h5>도서 커버 업로드 카드</h5>
           <BookCoverUploadCard />
+          <h5>도서 피드 카드</h5>
+          <BookFeedCard
+            :book="{
+              bookId: 1,
+              title: '책 제목',
+              authorName: '작가 이름',
+              introduction: '책 소개',
+              isbn: '1234567890987',
+              publisher: '출판사',
+              categories: ['NOVEL', 'ART_BOOK'],
+              coverImageUrl: 'https://placeimg.com/640/480/any',
+              createdAt: new Date(),
+              pickCount: 0,
+              isIndie: true,
+              isPermitted: true,
+            }"
+            :is-picked="true"
+          />
         </div>
       </div>
     </div>
