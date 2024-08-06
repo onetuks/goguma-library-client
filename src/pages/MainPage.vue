@@ -2,7 +2,7 @@
 import PickButton from "@/components/button/PickButton.vue";
 import SubscribeButton from "@/components/button/SubscribeButton.vue";
 import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
-import CalendarIcon from "@/components/calendar/CalendarDayCard.vue";
+import CalendarIcon from "@/components/calendar/CalendarIcon.vue";
 import CalendarView from "@/components/calendar/CalendarView.vue";
 </script>
 

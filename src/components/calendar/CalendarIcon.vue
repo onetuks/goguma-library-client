@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export type CalendarDayType =
+export type CalendarIconType =
   | "notChecked"
   | "checked"
   | "todayChecked"
@@ -9,7 +9,7 @@ export type CalendarDayType =
 
 const props = defineProps<{
   day: string;
-  type: CalendarDayType;
+  type: CalendarIconType;
 }>();
 
 const getIconClass = () => {

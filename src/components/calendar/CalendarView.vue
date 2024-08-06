@@ -8,9 +8,9 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
-import CalendarDayCard, {
-  CalendarDayType,
-} from "@/components/calendar/CalendarDayCard.vue";
+import CalendarIcon, {
+  CalendarIconType,
+} from "@/components/calendar/CalendarIcon.vue";
 import { onBeforeMount } from "vue";
 
 interface Day {
@@ -44,7 +44,7 @@ const generateCalendar = (): Day[] => {
   );
 };
 
-const getDayType = (day: Day): CalendarDayType => {
+const getDayType = (day: Day): CalendarIconType => {
   const isThisMonthDay = isSameMonth(
     day.date,
     new Date(props.year, props.month - 1)
@@ -64,7 +64,7 @@ const getDayType = (day: Day): CalendarDayType => {
   <div class="calendar">
     <!-- 요일 헤더 -->
     <div class="weekdays">
-      <CalendarDayCard
+      <CalendarIcon
         v-for="(day, index) in WEEKDAYS"
         :key="index"
         :day="day"
@@ -73,7 +73,7 @@ const getDayType = (day: Day): CalendarDayType => {
     </div>
     <!--  날짜 카드  -->
     <div class="days">
-      <CalendarDayCard
+      <CalendarIcon
         v-for="(day, index) in days"
         :key="index"
         :day="day.date.getDate().toString()"
