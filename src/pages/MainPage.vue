@@ -10,6 +10,8 @@ import BookPickedCard from "@/components/card/BookPickedCard.vue";
 import { Book } from "@/dto/Book";
 import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
+import ReviewDetailCard from "@/components/card/ReviewDetailCard.vue";
+import { Review } from "@/dto/Review";
 
 const book: Book = {
   bookId: 1,
@@ -24,6 +26,19 @@ const book: Book = {
   pickCount: 0,
   isIndie: true,
   isPermitted: true,
+};
+
+const review: Review = {
+  reviewId: 1,
+  memberId: 1,
+  nickname: "닉네임",
+  bookId: 1,
+  bookTitle: "책 제목",
+  reviewTitle: "서평 제목",
+  reviewContent: "서평 내용",
+  pickCount: 1,
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 </script>
 
@@ -76,6 +91,8 @@ const book: Book = {
           <BookSearchResultCard :book="book" />
           <h5>추천 도서 카드</h5>
           <BookRecommendCard :book="book" />
+          <h5>서평 디테일 카드</h5>
+          <ReviewDetailCard :review="review" />
         </div>
       </div>
     </div>
