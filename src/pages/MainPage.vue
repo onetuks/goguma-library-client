@@ -12,6 +12,7 @@ import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 import ReviewDetailCard from "@/components/card/ReviewDetailCard.vue";
 import { Review } from "@/dto/Review";
+import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 
 const book: Book = {
   bookId: 1,
@@ -93,6 +94,8 @@ const review: Review = {
           <BookRecommendCard :book="book" />
           <h5>서평 디테일 카드</h5>
           <ReviewDetailCard :review="review" />
+          <h5>서평 미리보기 카드</h5>
+          <ReviewPreviewCard :review="review" :book="book" />
         </div>
       </div>
     </div>

@@ -29,12 +29,14 @@ defineProps<{
 }
 
 .review-title {
+  display: flex;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
 .review-content {
+  display: flex;
   font-size: 14px;
   color: var(--text-primary);
   margin-bottom: 10px;
