@@ -14,6 +14,7 @@ import ReviewDetailCard from "@/components/card/ReviewDetailCard.vue";
 import { Review } from "@/dto/Review";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
+import NavigationBar from "@/components/bar/NavigationBar.vue";
 
 const book: Book = {
   bookId: 1,
@@ -45,7 +46,7 @@ const review: Review = {
 </script>
 
 <template>
-  <div style="padding: 15px 0">
+  <div style="padding: 50px 0">
     <h1>컴포넌트 모음</h1>
     <div style="display: flex; justify-content: center; flex-direction: column">
       <div class="component-wrapper">
@@ -105,6 +106,8 @@ const review: Review = {
           <h5>페이지 헤더 바</h5>
           <PageHeader header-title="작성 서평" />
           <PageHeader header-title="서평 Pick" />
+          <h5>네비게이션 바</h5>
+          <NavigationBar />
         </div>
       </div>
     </div>
