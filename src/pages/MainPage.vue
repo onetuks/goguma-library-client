@@ -13,6 +13,7 @@ import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 import ReviewDetailCard from "@/components/card/ReviewDetailCard.vue";
 import { Review } from "@/dto/Review";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
+import PageHeader from "@/components/bar/PageHeader.vue";
 
 const book: Book = {
   bookId: 1,
@@ -96,6 +97,14 @@ const review: Review = {
           <ReviewDetailCard :review="review" />
           <h5>서평 미리보기 카드</h5>
           <ReviewPreviewCard :review="review" :book="book" />
+        </div>
+      </div>
+      <div>
+        <h3>페이지 바</h3>
+        <div>
+          <h5>페이지 헤더 바</h5>
+          <PageHeader header-title="작성 서평" />
+          <PageHeader header-title="서평 Pick" />
         </div>
       </div>
     </div>
