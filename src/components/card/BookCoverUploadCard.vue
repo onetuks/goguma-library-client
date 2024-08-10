@@ -35,7 +35,7 @@ const removeCover = (): void => {
     <div v-if="hasCover()" class="cover-preview">
       <img :src="coverUrl" alt="Book Cover" class="book-cover" />
       <img
-        src="@/assets/icon/trashcan_icon.png"
+        src="../../assets/icon/upload/trashcan_icon.png"
         alt="Remove Cover"
         class="remove-button"
         @click="removeCover"
@@ -43,7 +43,7 @@ const removeCover = (): void => {
     </div>
     <div v-else class="upload-placeholder" @click="triggerChangeFileClick">
       <img
-        src="@/assets/icon/camera_icon.png"
+        src="../../assets/icon/upload/camera_icon.png"
         alt="Camera Icon"
         class="camera-icon"
       />
