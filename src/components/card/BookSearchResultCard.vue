@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Book } from "@/dto/Book";
+import { Book } from "@/types/Book";
 
 defineProps<{
   book: Book;

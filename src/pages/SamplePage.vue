@@ -7,15 +7,14 @@ import CalendarView from "@/components/calendar/CalendarView.vue";
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import BookFeedCard from "@/components/card/BookFeedCard.vue";
 import BookPickedCard from "@/components/card/BookPickedCard.vue";
-import { Book } from "@/dto/Book";
 import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 import ReviewDetailCard from "@/components/card/ReviewDetailCard.vue";
-import { Review } from "@/dto/Review";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
-import NavigationBar from "@/components/bar/NavigationBar.vue";
 import SortSelect from "@/components/select/SortSelect.vue";
+import { Book } from "@/types/Book";
+import { Review } from "@/types/Review";
 
 const book: Book = {
   bookId: 1,
@@ -58,14 +57,7 @@ const review: Review = {
           <h5>구독버튼</h5>
           <SubscribeButton :is-subscribed="false" />
           <h5>서평쓰기버튼</h5>
-          <ReviewRegisterButton
-            :review="{
-              memberId: 1,
-              bookId: 1,
-              reviewTitle: '서평제목',
-              reviewContent: '서평본문',
-            }"
-          />
+          <ReviewRegisterButton :review="review" />
         </div>
       </div>
       <div>
@@ -107,8 +99,8 @@ const review: Review = {
           <h5>페이지 헤더 바</h5>
           <PageHeader header-title="작성 서평" />
           <PageHeader header-title="서평 Pick" />
-          <h5>네비게이션 바</h5>
-          <NavigationBar />
+          <!--          <h5>네비게이션 바</h5>-->
+          <!--          <NavigationBar />-->
         </div>
       </div>
       <div>

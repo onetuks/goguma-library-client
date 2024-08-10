@@ -4,6 +4,7 @@
     |
   </nav>
   <router-view />
+  <NavigationBar />
 </template>
 
 <style>
@@ -94,3 +95,6 @@ h1 {
   --button-fifth: var(--white);
 }
 </style>
+<script setup lang="ts">
+import NavigationBar from "@/components/bar/NavigationBar.vue";
+</script>

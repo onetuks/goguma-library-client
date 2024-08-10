@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SubscribeButton from "@/components/button/SubscribeButton.vue";
 import PickButton from "@/components/button/PickButton.vue";
-import { Book } from "@/dto/Book";
+import { Book } from "@/types/Book";
 import { formatDate } from "date-fns";
 
 defineProps<{

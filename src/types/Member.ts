@@ -1,5 +1,5 @@
-import { Category } from "@/dto/Category";
-import { MemberStatics } from "@/dto/MemberStatics";
+import { Category } from "@/types/Category";
+import { MemberStatics } from "@/types/MemberStatics";
 
 export interface Member {
   memberId: number;
