@@ -1,7 +1,7 @@
 <template>
+  <PageHeader header-title="로그인" />
   <nav>
-    <router-link to="/">Main</router-link>
-    |
+    <router-link to="/" />
   </nav>
   <router-view />
   <NavigationBar class="nav-bar" />

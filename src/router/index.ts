@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import MainPage from "@/pages/MainPage.vue";
+import LoginPage from "@/pages/login/LoginPage.vue";
+import SamplePage from "@/pages/SamplePage.vue";
+import LoginHandler from "@/pages/login/LoginHandlerView.vue";
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "main",
-    component: MainPage,
-  },
+  { path: "/", component: SamplePage },
+  { path: "/sample", component: SamplePage },
+  { path: "/login", component: LoginPage },
+  { path: "/login/oauth2/callback", component: LoginHandler },
 ];
 
 const router = createRouter({

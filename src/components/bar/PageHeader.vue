@@ -2,36 +2,55 @@
 defineProps<{
   headerTitle: string;
 }>();
+
+const goBack = () => window.history.back();
 </script>
 
 <template>
-  <div class="top-bar">
-    <button class="button header-button">{{ headerTitle }}</button>
-  </div>
+  <header>
+    <div class="header-container">
+      <img
+        src="@/assets/icon/direction/left_icon.png"
+        alt="뒤로가기"
+        @click="goBack"
+        class="back-button"
+      />
+      <p class="header-title">{{ headerTitle }}</p>
+    </div>
+    <div class="header-division"></div>
+  </header>
 </template>
 
 <style scoped>
-.top-bar {
-  display: flex;
-  justify-content: center;
+header {
   margin: 20px 0;
+  height: 50px;
+  width: 100%;
 }
 
-.button {
-  padding: 10px 20px;
-  border: 1px solid var(--border-primary);
-  border-radius: 5px;
+.header-container {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.header-division {
+  background-color: var(--border-primary);
+  width: 100%;
+  height: 1px;
+}
+
+.header-title {
+  flex-grow: 1;
+  font-size: 20px;
+}
+
+.back-button {
   background-color: var(--background-primary);
-  color: #000000;
-  cursor: pointer;
-  margin: 0 10px;
+  position: absolute;
 }
 
-.button:hover {
+.back-button:hover {
   background-color: var(--surface-fourth);
-}
-
-.header-button {
-  /* 추가적인 스타일이 필요하면 여기에 추가 */
 }
 </style>
