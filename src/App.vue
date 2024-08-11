@@ -4,7 +4,7 @@
     |
   </nav>
   <router-view />
-  <NavigationBar />
+  <NavigationBar class="nav-bar" />
 </template>
 
 <style>
@@ -41,6 +41,13 @@ header {
 
 h1 {
   color: var(--text-secondary);
+}
+
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 :root {
