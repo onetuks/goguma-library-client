@@ -49,7 +49,7 @@ defineProps<{
 .title,
 .publisher {
   text-align: center;
-  font-family: "Nanum Square", serif;
+  font-family: "Nanum Square", sans-serif;
   font-weight: bold;
 }
 
