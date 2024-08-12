@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import SamplePage from "@/pages/SamplePage.vue";
-import BookInformationPage from "@/pages/BookInformationPage.vue";
+import BookInformationPage from "@/pages/book/registration/BookRegistrationPage.vue";
 import LoginHandlerView from "@/pages/login/handler/LoginHandlerView.vue";
 import LoginPage from "@/pages/login/LoginPage.vue";
 
