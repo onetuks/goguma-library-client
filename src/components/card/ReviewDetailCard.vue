@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Review } from "@/dto/Review";
+import { Review } from "@/types/Review";
 
 defineProps<{
   review: Review;

@@ -76,6 +76,9 @@
   --button-fourth: var(--gray-800);
   --button-fifth: var(--white);
   --button-sixth: var(--text-primary);
+
+  /* Font */
+  --font-primary: "Nanum Square", sans-serif;
 }
 
 body {

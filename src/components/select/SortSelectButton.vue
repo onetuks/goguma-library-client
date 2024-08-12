@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SortType } from "@/dto/SortType";
+import { SortType } from "@/types/SortType";
 import { onBeforeMount } from "vue";
 
 const props = withDefaults(

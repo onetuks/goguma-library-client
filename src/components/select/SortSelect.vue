@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SortType, SortTypes } from "@/dto/SortType";
+import { SortType, SortTypes } from "@/types/SortType";
 import SortSelectButton from "@/components/select/SortSelectButton.vue";
 import { ref } from "vue";
 

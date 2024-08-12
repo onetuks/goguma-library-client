@@ -1,4 +1,4 @@
-import { Category } from "@/dto/Category";
+import { Category } from "@/types/Category";
 
 export interface MemberStatics {
   memberStaticsId: number;

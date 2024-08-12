@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Book } from "@/dto/Book";
+import { Book } from "@/types/Book";
 
 defineProps<{
   book: Book;
@@ -49,7 +49,7 @@ defineProps<{
 .title,
 .publisher {
   text-align: center;
-  font-family: "Nanum Square", serif;
+  font-family: "Nanum Square", sans-serif;
   font-weight: bold;
 }
 
