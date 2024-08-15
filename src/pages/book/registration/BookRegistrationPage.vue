@@ -1,11 +1,52 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import axios from "axios";
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import IsbnWarningModal from "@/pages/book/registration/modal/IsbnWarningModal.vue";
 
-// Ref to handle ISBN input and checkbox state
 const isbn = ref("");
 const noIsbn = ref(false);
+const title = ref("");
+const author = ref("");
+const publisher = ref("");
+const coverUrl = ref("");
+const isModalViewable = ref(false);
+const modalMessage = ref("");
+
+// Method to handle ISBN search
+const handleIsbnCheck = async () => {
+  if ((!isbn.value && !noIsbn.value) || !title.value || !author.value) {
+    modalMessage.value = "필수입력정보를 입력해주세요";
+    isModalViewable.value = true;
+    return;
+  }
+
+  try {
+    const response = await axios.get(
+      `https://api.example.com/books?isbn=${isbn.value}`
+    );
+    const bookData = response.data;
+
+    if (!bookData) {
+      modalMessage.value = "확인되지 않는 ISBN 번호입니다";
+      isModalViewable.value = true;
+      return;
+    }
+
+    title.value = bookData.title;
+    author.value = bookData.author;
+    publisher.value = bookData.publisher;
+    coverUrl.value = bookData.coverImageUrl;
+  } catch (error) {
+    modalMessage.value = "확인되지 않는 ISBN 번호입니다";
+    isModalViewable.value = true;
+  }
+};
+
+// Close popup
+const closePopup = () => {
+  isModalViewable.value = false;
+};
 </script>
 
 <template>
@@ -36,35 +77,27 @@ const noIsbn = ref(false);
       </div>
     </div>
 
-    <div class="isbn-info">
-      <strong class="isbn-title">*ISBN이란?</strong>
-      <p class="isbn-description">
-        도서의 유통을 편리하게 하기 위해 각 도서에 부여된 고유번호입니다
-      </p>
-      <div class="isbn-example-container">
-        <span class="isbn-example-label">예시)</span>
-        <img
-          src="@/assets/isbn/ISBN.png"
-          alt="ISBN 예시"
-          class="isbn-example"
-        />
-      </div>
-    </div>
-
     <div class="form-section">
       <label class="form-label"> 제목<span class="required">*</span> </label>
       <input
         type="text"
+        v-model="title"
         placeholder="도서 제목을 입력해주세요"
-        class="text-input"
+        class="text-input title-input"
       />
 
       <label class="form-label"> 작가<span class="required">*</span> </label>
-      <input type="text" placeholder="작가를 입력해주세요" class="text-input" />
+      <input
+        type="text"
+        v-model="author"
+        placeholder="작가를 입력해주세요"
+        class="text-input"
+      />
 
       <label class="form-label"> 출판사 </label>
       <input
         type="text"
+        v-model="publisher"
         placeholder="출판사를 입력해주세요"
         class="text-input"
       />
@@ -72,7 +105,7 @@ const noIsbn = ref(false);
 
     <div class="cover-image-section">
       <label class="form-label">표지이미지</label>
-      <BookCoverUploadCard />
+      <BookCoverUploadCard :coverUrl="coverUrl" />
     </div>
 
     <div class="info-section">
@@ -86,7 +119,11 @@ const noIsbn = ref(false);
 
     <button class="register-button">도서 등록하기</button>
 
-    <IsbnWarningModal is-modal-viewable="showPopup" message="암튼 모달" />
+    <IsbnWarningModal
+      :isModalViewable="isModalViewable"
+      :message="modalMessage"
+      @close="closePopup"
+    />
   </div>
 </template>
 
@@ -95,8 +132,8 @@ const noIsbn = ref(false);
   max-width: 390px;
   margin: 0 auto;
   padding: 0 15px;
-  font-family: "NanumSquare", sans-serif;
-  color: #000;
+  font-family: var(--font-primary);
+  color: var(--text-primary);
 }
 
 .isbn-section {
@@ -110,7 +147,7 @@ const noIsbn = ref(false);
 }
 
 .isbn-label {
-  font-size: 16px; /* 제목 대 폰트 크기 */
+  font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -129,66 +166,35 @@ const noIsbn = ref(false);
 
 .isbn-input-container {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px; /* Ensure a 6px gap */
   margin-bottom: 10px;
+  width: 100%; /* Ensure the entire container is 100% of its parent */
+  max-width: 360px; /* Ensure the container does not exceed 360px */
 }
 
 .isbn-input {
-  width: 239px;
+  width: calc(
+    100% - 106px
+  ); /* Adjust width to fit within the 360px constraint */
   height: 36px;
   padding: 8px;
   border: none;
   border-radius: 5px;
-  background-color: var(--surface-tertiary); /* 입력 영역 색상 */
+  background-color: var(--surface-tertiary);
   font-size: 14px;
 }
 
 .isbn-search-button {
-  width: 115px;
+  width: 100px; /* Fixed width for the button */
   height: 36px;
-  border: 2px solid var(--button-primary); /* 버튼의 외곽선 색상 */
+  border: 2px solid var(--button-primary);
   border-radius: 10px;
-  font-size: 14px; /* 버튼 중 폰트 크기 */
+  font-size: 14px;
   color: var(--text-primary);
   background-color: transparent;
   cursor: pointer;
-}
-
-.isbn-info {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: var(--surface-tertiary); /* ISBN 설명 영역의 배경색상 */
-  border: 1px solid var(--border-primary);
-  border-radius: 5px;
-}
-
-.isbn-title {
-  font-size: 16px; /* 버튼 대 폰트 크기 */
-  font-weight: bold;
-  color: var(--text-fourth); /* ISBN이란? 제목의 색상 */
-  margin-bottom: 10px;
-  display: block;
-}
-
-.isbn-description {
-  font-size: 14px; /* 본문 중 폰트 크기 */
-  margin-bottom: 10px;
-}
-
-.isbn-example-container {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* 가운데 정렬 */
-}
-
-.isbn-example-label {
-  font-size: 14px; /* 본문 중 폰트 크기 */
-  color: var(--text-primary);
-  margin-right: 5px;
-}
-
-.isbn-example {
-  display: block;
 }
 
 .form-section {
@@ -197,54 +203,70 @@ const noIsbn = ref(false);
 
 .form-label {
   display: block;
-  font-size: 16px; /* 제목 대 폰트 크기 */
+  font-size: 16px;
   font-weight: bold;
-  text-align: left;
   margin: 10px 0 5px;
+  text-align: left; /* Ensure labels are left-aligned */
 }
 
 .text-input {
-  width: 360px;
+  width: 100%;
+  max-width: 360px;
   height: 40px;
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: var(--surface-tertiary); /* 입력 영역 색상 */
+  background-color: var(--surface-tertiary);
   font-size: 14px;
-  margin: 0 auto;
   display: block;
+}
+
+.title-input {
+  width: 100%;
+  max-width: 360px;
 }
 
 .cover-image-section {
   margin: 20px 0;
 }
 
+.book-cover-upload-card {
+  width: 100%;
+  max-width: 360px;
+  height: 268px;
+}
+
 .info-section {
-  font-size: 12px; /* 본문 소 */
+  font-size: 12px;
   color: #777;
   line-height: 1.5;
   margin-bottom: 20px;
+  text-align: left; /* Ensure info text is left-aligned */
 }
 
 .info-title {
-  font-size: 14px; /* 제목 중 폰트 크기 */
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
+  text-align: left; /* Ensure info title is left-aligned */
 }
 
 .register-button {
-  width: 330px;
+  width: 85%;
+  max-width: 330px;
   height: 50px;
-  padding: 15px;
+  padding: 0;
   background-color: transparent;
-  border: 2px solid var(--button-secondary); /* 버튼 외곽선 색상 */
-  color: var(--text-primary); /* 버튼 텍스트 색상 */
-  font-size: 16px; /* 버튼 대 폰트 크기 */
+  border: 2px solid var(--button-secondary);
+  color: var(--text-primary);
+  font-size: 16px;
   font-weight: bold;
   border-radius: 15px;
   cursor: pointer;
   margin: 0 auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
@@ -253,4 +275,17 @@ const noIsbn = ref(false);
   color: #fff;
 }
 
+@media (max-width: 768px) {
+  .text-input,
+  .title-input,
+  .isbn-input,
+  .isbn-search-button,
+  .book-cover-upload-card {
+    width: 90%;
+  }
+
+  .register-button {
+    width: 90%;
+  }
+}
 </style>
