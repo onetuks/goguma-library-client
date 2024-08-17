@@ -45,9 +45,13 @@ export const BookApis = {
     coverImage: File
   ): Promise<BookResponse> => {
     // 도서 등록
-    return await postFormData("/books", request, coverImage).then(
-      (data) => data as BookResponse
-    );
+    return await postFormData(
+      "/books",
+      "request",
+      request,
+      "cover-image",
+      coverImage
+    ).then((data) => data as BookResponse);
   },
   getBook: async (bookId: number): Promise<BookResponse> => {
     // 도서 단건 조회

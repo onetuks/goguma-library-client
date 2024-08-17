@@ -48,12 +48,14 @@ export const post = async (
 
 export const postFormData = async (
   uri: string,
+  requestBodyParameterName: string,
   requestBody: object,
+  fileParameterName: string,
   file: File
 ): Promise<object> => {
   const formData = new FormData();
-  formData.append("request", JSON.stringify(requestBody));
-  formData.append("cover-image", file);
+  formData.append(requestBodyParameterName, JSON.stringify(requestBody));
+  formData.append(fileParameterName, file);
 
   return await axios
     .post(BASE_SERVER_URL + uri, formData, {
@@ -82,6 +84,36 @@ export const patch = async (
     .patch(BASE_SERVER_URL + uri, requestBody, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: localStorage.getItem(ACCESS_TOKEN),
+      },
+    })
+    .then((response) => {
+      const data = response.data;
+      console.log(
+        "[PATCH] URL - (",
+        BASE_SERVER_URL + uri + ") - Response : ",
+        data
+      );
+      return data;
+    })
+    .catch((error) => console.error(error));
+};
+
+export const patchFormData = async (
+  uri: string,
+  requestBodyParameterName: string,
+  requestBody: object,
+  fileParameterName: string,
+  file: File
+): Promise<object> => {
+  const formData = new FormData();
+  formData.append(requestBodyParameterName, JSON.stringify(requestBody));
+  formData.append(fileParameterName, file);
+
+  return await axios
+    .patch(BASE_SERVER_URL + uri, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: localStorage.getItem(ACCESS_TOKEN),
       },
     })
