@@ -25,7 +25,7 @@ export const get = async (uri: string): Promise<object> => {
 
 export const post = async (
   uri: string,
-  requestBody: object | null
+  requestBody?: object
 ): Promise<object> => {
   return await axios
     .post(BASE_SERVER_URL + uri, requestBody, {
@@ -145,4 +145,12 @@ export const remove = (uri: string): void => {
       )
     )
     .catch((error) => console.error(error));
+};
+
+export const buildPageQuery = (page?: number, size?: number): string => {
+  let query = "";
+  query += page || size ? "?" : "";
+  query += page ? `page=${page}` : "";
+  query += page && size ? "&" : "";
+  return query;
 };

@@ -16,7 +16,7 @@ const regulateDate = (date: Date): string => {
 export const AttendanceApis = {
   postNewAttendance: async (date: Date): Promise<AttendanceResponse> => {
     // 출석 등록
-    return await post(`/attendances?date=${regulateDate(date)}`, null).then(
+    return await post(`/attendances?date=${regulateDate(date)}`).then(
       (data) => data as AttendanceResponse
     );
   },

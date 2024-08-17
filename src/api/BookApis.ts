@@ -1,6 +1,6 @@
 // ISBN 도서 정보 조회
 import { Category } from "@/types/Category";
-import { get, postFormData } from "@/api/ServerRequest";
+import { buildPageQuery, get, postFormData } from "@/api/ServerRequest";
 
 export interface BookIsbnGetResponse {
   title: string;
@@ -59,12 +59,12 @@ export const BookApis = {
   },
   getBooksWithKeyword: async (
     keyword: string,
-    page: number,
-    size: number
+    page?: number,
+    size?: number
   ): Promise<BookResponse[]> => {
     // 제목/저자/출판사 포함 도서 다건 조회
     return await get(
-      `/books?keyword=${keyword}&page=${page}&size=${size}`
+      `/books?keyword=${keyword}${buildPageQuery(page, size)}`
     ).then((data) => data as BookResponse[]);
   },
   getBooksWithInterestedCategories: async (): Promise<BookResponse[]> => {

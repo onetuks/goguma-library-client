@@ -1,6 +1,11 @@
 import { BookResponse } from "@/api/BookApis";
 import { Category } from "@/types/Category";
-import { get, patchFormData, remove } from "@/api/ServerRequest";
+import {
+  buildPageQuery,
+  get,
+  patchFormData,
+  remove,
+} from "@/api/ServerRequest";
 
 export interface BookPatchRequest {
   title: string;
@@ -34,12 +39,15 @@ export const AdminBookApis = {
   },
   getBooksForInspection: async (
     inspectionMode: boolean,
-    page: number,
-    size: number
+    page?: number,
+    size?: number
   ): Promise<BookResponse[]> => {
     // 검수 대상 도서 다건 조회
     return await get(
-      `/admin/books?inspection-mode=${inspectionMode}&page=${page}&size=${size}`
+      `/admin/books?inspection-mode=${inspectionMode}${buildPageQuery(
+        page,
+        size
+      )}`
     ).then((data) => data as BookResponse[]);
   },
 };
