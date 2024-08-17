@@ -1,0 +1,103 @@
+/* 기본 폰트 설정 */
+:root {
+    --font-family: 'NanumSquare', sans-serif;
+    --font-family-kopub: 'Kopub', sans-serif;
+}
+
+/* 모든 텍스트에 NanumSquare 폰트 적용 */
+body, html, h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea, select, label {
+    font-family: var(--font-family);
+}
+
+/* 헤드라인 대 */
+.headline-large {
+    font-size: 30px;
+    line-height: auto;
+}
+
+/* 헤드라인 중 */
+.headline-medium {
+    font-size: 24px;
+    line-height: auto;
+}
+
+/* 헤드라인 소 */
+.headline-small {
+    font-size: 20px;
+    line-height: auto;
+}
+
+/* 제목 대 */
+.title-large {
+    font-size: 16px;
+    line-height: auto;
+}
+
+/* 제목 중 */
+.title-medium {
+    font-size: 14px;
+    line-height: auto;
+}
+
+/* 본문 대 */
+.body-large {
+    font-size: 16px;
+    line-height: auto;
+}
+
+/* 본문 중 */
+.body-medium {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+/* 본문 소 */
+.body-small {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+/* 버튼 대 */
+.button-large {
+    font-size: 16px;
+    line-height: auto;
+}
+
+/* 버튼 중 */
+.button-medium {
+    font-size: 14px;
+    line-height: auto;
+}
+
+/* 캡션 대 */
+.caption-large {
+    font-size: 11px;
+    line-height: auto;
+}
+
+/* 캡션 중 */
+.caption-medium {
+    font-size: 9px;
+    line-height: auto;
+}
+
+/* 헤드라인 대_Kopub */
+.headline-large-kopub {
+    font-family: var(--font-family-kopub);
+    font-size: 31px;
+    line-height: auto;
+}
+
+/* 헤드라인 중_Kopub */
+.headline-medium-kopub {
+    font-family: var(--font-family-kopub);
+    font-size: 25px;
+    line-height: auto;
+}
+
+/* 헤드라인 소_Kopub */
+.headline-small-kopub {
+    font-family: var(--font-family-kopub);
+    font-size: 21px;
+    line-height: auto;
+}
