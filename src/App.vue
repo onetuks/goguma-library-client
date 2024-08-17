@@ -1,5 +1,5 @@
 <template>
-  <PageHeader header-title="로그인" />
+  <PageHeader :header-title="getPageTitle()" />
   <nav>
     <router-link to="/" />
   </nav>
@@ -36,4 +36,18 @@ html,
 <script setup lang="ts">
 import NavigationBar from "@/components/bar/NavigationBar.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+const getPageTitle = (): string => {
+  switch (route.path) {
+    case "/login":
+      return "로그인";
+    case "/member/sign-up":
+      return "회원가입";
+    default:
+      return "고구마 서재";
+  }
+};
 </script>
