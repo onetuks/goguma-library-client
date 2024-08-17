@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ACCESS_TOKEN } from "@/types/AuthWords";
 
-const BASE_SERVER_URL = "http://localhost:8080/api";
+export const BASE_SERVER_URL = "http://localhost:8080/api";
 
 export const get = async (uri: string): Promise<object> => {
   return await axios
@@ -44,6 +44,29 @@ export const post = async (
       return data;
     })
     .catch((error) => console.error(error));
+};
+
+export const postWithAuthCode = async (
+  uri: string,
+  code: string
+): Promise<object> => {
+  return await axios
+    .post(
+      BASE_SERVER_URL + uri,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${code}`,
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("로그인에 성공했습니다.");
+      return response.data;
+    })
+    .catch((error) => console.error("로그인 실패 - ", error));
 };
 
 export const postFormData = async (
@@ -140,7 +163,7 @@ export const remove = (uri: string): void => {
         Authorization: localStorage.getItem(ACCESS_TOKEN),
       },
     })
-    .then((response) =>
+    .then(() =>
       console.log(
         "[DELETE] URL - (" +
           BASE_SERVER_URL +

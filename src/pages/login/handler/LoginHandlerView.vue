@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
-import { ACCESS_TOKEN } from "@/types/AuthWords";
 import { ClientProvider, ClientProviders } from "@/types/ClientProvider";
+import { AuthApis } from "@/api/AuthApis";
 
 onMounted(() => {
   const authCode: string = getAuthCode(window.location.search);
@@ -11,7 +10,13 @@ onMounted(() => {
     window.location.pathname
   );
 
-  login(clientProvider, authCode);
+  AuthApis.login(clientProvider, authCode)
+    .then((loginResponse) => {
+      loginResponse.isNewMember
+        ? router.push(`/members/${loginResponse.loginId}/my/settings`)
+        : router.push("/");
+    })
+    .catch(() => router.push("/login"));
 });
 
 const router = useRouter();
@@ -30,32 +35,6 @@ const getAuthCode = (search: string): string => {
   }
 
   return urlParams.get("code") as string;
-};
-
-const login = async (
-  clientProvider: ClientProvider,
-  code: string
-): Promise<void> => {
-  axios
-    .post(
-      `http://localhost:8080/api/auth/login/${clientProvider}`,
-      {},
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${code}`,
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    )
-    .then((response) => {
-      localStorage.setItem(ACCESS_TOKEN, response.data.appToken);
-      console.log("로그인에 성공했습니다.");
-      router.push("/");
-    })
-    .catch((error) => {
-      console.error("서버 JWT 토큰 발급 실패: ", error);
-    });
 };
 </script>
 
