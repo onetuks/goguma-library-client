@@ -48,14 +48,16 @@ export const post = async (
 
 export const postFormData = async (
   uri: string,
-  requestBodyParameterName: string,
   requestBody: object,
-  fileParameterName: string,
-  file: File
+  ...fileEntries: [string, File?][]
 ): Promise<object> => {
   const formData = new FormData();
-  formData.append(requestBodyParameterName, JSON.stringify(requestBody));
-  formData.append(fileParameterName, file);
+  formData.append("request", JSON.stringify(requestBody));
+  fileEntries.forEach(([parameterName, file]) => {
+    if (file) {
+      formData.append(parameterName, file);
+    }
+  });
 
   return await axios
     .post(BASE_SERVER_URL + uri, formData, {
@@ -101,14 +103,16 @@ export const patch = async (
 
 export const patchFormData = async (
   uri: string,
-  requestBodyParameterName: string,
   requestBody: object,
-  fileParameterName: string,
-  file: File
+  ...fileEntries: [string, File?][]
 ): Promise<object> => {
   const formData = new FormData();
-  formData.append(requestBodyParameterName, JSON.stringify(requestBody));
-  formData.append(fileParameterName, file);
+  formData.append("request", JSON.stringify(requestBody));
+  fileEntries.forEach(([parameterName, file]) => {
+    if (file) {
+      formData.append(parameterName, file);
+    }
+  });
 
   return await axios
     .patch(BASE_SERVER_URL + uri, formData, {

@@ -25,13 +25,10 @@ export const AdminBookApis = {
     coverImage: File
   ): Promise<BookResponse> => {
     // 도서 정보 수정
-    return await patchFormData(
-      `/admin/books/${bookId}`,
-      "request",
-      request,
+    return await patchFormData(`/admin/books/${bookId}`, request, [
       "cover-image",
-      coverImage
-    ).then((data) => data as BookResponse);
+      coverImage,
+    ]).then((data) => data as BookResponse);
   },
   deleteBook: async (bookId: number): Promise<void> => {
     // 도서 삭제
