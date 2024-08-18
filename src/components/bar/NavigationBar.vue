@@ -92,7 +92,6 @@ const getNavigationButtonIcon = (button: Button, index: number): string => {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 390px;
   height: 69px;
   background-color: var(--surface-fourth);
   display: flex;

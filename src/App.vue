@@ -18,20 +18,14 @@ html,
   padding: 0;
   height: auto;
   display: flex;
+  width: 100%;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   font-family: "Arial", sans-serif;
   text-align: center;
   background-color: var(--background-primary);
   color: var(--text-primary);
-}
-
-.nav-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
 }
 </style>
 <script setup lang="ts">
