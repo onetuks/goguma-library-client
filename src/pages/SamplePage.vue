@@ -15,6 +15,39 @@ import PageHeader from "@/components/bar/PageHeader.vue";
 import SortSelect from "@/components/select/SortSelect.vue";
 import { Book } from "@/types/Book";
 import { Review } from "@/types/Review";
+import ProfileImageSettingCard from "@/components/card/ProfileImageSettingCard.vue";
+import { Member } from "@/types/Member";
+
+const member: Member = {
+  memberId: 1_000,
+  nickname: "고구마침팬치",
+  introduction: "열혈 침팬치",
+  interestedCategories: ["CARTOON", "NOVEL"],
+  isAlarmAccepted: true,
+  points: 100,
+  profileImageUrl: "profileImageUrl",
+  profileBackgroundImageUrl: "profileBackgroundImageUrl",
+  memberStatics: {
+    memberStaticsId: 1_000,
+    reviewCounts: 1,
+    followerCounts: 1,
+    followingCounts: 12,
+    reviewCategoryCounts: [
+      ["ALL", 1],
+      ["ETC", 1],
+      ["POETRY", 1],
+      ["ESSAY", 1],
+      ["TRAVEL", 1],
+      ["PHOTO", 1],
+      ["ILLUSTRATION", 1],
+      ["CARTOON", 1],
+      ["MAGAZINE", 1],
+      ["NOVEL", 1],
+      ["ART_BOOK", 1],
+      ["NON_LITERATURE", 1],
+    ],
+  },
+};
 
 const book: Book = {
   bookId: 1,
@@ -91,6 +124,8 @@ const review: Review = {
           <ReviewDetailCard :review="review" />
           <h5>서평 미리보기 카드</h5>
           <ReviewPreviewCard :review="review" :book="book" />
+          <h5>프로필 이미지 카드</h5>
+          <ProfileImageSettingCard :member="member" />
         </div>
       </div>
       <div>

@@ -5,5 +5,5 @@ export interface MemberStatics {
   reviewCounts: number;
   followerCounts: number;
   followingCounts: number;
-  reviewCategoryCounts: Map<Category, number>;
+  reviewCategoryCounts: [Category, number][];
 }
