@@ -9,6 +9,7 @@
 
 <style>
 @import "@/styles/colors.css"; /* 색상 변수 정의 CSS 파일 */
+@import "https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css";
 
 body,
 html,
@@ -41,13 +42,6 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 const getPageTitle = (): string => {
-  switch (route.path) {
-    case "/login":
-      return "로그인";
-    case "/member/sign-up":
-      return "회원가입";
-    default:
-      return "고구마 서재";
-  }
+  return route.name as string;
 };
 </script>
