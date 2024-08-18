@@ -1,12 +1,19 @@
 <script lang="ts" setup>
-import { Member } from "@/types/Member";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { Member } from "@/api/MemberApis";
 
 const props = defineProps<{ member: Member }>();
+const emits = defineEmits<{
+  (event: "update:Member", value: Member): void;
+}>();
 
 const localMember = ref<Member>(props.member);
 const profileImageInput = ref<HTMLInputElement>();
 const profileBackgroundImageInput = ref<HTMLInputElement>();
+
+watch(localMember, (newMember) => {
+  emits("update:Member", newMember);
+});
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement;

@@ -15,13 +15,14 @@ import PageHeader from "@/components/bar/PageHeader.vue";
 import SortSelect from "@/components/select/SortSelect.vue";
 import { Book } from "@/types/Book";
 import { Review } from "@/types/Review";
-import ProfileImageSettingCard from "@/components/card/ProfileImageSettingCard.vue";
-import { Member } from "@/types/Member";
+import ProfileImageSettingCard from "@/pages/my/components/ProfileImageSettingView.vue";
+import { Member } from "@/api/MemberApis";
 
 const member: Member = {
   memberId: 1_000,
   nickname: "고구마침팬치",
   introduction: "열혈 침팬치",
+  instagramUrl: "https://www.instagram.com/gogumachim",
   interestedCategories: ["CARTOON", "NOVEL"],
   isAlarmAccepted: true,
   points: 100,

@@ -1,6 +1,7 @@
 /* 기본 폰트 설정 */
 :root {
     --font-family: 'NanumSquare', sans-serif;
+    --font-family-bold: 'NanumSquareBold', sans-serif;
     --font-family-kopub: 'Kopub', sans-serif;
 
     --size-14: 14px;
