@@ -2,11 +2,14 @@
 :root {
     --font-family: 'NanumSquare', sans-serif;
     --font-family-kopub: 'Kopub', sans-serif;
+
+    --size-14: 14px;
+    --size-16: 16px;
 }
 
 /* 모든 텍스트에 NanumSquare 폰트 적용 */
 body, html, h1, h2, h3, h4, h5, h6, p, a, span, div, button, input, textarea, select, label {
-    font-family: var(--font-family);
+    font-family: var(--font-family), serif;
 }
 
 /* 헤드라인 대 */
