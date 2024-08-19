@@ -21,7 +21,7 @@ html,
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  font-family: "Arial", sans-serif;
+  font-family: "NanumSquare", sans-serif; /* 나눔스퀘어를 기본 폰트로 설정 */
   text-align: center;
   background-color: var(--background-primary);
   color: var(--text-primary);
@@ -34,6 +34,7 @@ html,
   width: 100%;
 }
 </style>
+
 <script setup lang="ts">
 import NavigationBar from "@/components/bar/NavigationBar.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
