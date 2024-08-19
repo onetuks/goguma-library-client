@@ -24,8 +24,8 @@ export interface MemberStatics {
 
 export interface MemberPatchRequest {
   nickname: string;
-  introduction: string;
-  instagramUrl: string;
+  introduction?: string;
+  instagramUrl?: string;
   interestedCategories: Category[];
   isAlarmAccepted: boolean;
 }
@@ -48,8 +48,8 @@ export const MemberApis = {
   patchMemberProfile: async (
     memberId: number,
     request: MemberPatchRequest,
-    profileImage?: File,
-    profileBackgroundImage?: File
+    profileImage: File | null,
+    profileBackgroundImage: File | null
   ): Promise<MemberResponse> => {
     // 멤버 프로필 수정
     return await patchFormData(

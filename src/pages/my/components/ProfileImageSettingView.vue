@@ -4,15 +4,22 @@ import { Member } from "@/api/MemberApis";
 
 const props = defineProps<{ member: Member }>();
 const emits = defineEmits<{
-  (event: "update:Member", value: Member): void;
+  (event: "update:ProfileImageFile", value: File | null): void;
+  (event: "update:ProfileBackgroundImageFile", value: File | null): void;
 }>();
 
 const localMember = ref<Member>(props.member);
+const profileImageFile = ref<File | null>(null);
+const profileBackgroundImageFile = ref<File | null>(null);
 const profileImageInput = ref<HTMLInputElement>();
 const profileBackgroundImageInput = ref<HTMLInputElement>();
 
-watch(localMember, (newMember) => {
-  emits("update:Member", newMember);
+watch(profileImageFile, (newProfileImageFile) => {
+  emits("update:ProfileImageFile", newProfileImageFile);
+});
+
+watch(profileBackgroundImageFile, (newProfileBackgroundImageFile) => {
+  emits("update:ProfileBackgroundImageFile", newProfileBackgroundImageFile);
 });
 
 const handleImageError = (event: Event) => {
@@ -34,6 +41,7 @@ const changeProfileImage = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
   if (file) {
+    profileImageFile.value = file;
     localMember.value.profileImageUrl = URL.createObjectURL(file);
   }
 };
@@ -42,6 +50,7 @@ const changeProfileBackgroundImage = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
   if (file) {
+    profileBackgroundImageFile.value = file;
     localMember.value.profileBackgroundImageUrl = URL.createObjectURL(file);
   }
 };

@@ -75,7 +75,10 @@ export const postFormData = async (
   ...fileEntries: [string, File?][]
 ): Promise<object> => {
   const formData = new FormData();
-  formData.append("request", JSON.stringify(requestBody));
+  const jsonBlob = new Blob([JSON.stringify(requestBody)], {
+    type: "application/json",
+  });
+  formData.append("request", jsonBlob);
   fileEntries.forEach(([parameterName, file]) => {
     if (file) {
       formData.append(parameterName, file);
@@ -127,10 +130,13 @@ export const patch = async (
 export const patchFormData = async (
   uri: string,
   requestBody: object,
-  ...fileEntries: [string, File?][]
+  ...fileEntries: [string, File | null][]
 ): Promise<object> => {
   const formData = new FormData();
-  formData.append("request", JSON.stringify(requestBody));
+  const jsonBlob = new Blob([JSON.stringify(requestBody)], {
+    type: "application/json",
+  });
+  formData.append("request", jsonBlob);
   fileEntries.forEach(([parameterName, file]) => {
     if (file) {
       formData.append(parameterName, file);
