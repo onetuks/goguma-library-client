@@ -10,13 +10,16 @@ import {
 } from "@/api/MemberApis";
 import ProfileInfoSettingView from "@/pages/my/components/ProfileInfoSettingView.vue";
 import { useRoute } from "vue-router";
+import router from "@/router";
 
 const route = useRoute();
 
 const memberIdParam = Number(route.params.memberId);
 
 const localMember = ref<Member | null>(null);
+const profileImageFilename = ref<string | null>(null);
 const profileImageFile = ref<File | null>(null);
+const profileBackgroundImageFilename = ref<string | null>(null);
 const profileBackgroundImageFile = ref<File | null>(null);
 
 const fetchMemberProfile = async () => {
@@ -31,12 +34,26 @@ const updateMember = (updatedMember: Member) => {
   localMember.value = updatedMember;
 };
 
-const updateProfileImage = (newProfileImageFile: File | null) =>
-  (profileImageFile.value = newProfileImageFile);
+const updateProfileImage = (newProfileImageFile: File | null) => {
+  profileImageFile.value = newProfileImageFile;
+};
 
 const updateProfileBackgroundImage = (
   newProfileBackgroundImageFile: File | null
-) => (profileBackgroundImageFile.value = newProfileBackgroundImageFile);
+) => {
+  profileBackgroundImageFile.value = newProfileBackgroundImageFile;
+};
+
+const updateProfileImageFilename = (newProfileImageFilename: string | null) => {
+  console.log("updateProfileImageFilename", newProfileImageFilename);
+  profileImageFilename.value = newProfileImageFilename;
+};
+
+const updateProfileBackgroundImageFilename = (
+  newProfileBackgroundImageFilename: string | null
+) => {
+  profileBackgroundImageFilename.value = newProfileBackgroundImageFilename;
+};
 
 const notEnoughInfo = () => {
   return (
@@ -49,6 +66,13 @@ const notEnoughInfo = () => {
 };
 
 const submitForm = async () => {
+  console.log(
+    "submitForm",
+    localMember.value,
+    profileImageFile.value,
+    profileBackgroundImageFile.value
+  );
+
   if (notEnoughInfo()) {
     alert("필수 정보를 입력해주세요.");
     return;
@@ -56,10 +80,12 @@ const submitForm = async () => {
 
   const memberPatchRequest: MemberPatchRequest = {
     nickname: localMember.value?.nickname || "고구마 침팬치",
-    introduction: localMember.value?.nickname,
+    introduction: localMember.value?.introduction,
     instagramUrl: localMember.value?.instagramUrl,
     interestedCategories: localMember.value?.interestedCategories || ["ALL"],
     isAlarmAccepted: localMember.value?.isAlarmAccepted || true,
+    profileImageFilename: profileImageFilename.value,
+    profileBackgroundImageFilename: profileBackgroundImageFilename.value,
   };
 
   await MemberApis.patchMemberProfile(
@@ -67,9 +93,7 @@ const submitForm = async () => {
     memberPatchRequest,
     profileImageFile.value,
     profileBackgroundImageFile.value
-  ).then((memberResponse: MemberResponse) => {
-    console.log("멤버 프로필 수정 결과 : ", memberResponse);
-  });
+  ).then(() => router.push("/"));
 };
 
 fetchMemberProfile();
@@ -81,6 +105,10 @@ fetchMemberProfile();
       :member="localMember"
       @update:ProfileImageFile="updateProfileImage"
       @update:ProfileBackgroundImageFile="updateProfileBackgroundImage"
+      @update:ProfileImageFilename="updateProfileImageFilename"
+      @update:ProfileBackgroundImageFilename="
+        updateProfileBackgroundImageFilename
+      "
     />
     <ProfileInfoSettingView
       :member="localMember"

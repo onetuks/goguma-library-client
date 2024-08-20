@@ -1,18 +1,38 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import { Member } from "@/api/MemberApis";
+import { S3_URL } from "@/assets/S3Url";
 
 const props = defineProps<{ member: Member }>();
 const emits = defineEmits<{
   (event: "update:ProfileImageFile", value: File | null): void;
   (event: "update:ProfileBackgroundImageFile", value: File | null): void;
+  (event: "update:ProfileImageFilename", value: string | null): void;
+  (event: "update:ProfileBackgroundImageFilename", value: string | null): void;
 }>();
 
+const DEFAULT_PROFILE_FILENAME = "default-profile.png";
+const DEFAULT_PROFILE_BACKGROUND_FILENAME = "default-profile-background.png";
+
 const localMember = ref<Member>(props.member);
+const profileImageFilename = ref<string | null>(null);
+const profileBackgroundImageFilename = ref<string | null>(null);
 const profileImageFile = ref<File | null>(null);
 const profileBackgroundImageFile = ref<File | null>(null);
 const profileImageInput = ref<HTMLInputElement>();
 const profileBackgroundImageInput = ref<HTMLInputElement>();
+
+watch(profileImageFilename, (newProfileImageFilename) => {
+  console.log("profileImageFilename", profileImageFilename.value);
+  emits("update:ProfileImageFilename", newProfileImageFilename);
+});
+
+watch(profileBackgroundImageFilename, (newProfileBackgroundImageFilename) => {
+  emits(
+    "update:ProfileBackgroundImageFilename",
+    newProfileBackgroundImageFilename
+  );
+});
 
 watch(profileImageFile, (newProfileImageFile) => {
   emits("update:ProfileImageFile", newProfileImageFile);
@@ -28,21 +48,30 @@ const handleImageError = (event: Event) => {
 };
 
 const initProfileImage = () => {
-  localMember.value.profileImageUrl =
-    "http://goguma-library/profiles/default-profile.png";
+  localMember.value.profileImageUrl = `${S3_URL}/profiles/${DEFAULT_PROFILE_FILENAME}`;
+  profileImageFile.value = null;
+  profileImageFilename.value = DEFAULT_PROFILE_FILENAME;
 };
 
 const initProfileBackgroundImage = () => {
-  localMember.value.profileBackgroundImageUrl =
-    "http://goguma-library/profiles/default-profile-background.png";
+  localMember.value.profileBackgroundImageUrl = `${S3_URL}/profile-backgrounds/${DEFAULT_PROFILE_BACKGROUND_FILENAME}`;
+  profileBackgroundImageFile.value = null;
+  profileBackgroundImageFilename.value = DEFAULT_PROFILE_BACKGROUND_FILENAME;
 };
+
+// 1. 새로운 이미지 파일 넣기 (file: nonnull, url: nonnull)
+// 2. 이미지 파일 넣지 않음 (file: null, url: null)
+// 3. 기본 이미지 파일로 변경 (file: null, url: nonnull)
 
 const changeProfileImage = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
   if (file) {
+    const newUrl = URL.createObjectURL(file);
+    localMember.value.profileImageUrl = newUrl;
     profileImageFile.value = file;
-    localMember.value.profileImageUrl = URL.createObjectURL(file);
+    profileImageFilename.value =
+      newUrl.split("/").pop() + file.type.replace("image/", ".");
   }
 };
 
@@ -50,8 +79,11 @@ const changeProfileBackgroundImage = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
   if (file) {
+    const newUrl = URL.createObjectURL(file);
+    localMember.value.profileBackgroundImageUrl = newUrl;
     profileBackgroundImageFile.value = file;
-    localMember.value.profileBackgroundImageUrl = URL.createObjectURL(file);
+    profileBackgroundImageFilename.value =
+      newUrl.split("/").pop() + file.type.replace("image/", ".");
   }
 };
 </script>
@@ -61,7 +93,7 @@ const changeProfileBackgroundImage = (event: Event) => {
     <div
       class="profile-background-image-wrapper"
       :style="{
-        backgroundImage: `url(${localMember.profileBackgroundImageUrl}) `,
+        backgroundImage: `url(${localMember.profileBackgroundImageUrl})`,
       }"
     >
       <div class="init-button-wrapper">

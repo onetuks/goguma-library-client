@@ -24,10 +24,12 @@ export interface MemberStatics {
 
 export interface MemberPatchRequest {
   nickname: string;
-  introduction?: string;
-  instagramUrl?: string;
+  introduction?: string | null;
+  instagramUrl?: string | null;
   interestedCategories: Category[];
   isAlarmAccepted: boolean;
+  profileImageFilename: string | null;
+  profileBackgroundImageFilename: string | null;
 }
 
 export interface MemberResponse {

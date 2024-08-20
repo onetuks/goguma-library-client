@@ -26,8 +26,10 @@ const member: Member = {
   interestedCategories: ["CARTOON", "NOVEL"],
   isAlarmAccepted: true,
   points: 100,
-  profileImageUrl: "profileImageUrl",
-  profileBackgroundImageUrl: "profileBackgroundImageUrl",
+  profileImageUrl:
+    "https://goguma-chimpanzee.s3.ap-northeast-2.amazonaws.com/profiles/default-profile.png",
+  profileBackgroundImageUrl:
+    "https://goguma-chimpanzee.s3.ap-northeast-2.amazonaws.com/profile-backgrounds/default-profile-background.png",
   memberStatics: {
     memberStaticsId: 1_000,
     reviewCounts: 1,

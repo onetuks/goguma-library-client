@@ -13,7 +13,7 @@ onMounted(() => {
   AuthApis.login(clientProvider, authCode)
     .then((loginResponse) => {
       loginResponse.isNewMember
-        ? router.push(`/members/${loginResponse.loginId}/my/settings`)
+        ? router.push(`/members/${loginResponse.loginId}/settings`)
         : router.push("/");
     })
     .catch(() => router.push("/login"));
