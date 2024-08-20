@@ -17,18 +17,21 @@ import ProfileItem from "@/components/profile/ProfileItem.vue"; // ProfileItem.v
 
 import { Book } from "@/types/Book";
 import { Review } from "@/types/Review";
-import ProfileImageSettingCard from "@/components/card/ProfileImageSettingCard.vue";
-import { Member } from "@/types/Member";
+import ProfileImageSettingCard from "@/pages/my/components/ProfileImageSettingView.vue";
+import { Member } from "@/api/MemberApis";
 
 const member: Member = {
   memberId: 1_000,
   nickname: "고구마침팬치",
   introduction: "열혈 침팬치",
+  instagramUrl: "https://www.instagram.com/gogumachim",
   interestedCategories: ["CARTOON", "NOVEL"],
   isAlarmAccepted: true,
   points: 100,
-  profileImageUrl: "profileImageUrl",
-  profileBackgroundImageUrl: "profileBackgroundImageUrl",
+  profileImageUrl:
+    "https://goguma-chimpanzee.s3.ap-northeast-2.amazonaws.com/profiles/default-profile.png",
+  profileBackgroundImageUrl:
+    "https://goguma-chimpanzee.s3.ap-northeast-2.amazonaws.com/profile-backgrounds/default-profile-background.png",
   memberStatics: {
     memberStaticsId: 1_000,
     reviewCounts: 1,

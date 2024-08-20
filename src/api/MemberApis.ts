@@ -1,17 +1,11 @@
 import { Category } from "@/types/Category";
 import { get, patchFormData } from "@/api/ServerRequest";
 
-export interface MemberPatchRequest {
-  nickname: string;
-  introduction: string;
-  interestedCategories: Category[];
-  isAlarmAccepted: boolean;
-}
-
-export interface MemberResponse {
+export interface Member {
   memberId: number;
   nickname: string;
   introduction: string;
+  instagramUrl: string;
   interestedCategories: Category[];
   isAlarmAccepted: boolean;
   points: number;
@@ -25,7 +19,30 @@ export interface MemberStatics {
   reviewCounts: number;
   followerCounts: number;
   followingCounts: number;
-  reviewCategoryCounts: Map<Category, number>;
+  reviewCategoryCounts: [Category, number][];
+}
+
+export interface MemberPatchRequest {
+  nickname: string;
+  introduction?: string | null;
+  instagramUrl?: string | null;
+  interestedCategories: Category[];
+  isAlarmAccepted: boolean;
+  profileImageFilename: string | null;
+  profileBackgroundImageFilename: string | null;
+}
+
+export interface MemberResponse {
+  memberId: number;
+  nickname: string;
+  introduction: string;
+  instagramUrl: string;
+  interestedCategories: Category[];
+  isAlarmAccepted: boolean;
+  points: number;
+  profileImageUrl: string;
+  profileBackgroundImageUrl: string;
+  memberStatics: MemberStatics;
 }
 
 export const MemberApis = {
@@ -33,8 +50,8 @@ export const MemberApis = {
   patchMemberProfile: async (
     memberId: number,
     request: MemberPatchRequest,
-    profileImage?: File,
-    profileBackgroundImage?: File
+    profileImage: File | null,
+    profileBackgroundImage: File | null
   ): Promise<MemberResponse> => {
     // 멤버 프로필 수정
     return await patchFormData(
@@ -56,4 +73,21 @@ export const MemberApis = {
       (data) => data as MemberResponse[]
     );
   },
+};
+
+export const mapMemberResponseToMember = (
+  memberResponse: MemberResponse
+): Member => {
+  return {
+    memberId: memberResponse.memberId,
+    nickname: memberResponse.nickname,
+    introduction: memberResponse.introduction,
+    instagramUrl: memberResponse.instagramUrl,
+    interestedCategories: memberResponse.interestedCategories,
+    isAlarmAccepted: memberResponse.isAlarmAccepted,
+    points: memberResponse.points,
+    profileImageUrl: memberResponse.profileImageUrl,
+    profileBackgroundImageUrl: memberResponse.profileBackgroundImageUrl,
+    memberStatics: memberResponse.memberStatics,
+  };
 };
