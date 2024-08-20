@@ -1,7 +1,12 @@
 <script setup lang="ts">
-defineProps<{
-  headerTitle: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    headerTitle: string;
+  }>(),
+  {
+    headerTitle: "고구마 서재",
+  }
+);
 
 const goBack = () => window.history.back();
 </script>
@@ -15,7 +20,7 @@ const goBack = () => window.history.back();
         @click="goBack"
         class="back-button"
       />
-      <p class="header-title">{{ headerTitle }}</p>
+      <p class="header-title">{{ props.headerTitle }}</p>
     </div>
     <div class="header-division"></div>
   </header>

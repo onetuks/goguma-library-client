@@ -9,31 +9,27 @@
 
 <style>
 @import "@/styles/colors.css"; /* 색상 변수 정의 CSS 파일 */
+@import "@/styles/font.css";
 @import "https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css";
 
 body,
 html,
 #app {
-  margin: 0 0 70px;
+  margin: 0 0 70px 0;
   padding: 0;
   height: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  font-family: "Arial", sans-serif;
   text-align: center;
   background-color: var(--background-primary);
   color: var(--text-primary);
-}
-
-.nav-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  font-family: var(--font-family-regular), sans-serif;
 }
 </style>
+
 <script setup lang="ts">
 import NavigationBar from "@/components/bar/NavigationBar.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
