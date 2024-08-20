@@ -43,7 +43,7 @@ watch(profileBackgroundImageFile, (newProfileBackgroundImageFile) => {
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  target.src = require("@/assets/icon/default-profile.png");
+  target.src = require("@/assets/icon/profile/default-profile.png");
 };
 
 const initProfileImage = () => {

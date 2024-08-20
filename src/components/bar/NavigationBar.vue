@@ -26,8 +26,8 @@ const buttons: Button[] = [
   },
   {
     label: "Add",
-    inactiveIcon: require("@/assets/icon/add_icon.png"),
-    activeIcon: require("@/assets/icon/add_icon.png"),
+    inactiveIcon: require("@/assets/icon/add/add_icon.png"),
+    activeIcon: require("@/assets/icon/add/add_icon.png"),
     width: 26,
     height: 26,
   },

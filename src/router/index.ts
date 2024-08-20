@@ -4,10 +4,16 @@ import BookInformationPage from "@/pages/book/registration/BookRegistrationPage.
 import LoginHandlerView from "@/pages/login/handler/LoginHandlerView.vue";
 import LoginPage from "@/pages/login/LoginPage.vue";
 import ProfileEditPage from "@/pages/my/ProfileSettingPage.vue";
+import ErrorPage from "@/pages/error/ErrorPage.vue";
+import HomePage from "@/pages/home/HomePage.vue";
+import WarningPage from "@/pages/error/WarningPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "고구마서재", component: SamplePage },
   { path: "/sample", name: "컴포넌트 샘플 페이지", component: SamplePage },
+  { path: "/home", name: "메인화면", component: HomePage },
+  { path: "/error", name: "", component: ErrorPage },
+  { path: "/warning", name: "", component: WarningPage },
   { path: "/login", name: "로그인", component: LoginPage },
   {
     path: "/login/oauth2/callback/:provider",
