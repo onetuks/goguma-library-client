@@ -1,39 +1,37 @@
 <script setup lang="ts">
-import SubscribeButton from "@/components/button/SubscribeButton.vue";
-import PickButton from "@/components/button/PickButton.vue";
-import { Book } from "@/types/Book";
-import { formatDate } from "date-fns";
+import { ref } from "vue";
+import ProfileHeader from "@/components/profile/FeedProfileHeader.vue";
+import { format } from "date-fns";
 
-defineProps<{
-  book: Book;
-  isPicked: boolean;
-}>();
+const book = {
+  title: "제목이 들어가는 영역",
+  authorName: "치킨인더군",
+  introduction:
+    "서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다.",
+  coverImageUrl: require("@/assets/test/picture_test.png"),
+  createdAt: new Date(),
+  pickCount: 1,
+};
+
+const isPicked = ref(false);
 </script>
 
 <template>
   <div class="feed-card">
+    <!-- 이미지 영역 -->
     <div class="card-image">
       <img :src="book.coverImageUrl" alt="Book Cover" class="book-cover" />
     </div>
-    <div class="card-content">
-      <div class="card-header">
-        <img
-          src="@/assets/test/profile_picture.png"
-          alt="Profile"
-          class="profile-picture"
-        />
-        <div class="user-info">
-          <span class="username">{{ book.authorName }}</span>
-          <SubscribeButton :is-subscribed="false" />
-        </div>
-        <PickButton :pick-count="book.pickCount" :is-picked="isPicked" />
-      </div>
+
+    <!-- 정보 영역 -->
+    <div class="card-info">
+      <ProfileHeader class="profile-header" />
       <div class="card-body">
         <h2 class="title">{{ book.title }}</h2>
         <p class="content">{{ book.introduction }}</p>
       </div>
       <div class="card-footer">
-        <span class="date">{{ formatDate(book.createdAt, "yyyy-MM-dd") }}</span>
+        <span class="date">{{ format(book.createdAt, "yyyy.MM.dd") }}</span>
       </div>
     </div>
   </div>
@@ -43,64 +41,45 @@ defineProps<{
 .feed-card {
   width: 360px;
   height: 532px;
+  position: relative;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
 }
 
 .card-image {
-  flex: 3;
-  position: relative;
+  width: 100%;
+  height: 100%; /* 전체 카드 높이에 맞게 설정 */
 }
 
 .book-cover {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* 이미지가 전체 영역을 커버하면서 비율 유지 */
+  object-position: center; /* 이미지 중앙을 기준으로 맞춤 */
 }
 
-.card-content {
-  flex: 2;
-  background-color: white;
+.card-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 172px;
+  background: linear-gradient(
+    180deg,
+    rgba(234, 228, 216, 0.4) 0%,
+    /* EAE4D8 at 40% opacity */ #fefdf6 50%,
+    /* FEFDF6 at 100% opacity */ var(--background-primary) 100%
+  );
+  backdrop-filter: blur(2px); /* Background blur 효과 */
+  padding: 5px 15px 15px 15px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
 }
 
-.card-header {
-  display: flex;
-  align-items: center;
+.profile-header {
   margin-bottom: 10px;
-}
-
-.profile-picture {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  margin-right: auto;
-}
-
-.username {
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.subscription-button {
-  margin-left: 10px;
-}
-
-.heart-button {
-  margin-left: auto;
 }
 
 .card-body {
@@ -108,25 +87,39 @@ defineProps<{
 }
 
 .title {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 10px 0;
+  font-family: var(--font-family-kopub), sans-serif;
+  font-size: 31px; /* 헤드라인 대_Kopub */
+  color: var(--text-fourth);
+  margin: 10px 0 10px 0; /* 상단 10px, 하단 10px 간격 추가 */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Drop shadow */
+  text-align: left; /* 좌측 정렬 */
 }
 
 .content {
+  font-family: var(--font-family), sans-serif;
   font-size: 14px;
-  color: #333;
-  line-height: 1.5;
+  color: var(--text-primary);
+  line-height: 20px; /* 줄간격 20px */
+  letter-spacing: 0%; /* Letter spacing 0% */
+  margin-top: 10px; /* 제목과 서평 영역 사이 간격 10px */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Limit the number of lines */
+  -webkit-line-clamp: 3; /* 최대 3줄 표시 */
   -webkit-box-orient: vertical;
+  text-align: left; /* 좌측 정렬 */
 }
 
 .card-footer {
-  text-align: right;
-  font-size: 12px;
-  color: #888;
+  width: 70px;
+  height: 18px;
+  position: absolute;
+  left: 15px; /* 좌단에서 15px 떨어짐 */
+  bottom: 5px; /* 하단에서 5px 떨어짐 */
+  top: auto; /* 상단 위치 설정 없음 */
+  right: auto; /* 우측 위치 설정 없음 */
+  font-size: 12px; /* 본문 소 */
+  color: var(--text-fifth);
+  text-align: left; /* 좌측 정렬 */
 }
 </style>
