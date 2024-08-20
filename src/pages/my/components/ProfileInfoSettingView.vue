@@ -140,7 +140,7 @@ const toggleCategorySelection = (category: Category) => {
 
 .form-notice {
   width: auto;
-  font-family: var(--font-family), sans-serif;
+  font-family: var(--font-family-regular), sans-serif;
   font-size: 14px;
   font-weight: normal;
 }
@@ -191,7 +191,7 @@ const toggleCategorySelection = (category: Category) => {
 }
 
 .custom-checkbox-label {
-  font-family: var(--font-family), sans-serif;
+  font-family: var(--font-family-regular), sans-serif;
   font-size: 14px;
   font-weight: normal;
 }

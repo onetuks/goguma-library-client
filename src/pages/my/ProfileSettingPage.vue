@@ -11,6 +11,7 @@ import {
 import ProfileInfoSettingView from "@/pages/my/components/ProfileInfoSettingView.vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 const route = useRoute();
 
@@ -21,6 +22,12 @@ const profileImageFilename = ref<string | null>(null);
 const profileImageFile = ref<File | null>(null);
 const profileBackgroundImageFilename = ref<string | null>(null);
 const profileBackgroundImageFile = ref<File | null>(null);
+
+const isModalVisible = ref<boolean>(false);
+
+const closeModal = () => {
+  isModalVisible.value = false;
+};
 
 const fetchMemberProfile = async () => {
   MemberApis.getMemberProfile(memberIdParam).then(
@@ -45,7 +52,6 @@ const updateProfileBackgroundImage = (
 };
 
 const updateProfileImageFilename = (newProfileImageFilename: string | null) => {
-  console.log("updateProfileImageFilename", newProfileImageFilename);
   profileImageFilename.value = newProfileImageFilename;
 };
 
@@ -66,15 +72,8 @@ const notEnoughInfo = () => {
 };
 
 const submitForm = async () => {
-  console.log(
-    "submitForm",
-    localMember.value,
-    profileImageFile.value,
-    profileBackgroundImageFile.value
-  );
-
   if (notEnoughInfo()) {
-    alert("필수 정보를 입력해주세요.");
+    isModalVisible.value = true;
     return;
   }
 
@@ -115,6 +114,12 @@ fetchMemberProfile();
       @update:Member="updateMember"
     />
     <button @click="submitForm" class="submit-button">가입하기</button>
+    <ConfirmModal
+      :visible="isModalVisible"
+      message="정보를 모두 입력해주세요"
+      button-text="확인"
+      @modal:Close="closeModal"
+    />
   </div>
 </template>
 

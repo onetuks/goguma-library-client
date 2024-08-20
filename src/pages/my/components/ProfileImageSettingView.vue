@@ -23,7 +23,6 @@ const profileImageInput = ref<HTMLInputElement>();
 const profileBackgroundImageInput = ref<HTMLInputElement>();
 
 watch(profileImageFilename, (newProfileImageFilename) => {
-  console.log("profileImageFilename", profileImageFilename.value);
   emits("update:ProfileImageFilename", newProfileImageFilename);
 });
 
@@ -232,7 +231,7 @@ const changeProfileBackgroundImage = (event: Event) => {
   border: 1px solid var(--button-primary);
   border-radius: 10px;
   font-size: 15px;
-  font-family: var(--font-family), sans-serif;
+  font-family: var(--font-family-regular), sans-serif;
 }
 
 .hidden-file-input {
