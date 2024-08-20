@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import SamplePage from "@/pages/SamplePage.vue";
-import BookInformationPage from "@/pages/book/registration/BookRegistrationPage.vue";
+import ReviewItemPage from "@/pages/book/review/ReviewItemPage.vue";
 import LoginHandlerView from "@/pages/login/handler/LoginHandlerView.vue";
 import LoginPage from "@/pages/login/LoginPage.vue";
-import ProfileEditPage from "@/pages/my/ProfileSettingPage.vue";
+import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
+import ProfileSettingPage from "@/pages/my/ProfileSettingPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "고구마서재", component: SamplePage },
@@ -17,9 +18,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/members/:memberId/settings",
     name: "프로필수정",
-    component: ProfileEditPage,
+    component: ProfileSettingPage,
   },
   { path: "/books/:bookId", name: "도서정보", component: BookInformationPage },
+  { path: "/reviews/:reviewId", name: "서평정보", component: ReviewItemPage },
 ];
 
 const router = createRouter({

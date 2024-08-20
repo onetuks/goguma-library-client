@@ -22,30 +22,39 @@ const toggleSubscription = () => {
     :class="['subscription-button', { subscribed: localIsSubscribed }]"
     @click="toggleSubscription"
   >
-    {{ localIsSubscribed ? "구독중" : "구독" }}
+    {{ localIsSubscribed ? "팔로잉" : "팔로우" }}
   </button>
 </template>
 
 <style scoped>
 .subscription-button {
-  width: 75px;
-  padding: 10px 0;
-  font-size: 16px;
+  width: 70px;
+  height: 30px;
+  padding: 5px 0;
+  font-size: 14px;
   cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid var(--border-primary); /* border/primary */
+  color: var(--text-fourth); /* text/fourth */
   background-color: transparent;
-  color: #756357; /* 피그마의 ivory/100 */
-  border: 2px solid #e8e6d5; /* 피그마의 ivory/600 */
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* drop shadow 추가 */
 }
 
 .subscription-button.subscribed {
-  background-color: #756357; /* 피그마의 ivory/100 */
-  color: white;
+  border-color: var(--border-tertiary); /* border/tertiary */
+  color: var(--text-fourth); /* text/fourth */
+  background-color: transparent; /* 배경색 없음 */
 }
 
 .subscription-button:not(.subscribed):hover {
-  background-color: #e8e6d5; /* 피그마의 ivory/600 */
-  color: #756357; /* 피그마의 ivory/100 */
+  background-color: var(--border-primary); /* 팔로우 버튼 hover 색상 */
+  color: var(--text-fourth); /* text/fourth */
+}
+
+.subscription-button.subscribed:hover {
+  background-color: transparent; /* 배경색 없음 */
+  color: var(--text-fourth); /* text/fourth */
+  border-color: var(--border-tertiary); /* 테두리 색상만 변경 */
 }
 </style>
