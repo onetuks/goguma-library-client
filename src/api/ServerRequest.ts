@@ -1,7 +1,20 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ACCESS_TOKEN } from "@/types/AuthWords";
 
 export const BASE_SERVER_URL = "http://localhost:8080/api";
+
+export class ApiError extends Error {
+  code: string;
+  message: string;
+  reason: string;
+
+  constructor(code: string, message: string, reason: string) {
+    super(message);
+    this.code = code;
+    this.message = message;
+    this.reason = reason;
+  }
+}
 
 export const get = async (uri: string): Promise<object> => {
   return await axios
@@ -20,7 +33,7 @@ export const get = async (uri: string): Promise<object> => {
       );
       return data;
     })
-    .catch((error) => console.error(error));
+    .catch((error) => handleApiError(error));
 };
 
 export const post = async (
@@ -43,7 +56,7 @@ export const post = async (
       );
       return data;
     })
-    .catch((error) => console.error(error));
+    .catch((error) => handleApiError(error));
 };
 
 export const postWithAuthCode = async (
@@ -101,7 +114,7 @@ export const postFormData = async (
       );
       return data;
     })
-    .catch((error) => console.error(error));
+    .catch((error) => handleApiError(error));
 };
 
 export const patch = async (
@@ -124,7 +137,7 @@ export const patch = async (
       );
       return data;
     })
-    .catch((error) => console.error(error));
+    .catch((error) => handleApiError(error));
 };
 
 export const patchFormData = async (
@@ -159,7 +172,7 @@ export const patchFormData = async (
       );
       return data;
     })
-    .catch((error) => console.error(error));
+    .catch((error) => handleApiError(error));
 };
 
 export const remove = (uri: string): void => {
@@ -177,7 +190,7 @@ export const remove = (uri: string): void => {
           ") - Response : Deletion Success"
       )
     )
-    .catch((error) => console.error(error));
+    .catch((error) => handleApiError(error));
 };
 
 export const buildPageQuery = (page?: number, size?: number): string => {
@@ -186,4 +199,11 @@ export const buildPageQuery = (page?: number, size?: number): string => {
   query += page ? `page=${page}` : "";
   query += page && size ? "&" : "";
   return query;
+};
+
+const handleApiError = (error: AxiosError): void => {
+  if (error.response) {
+    throw error.response.data as ApiError;
+  }
+  throw new ApiError("500", "서버와의 통신에 실패했습니다.", error.message);
 };

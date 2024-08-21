@@ -66,11 +66,9 @@ const updateAttendances = (): void => {
     if (Array.isArray(attendances)) {
       attendanceCounts.value = attendances.length;
       attendances.forEach((attendance) => {
-        const day = days.value.find((day) =>
-          isSameDay(day.date, attendance.attendedAt)
-        );
-        if (day) {
-          day.attended = true;
+        const targetDay = getTargetDay(attendance);
+        if (targetDay) {
+          targetDay.attended = true;
         }
       });
     }
