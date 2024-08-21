@@ -9,7 +9,32 @@ interface Badge {
 }
 
 onBeforeMount(() => {
-  //todo fetch badges
+  badges.value = [
+    {
+      badgeId: 1,
+      name: "뱃지1",
+      detail: "테스트용1",
+      badgeImageUrl: "dfsd",
+    },
+    {
+      badgeId: 2,
+      name: "뱃지1",
+      detail: "테스트용1",
+      badgeImageUrl: "dfsd",
+    },
+    {
+      badgeId: 3,
+      name: "뱃지1",
+      detail: "테스트용1",
+      badgeImageUrl: "dfsd",
+    },
+    {
+      badgeId: 4,
+      name: "뱃지1",
+      detail: "테스트용1",
+      badgeImageUrl: "dfsd",
+    },
+  ];
 });
 
 defineProps<{
@@ -18,10 +43,6 @@ defineProps<{
 
 const badges = ref<Badge[]>([]);
 
-const getGridRows = () => {
-  return badges.value.length / 3;
-};
-
 const handleError = (event: Event) => {
   const target = event.target as HTMLImageElement;
   target.src = require("@/assets/icon/profile/default-badge.png");
@@ -29,13 +50,8 @@ const handleError = (event: Event) => {
 </script>
 
 <template>
-  <div
-    class="badge-container"
-    :style="{ gridTemplateRows: `110px repeat(${getGridRows()}, 110px)` }"
-    v-for="(badge, index) in badges"
-    :key="index"
-  >
-    <div class="badge">
+  <div class="badge-container">
+    <div class="badge" v-for="(badge, index) in badges" :key="index">
       <img
         :src="badge.badgeImageUrl"
         :alt="badge.name"
@@ -48,12 +64,11 @@ const handleError = (event: Event) => {
 
 <style scoped>
 .badge-container {
-  width: 100%;
-  justify-content: center;
-  height: auto;
   display: grid;
-  grid-template-columns: repeat(3, 110px);
   gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  justify-content: center;
+  padding-left: 15px;
 }
 
 .badge {
@@ -62,7 +77,10 @@ const handleError = (event: Event) => {
   background-color: var(--surface-tertiary);
   border: 1px solid var(--gray-900);
   border-radius: 20px;
-  padding: 10px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .badge-image {
