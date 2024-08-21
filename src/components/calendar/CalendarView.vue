@@ -1,74 +1,46 @@
 <script setup lang="ts">
-import {
-  eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
-  isSameMonth,
-  isToday,
-  startOfMonth,
-  startOfWeek,
-} from "date-fns";
+import { isSameMonth, isToday } from "date-fns";
 import CalendarIcon, {
   CalendarIconType,
 } from "@/components/calendar/CalendarIcon.vue";
-import { onBeforeMount } from "vue";
-
-interface Day {
-  date: Date;
-  checked: boolean;
-}
-
-const WEEKDAYS: string[] = ["일", "월", "화", "수", "목", "금", "토"];
+import { Day, WEEKDAYS } from "@/types/Calendar";
 
 const props = defineProps<{
-  year: number;
-  month: number;
+  days: Day[];
+  today: Date;
 }>();
 
-onBeforeMount(() => (days = generateCalendar()));
-
-let days: Day[] = [];
-
-const generateCalendar = (): Day[] => {
-  const startDay: Date = startOfWeek(
-    startOfMonth(new Date(props.year, props.month - 1))
-  );
-  const endDay: Date = endOfWeek(
-    endOfMonth(new Date(props.year, props.month - 1))
-  );
-  return eachDayOfInterval({ start: startDay, end: endDay }).map(
-    (date: Date) => ({
-      date,
-      checked: false,
-    })
-  );
-};
-
 const getDayType = (day: Day): CalendarIconType => {
-  const isThisMonthDay = isSameMonth(
-    day.date,
-    new Date(props.year, props.month - 1)
-  );
+  const isThisMonthDay = isSameMonth(day.date, props.today);
 
   if (!isThisMonthDay) {
-    return "notInMonth";
+    return "NOT_THIS_MONTH";
   }
+
   if (isToday(day.date)) {
-    return day.checked ? "todayChecked" : "todayNotChecked";
+    return day.attended ? "TODAY_ATTENDED" : "TODAY_NOT_ATTENDED";
   }
-  return day.checked ? "checked" : "notChecked";
+
+  return day.attended ? "ATTENDED" : "DEFAULT";
+};
+
+const getGridRows = () => {
+  return props.days.length / 7;
 };
 </script>
 
 <template>
-  <div class="calendar">
+  <div
+    class="calendar"
+    :style="{ gridTemplateRows: `46px repeat(${getGridRows()}, 46px)` }"
+  >
     <!-- 요일 헤더 -->
     <div class="weekdays">
       <CalendarIcon
         v-for="(day, index) in WEEKDAYS"
         :key="index"
         :day="day"
-        type="weekday"
+        type="DATE"
       />
     </div>
     <!--  날짜 카드  -->
@@ -85,15 +57,18 @@ const getDayType = (day: Day): CalendarIconType => {
 
 <style scoped>
 .calendar {
-  width: 358px;
-  height: 358px;
+  width: 100%;
+  justify-content: center;
+  height: auto;
   display: grid;
   grid-template-columns: repeat(7, 46px);
-  grid-template-rows: 46px repeat(6, 46px);
-  gap: 1px;
+  gap: 6px;
 }
 
-.weekdays,
+.weekdays {
+  display: contents;
+}
+
 .days {
   display: contents;
 }

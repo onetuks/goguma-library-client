@@ -1,14 +1,8 @@
 <script setup lang="ts">
-const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  count: {
-    type: Number,
-    required: true,
-  },
-});
+defineProps<{
+  label: string;
+  count: number;
+}>();
 </script>
 
 <template>
@@ -20,21 +14,23 @@ const props = defineProps({
 
 <style scoped>
 .stat-counter {
+  width: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 33px;
+  justify-content: space-between;
+  gap: 8px;
   text-align: center;
 }
 
 .label {
-  font-size: 12px; /* 본문 소 */
-  color: #000;
+  font-size: 12px;
+  color: black;
 }
 
 .count {
-  font-size: 16px; /* 제목 중 */
+  font-size: var(--font-size-16);
   font-weight: bold;
-  color: #000;
+  color: black;
 }
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ProfileImageSettingView from "@/pages/my/components/ProfileImageSettingView.vue";
+import ProfileImageSettingView from "@/pages/my/setting/components/ProfileImageSettingView.vue";
 import { ref } from "vue";
 import {
   mapMemberResponseToMember,
@@ -8,9 +8,9 @@ import {
   MemberPatchRequest,
   MemberResponse,
 } from "@/api/MemberApis";
-import ProfileInfoSettingView from "@/pages/my/components/ProfileInfoSettingView.vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
+import ProfileInfoSettingView from "@/pages/my/setting/components/ProfileInfoSettingView.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 const route = useRoute();

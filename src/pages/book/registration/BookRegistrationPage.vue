@@ -132,7 +132,7 @@ const closePopup = () => {
   max-width: 390px;
   margin: 0 auto;
   padding: 0 15px;
-  font-family: var(--font-primary);
+  font-family: var(--font-family-regular), sans-serif;
   color: var(--text-primary);
 }
 

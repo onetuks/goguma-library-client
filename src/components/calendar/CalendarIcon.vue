@@ -1,11 +1,11 @@
 <script setup lang="ts">
 export type CalendarIconType =
-  | "notChecked"
-  | "checked"
-  | "todayChecked"
-  | "todayNotChecked"
-  | "notInMonth"
-  | "weekday";
+  | "DEFAULT"
+  | "ATTENDED"
+  | "TODAY_ATTENDED"
+  | "TODAY_NOT_ATTENDED"
+  | "NOT_THIS_MONTH"
+  | "DATE";
 
 const props = defineProps<{
   day: string;
@@ -13,20 +13,12 @@ const props = defineProps<{
 }>();
 
 const getIconClass = () => {
-  return {
-    "calendar-icon": true,
-    checked: props.type === "checked",
-    "not-checked": props.type === "notChecked",
-    "not-in-month": props.type === "notInMonth",
-    "today-checked": props.type === "todayChecked",
-    "today-not-checked": props.type === "todayNotChecked",
-    weekday: props.type === "weekday",
-  };
+  return props.type.toLowerCase().replaceAll("_", "-");
 };
 </script>
 
 <template>
-  <div :class="getIconClass()">{{ day }}</div>
+  <div :class="['calendar-icon', getIconClass()]">{{ day }}</div>
 </template>
 
 <style scoped>
@@ -36,45 +28,42 @@ const getIconClass = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Nanum Square", serif;
+  font-family: var(--font-family-bold), serif;
+  border-radius: 5px;
 }
 
-/* 각 상태에 따른 스타일 적용 */
-.not-checked {
-  background-color: var(--surface-fourth);
-  color: var(--text-fourth);
+.date {
+  border: 1px solid var(--border-primary);
 }
 
-.checked {
-  background-color: var(--surface-secondary);
-  color: var(--text-secondary);
-}
-
-.today-not-checked {
-  width: 44px;
-  height: 44px;
-  background-color: var(--surface-fourth);
-  border: 1px solid var(--border-tertiary);
-  color: var(--text-fourth);
-}
-
-.today-checked {
-  width: 44px;
-  height: 44px;
-  background-color: var(--surface-secondary);
-  border: 1px solid var(--border-tertiary);
-  color: var(--text-secondary);
-}
-
-.not-in-month {
+.not-this-month {
   background-color: var(--surface-tertiary);
   color: var(--text-fifth);
 }
 
-.weekday {
+.default {
+  background-color: var(--surface-fourth);
+  color: var(--text-primary);
+}
+
+.attended {
+  background-color: var(--surface-secondary);
+  color: var(--text-secondary);
+}
+
+.today-not-attended {
   width: 44px;
   height: 44px;
-  border: 1px solid var(--border-primary);
-  color: var(--text-primary);
+  background-color: var(--surface-fourth);
+  border: 2px solid var(--border-tertiary);
+  color: var(--text-fourth);
+}
+
+.today-attended {
+  width: 44px;
+  height: 44px;
+  background-color: var(--surface-secondary);
+  border: 2px solid var(--border-tertiary);
+  color: var(--text-secondary);
 }
 </style>

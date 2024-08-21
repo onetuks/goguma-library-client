@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import ProfileHeader from "@/components/profile/FeedProfileHeader.vue";
 import { format } from "date-fns";
 
@@ -12,8 +11,6 @@ const book = {
   createdAt: new Date(),
   pickCount: 1,
 };
-
-const isPicked = ref(false);
 </script>
 
 <template>
@@ -44,7 +41,7 @@ const isPicked = ref(false);
   position: relative;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card-image {
@@ -96,7 +93,7 @@ const isPicked = ref(false);
 }
 
 .content {
-  font-family: var(--font-family), sans-serif;
+  font-family: var(--font-family-regular), sans-serif;
   font-size: 14px;
   color: var(--text-primary);
   line-height: 20px; /* 줄간격 20px */

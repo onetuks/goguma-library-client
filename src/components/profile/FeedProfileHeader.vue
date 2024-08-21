@@ -2,14 +2,6 @@
 import SubscribeButton from "@/components/button/SubscribeButton.vue";
 import PickButton from "@/components/button/PickButton.vue";
 
-interface ProfileHeaderProps {
-  profilePicture: string;
-  username: string;
-  isSubscribed: boolean;
-  pickCount: number;
-  isPicked: boolean;
-}
-
 // 예제 데이터
 const props = {
   profilePicture: require("@/assets/test/profile_picture.png"), // 프로필 이미지 경로
