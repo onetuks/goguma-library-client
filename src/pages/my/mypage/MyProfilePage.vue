@@ -9,6 +9,7 @@ import {
 } from "@/api/MemberApis";
 import ProfileView from "@/pages/my/mypage/components/ProfileView.vue";
 import ProfileAttendanceView from "@/pages/my/mypage/components/ProfileAttendanceView.vue";
+import ProfileBadgeView from "@/pages/my/mypage/components/ProfileBadgeView.vue";
 
 const route = useRoute();
 
@@ -31,6 +32,7 @@ fetchMemberProfile();
     <ProfileView :member="member" />
     <div class="divider" />
     <ProfileAttendanceView :member-id="memberIdParam" />
+    <ProfileBadgeView :member-id="memberIdParam" />
   </div>
 </template>
 
