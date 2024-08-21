@@ -13,11 +13,10 @@ import ReviewDetailCard from "@/components/card/ReviewDetailCard.vue";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
 import SortSelect from "@/components/select/SortSelect.vue";
-import ProfileItem from "@/components/profile/ProfileItem.vue"; // ProfileItem.vue를 추가
-
+import ProfileItem from "@/pages/my/mypage/components/ProfileView.vue";
+import ProfileImageSettingCard from "@/pages/my/setting/components/ProfileImageSettingView.vue";
 import { Book } from "@/types/Book";
 import { Review } from "@/types/Review";
-import ProfileImageSettingCard from "@/pages/my/components/ProfileImageSettingView.vue";
 import { Member } from "@/api/MemberApis";
 
 const member: Member = {
@@ -135,7 +134,6 @@ const review: Review = {
       </div>
       <div>
         <h3>프로필 컴포넌트</h3>
-        <!-- 프로필 컴포넌트를 추가 -->
         <ProfileItem />
       </div>
       <div>
@@ -144,8 +142,6 @@ const review: Review = {
           <h5>페이지 헤더 바</h5>
           <PageHeader header-title="작성 서평" />
           <PageHeader header-title="서평 Pick" />
-          <!--          <h5>네비게이션 바</h5>-->
-          <!--          <NavigationBar />-->
         </div>
       </div>
       <div>

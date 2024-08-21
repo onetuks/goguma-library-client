@@ -3,11 +3,11 @@ import HomePage from "@/pages/home/HomePage.vue";
 import SamplePage from "@/pages/SamplePage.vue";
 import LoginHandlerView from "@/pages/login/handler/LoginHandlerView.vue";
 import LoginPage from "@/pages/login/LoginPage.vue";
-import ProfileSettingPage from "@/pages/my/ProfileSettingPage.vue";
-import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
-import ReviewItemPage from "@/pages/book/review/ReviewItemPage.vue";
+import ProfileSettingPage from "@/pages/my/setting/ProfileSettingPage.vue";
 import ErrorPage from "@/pages/error/ErrorPage.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
+import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
+import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "고구마서재", component: SamplePage },
@@ -26,8 +26,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "프로필수정",
     component: ProfileSettingPage,
   },
-  { path: "/books/:bookId", name: "도서정보", component: BookInformationPage },
-  { path: "/reviews/:reviewId", name: "서평정보", component: ReviewItemPage },
+  {
+    path: "/members/:memberId/profiles",
+    name: "마이페이지",
+    component: MyProfilePage,
+  },
+  { path: "/books/:bookId", name: "도서정보", component: BookRegistrationPage },
 ];
 
 const router = createRouter({

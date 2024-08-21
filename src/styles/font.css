@@ -2,7 +2,9 @@
 :root {
     --font-family-regular: 'NanumSquare';
     --font-family-bold: 'NanumSquareBold';
+    --font-family-extra-bold: 'NanumSquareExtraBold';
     --font-family-kopub: 'Kopub';
 
     --font-size-14: 14px;
+    --font-size-16: 16px;
 }
