@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from "vue";
+import BadgeDetailModal from "@/pages/my/mypage/components/BadgeDetailModal.vue";
 
-interface Badge {
+export interface Badge {
   badgeId: number;
   name: string;
   detail: string;
@@ -18,19 +19,19 @@ onBeforeMount(() => {
     },
     {
       badgeId: 2,
-      name: "뱃지1",
+      name: "뱃지2",
       detail: "테스트용1",
       badgeImageUrl: "dfsd",
     },
     {
       badgeId: 3,
-      name: "뱃지1",
+      name: "뱃지3",
       detail: "테스트용1",
       badgeImageUrl: "dfsd",
     },
     {
       badgeId: 4,
-      name: "뱃지1",
+      name: "뱃지4",
       detail: "테스트용1",
       badgeImageUrl: "dfsd",
     },
@@ -42,16 +43,33 @@ defineProps<{
 }>();
 
 const badges = ref<Badge[]>([]);
+const isBadgeDetailModalVisible = ref<boolean>(false);
+const selectedBadge = ref<Badge | null>(null);
 
 const handleError = (event: Event) => {
   const target = event.target as HTMLImageElement;
   target.src = require("@/assets/icon/profile/default-badge.png");
 };
+
+const viewBadgeDetail = (badge: Badge) => {
+  selectedBadge.value = badge;
+  isBadgeDetailModalVisible.value = true;
+};
+
+const closeBadgeDetail = () => {
+  selectedBadge.value = null;
+  isBadgeDetailModalVisible.value = false;
+};
 </script>
 
 <template>
   <div class="badge-container">
-    <div class="badge" v-for="(badge, index) in badges" :key="index">
+    <div
+      class="badge"
+      v-for="(badge, index) in badges"
+      :key="index"
+      @click="viewBadgeDetail(badge)"
+    >
       <img
         :src="badge.badgeImageUrl"
         :alt="badge.name"
@@ -59,28 +77,38 @@ const handleError = (event: Event) => {
         @error="handleError"
       />
     </div>
+
+    <BadgeDetailModal
+      v-if="isBadgeDetailModalVisible && selectedBadge"
+      :badge="selectedBadge"
+      @modal:Close="closeBadgeDetail"
+    />
   </div>
 </template>
 
 <style scoped>
 .badge-container {
+  width: 100%;
   display: grid;
-  gap: 15px;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: center;
-  padding-left: 15px;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
 .badge {
-  width: 110px;
+  width: 100%;
+  max-width: 110px;
   height: 110px;
   background-color: var(--surface-tertiary);
   border: 1px solid var(--gray-900);
   border-radius: 20px;
-  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .badge-image {
