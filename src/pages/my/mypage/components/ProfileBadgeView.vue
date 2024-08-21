@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
-defineProps<{
-  memberId: number;
-}>();
+import { onBeforeMount, ref } from "vue";
 
 interface Badge {
   badgeId: number;
@@ -11,6 +7,14 @@ interface Badge {
   detail: string;
   badgeImageUrl: string;
 }
+
+onBeforeMount(() => {
+  //todo fetch badges
+});
+
+defineProps<{
+  memberId: number;
+}>();
 
 const badges = ref<Badge[]>([]);
 
