@@ -31,7 +31,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "마이페이지",
     component: MyProfilePage,
   },
-  { path: "/books/:bookId", name: "도서정보", component: BookRegistrationPage },
+  {
+    path: "/books/:bookId/registration",
+    name: "도서등록",
+    component: BookRegistrationPage,
+  },
 ];
 
 const router = createRouter({

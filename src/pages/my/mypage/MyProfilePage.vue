@@ -8,7 +8,7 @@ import {
   MemberResponse,
 } from "@/api/MemberApis";
 import ProfileView from "@/pages/my/mypage/components/ProfileView.vue";
-import CalendarView from "@/components/calendar/CalendarView.vue";
+import ProfileAttendanceView from "@/pages/my/mypage/components/ProfileAttendanceView.vue";
 
 const route = useRoute();
 
@@ -16,7 +16,6 @@ const memberIdParam = Number(route.params.memberId);
 const member = ref<Member | null>(null);
 
 const fetchMemberProfile = async () => {
-  console.log("memberIdParam: ", memberIdParam);
   MemberApis.getMemberProfile(memberIdParam).then(
     (memberResponse: MemberResponse) => {
       member.value = mapMemberResponseToMember(memberResponse);
@@ -31,6 +30,7 @@ fetchMemberProfile();
   <div v-if="member" class="my-profile-page-wrapper">
     <ProfileView :member="member" />
     <div class="divider" />
+    <ProfileAttendanceView :member-id="memberIdParam" />
   </div>
 </template>
 
