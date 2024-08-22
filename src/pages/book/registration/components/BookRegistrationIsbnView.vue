@@ -10,9 +10,15 @@ import {
 const NON_DIGIT_REGEX = /[^0-9]/;
 const ISBN_LENGTH = 13;
 
-const emits = defineEmits<{
-  (event: "register:WithIsbn", book: Book): void;
+const props = defineProps<{
+  book: Book;
 }>();
+
+const emits = defineEmits<{
+  (event: "update:Book", book: Book): void;
+}>();
+
+const localBook = ref<Book>({ ...props.book });
 
 const hasNoIsbn = ref<boolean>(false);
 const isbn = ref<string | null>(null);
@@ -22,6 +28,11 @@ const getCheckBoxImage = (): string => {
   return hasNoIsbn.value
     ? require("@/assets/icon/checkbox/checked-icon.png")
     : require("@/assets/icon/checkbox/unchecked-icon.png");
+};
+
+const toggleIsIndie = () => {
+  hasNoIsbn.value = !hasNoIsbn.value;
+  localBook.value.isIndie = hasNoIsbn.value;
 };
 
 const isValidIsbn = (isbn: string): boolean => {
@@ -40,8 +51,9 @@ const searchIsbn = () => {
 
   BookApis.getBookWithIsbn(isbn.value).then((data: BookIsbnGetResponse) => {
     const book: Book = mapBookIsbnGetResponseToBook(data);
-    book.isIndie = hasNoIsbn.value;
-    emits("register:WithIsbn", book);
+    book.isIndie = true;
+    localBook.value = { ...book };
+    emits("update:Book", { ...localBook.value });
   });
 };
 </script>
@@ -55,7 +67,7 @@ const searchIsbn = () => {
           :src="getCheckBoxImage()"
           alt="checkbox"
           class="isbn-checkbox-image"
-          @click="hasNoIsbn = !hasNoIsbn"
+          @click="toggleIsIndie"
         />
         <label class="isbn-checkbox-label">ISBN이 없거나 모르는 도서에요</label>
       </div>

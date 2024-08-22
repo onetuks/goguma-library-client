@@ -27,10 +27,11 @@ export interface BookResponse {
 export interface BookPostRequest {
   title: string;
   authorName: string;
-  isbn: string;
-  publisher: string;
+  isbn: string | null;
+  publisher: string | null;
   categories: Category[];
   isIndie: boolean;
+  coverImageFilename: string | null;
 }
 
 export interface Book {
@@ -38,8 +39,8 @@ export interface Book {
   title: string;
   authorName: string;
   introduction: string | null;
-  isbn: string;
-  publisher: string;
+  isbn: string | null;
+  publisher: string | null;
   categories: Category[];
   coverImageUrl: string;
   isIndie: boolean;
@@ -57,7 +58,7 @@ export const BookApis = {
   },
   postNewBook: async (
     request: BookPostRequest,
-    coverImage: File
+    coverImage: File | null
   ): Promise<BookResponse> => {
     // 도서 등록
     return await postFormData("/books", request, [
@@ -105,10 +106,25 @@ export const mapBookIsbnGetResponseToBook = (
     publisher: bookIsbnGetResponse.publisher,
     categories: bookIsbnGetResponse.category,
     coverImageUrl: bookIsbnGetResponse.coverImageUrl,
-    isIndie: false,
+    isIndie: bookIsbnGetResponse.isbn.length === 13,
     isPermitted: false,
     pickCount: null,
     createdAt: null,
+  };
+};
+
+export const mapBookToBookPostRequest = (
+  book: Book,
+  coverImageFilename: string | null
+): BookPostRequest => {
+  return {
+    title: book.title,
+    authorName: book.authorName,
+    isbn: book.isbn,
+    publisher: book.publisher,
+    categories: book.categories,
+    isIndie: book.isIndie,
+    coverImageFilename: coverImageFilename,
   };
 };
 
@@ -118,11 +134,11 @@ export const initBook = (): Book => {
     title: "",
     authorName: "",
     introduction: null,
-    isbn: "",
-    publisher: "",
+    isbn: null,
+    publisher: null,
     categories: [],
     coverImageUrl: "",
-    isIndie: false,
+    isIndie: true,
     isPermitted: false,
     pickCount: null,
     createdAt: null,

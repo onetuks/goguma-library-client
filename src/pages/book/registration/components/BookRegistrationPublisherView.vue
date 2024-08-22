@@ -10,11 +10,18 @@ const emits = defineEmits<{
   (event: "update:Book", book: Book): void;
 }>();
 
-const localBook = ref<Book>(props.book);
+const localBook = ref<Book>({ ...props.book });
 
-watch(localBook, (newLocalBook) => {
-  if (newLocalBook.publisher) {
-    emits("update:Book", newLocalBook);
+watch(
+  () => props.book.publisher,
+  (newPublisher) => {
+    localBook.value.publisher = newPublisher;
+  }
+);
+
+watch(localBook, (newBook) => {
+  if (newBook.publisher && newBook.publisher.length > 0) {
+    emits("update:Book", { ...newBook });
   }
 });
 </script>

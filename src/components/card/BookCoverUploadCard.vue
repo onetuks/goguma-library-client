@@ -1,15 +1,27 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { Book } from "@/api/BookApis";
+
+const props = defineProps<{
+  book: Book;
+}>();
 
 const emits = defineEmits<{
   (event: "update:CoverImageFile", file: File | null): void;
   (event: "update:CoverImageFilename", filename: string | null): void;
 }>();
 
-const coverImageUrl = ref<string | null>(null); // 이미지 미리보기 URL
+const coverImageUrl = ref<string | null>(props.book.coverImageUrl); // 이미지 미리보기 URL
 const coverImageFile = ref<File | null>(null); // 실제 파일
 const coverImageFilename = ref<string | null>(null); // 서버 요청에 제공할 파일명
 const coverImageInput = ref<HTMLInputElement | null>(null); // 파일 선택 input
+
+watch(
+  () => props.book.coverImageUrl,
+  (newCoverImageUrl) => {
+    coverImageUrl.value = newCoverImageUrl;
+  }
+);
 
 watch(coverImageFile, (newCoverImageFile) => {
   emits("update:CoverImageFile", newCoverImageFile);
@@ -41,6 +53,11 @@ const removeCover = (): void => {
   coverImageFile.value = null;
   coverImageInput.value = null;
 };
+
+const handleError = (event: Event): void => {
+  const target = event.target as HTMLImageElement;
+  target.src = require("@/assets/icon/error/error-icon.png");
+};
 </script>
 
 <template>
@@ -59,7 +76,12 @@ const removeCover = (): void => {
       />
 
       <div v-if="coverImageUrl" class="cover-preview">
-        <img :src="coverImageUrl" alt="Book Cover" class="book-cover" />
+        <img
+          :src="coverImageUrl"
+          alt="Book Cover"
+          class="book-cover"
+          @error="handleError"
+        />
         <img
           src="@/assets/icon/upload/trashcan_icon.png"
           alt="Remove Cover"
