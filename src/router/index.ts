@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     component: MyProfilePage,
   },
   {
-    path: "/books/:bookId/registration",
+    path: "/books/registration",
     name: "도서등록",
     component: BookRegistrationPage,
   },
