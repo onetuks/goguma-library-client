@@ -33,6 +33,21 @@ export interface BookPostRequest {
   isIndie: boolean;
 }
 
+export interface Book {
+  bookId: number | null;
+  title: string;
+  authorName: string;
+  introduction: string | null;
+  isbn: string;
+  publisher: string;
+  categories: Category[];
+  coverImageUrl: string;
+  isIndie: boolean;
+  isPermitted: boolean;
+  pickCount: number | null;
+  createdAt: Date | null;
+}
+
 export const BookApis = {
   getBookWithIsbn: async (isbn: string): Promise<BookIsbnGetResponse> => {
     // ISBN 도서 정보 조회
@@ -76,4 +91,23 @@ export const BookApis = {
       (data) => data as BookResponse[]
     );
   },
+};
+
+export const mapBookIsbnGetResponseToBook = (
+  bookIsbnGetResponse: BookIsbnGetResponse
+): Book => {
+  return {
+    bookId: null,
+    title: bookIsbnGetResponse.title,
+    authorName: bookIsbnGetResponse.authorName,
+    introduction: null,
+    isbn: bookIsbnGetResponse.isbn,
+    publisher: bookIsbnGetResponse.publisher,
+    categories: bookIsbnGetResponse.category,
+    coverImageUrl: bookIsbnGetResponse.coverImageUrl,
+    isIndie: false,
+    isPermitted: false,
+    pickCount: null,
+    createdAt: null,
+  };
 };

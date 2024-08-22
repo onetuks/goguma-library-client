@@ -3,6 +3,7 @@ import { ref } from "vue";
 import axios from "axios";
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import IsbnWarningModal from "@/pages/book/registration/modal/IsbnWarningModal.vue";
+import BookRegistrationIsbnView from "@/pages/book/registration/components/BookRegistrationIsbnView.vue";
 
 const isbn = ref("");
 const noIsbn = ref(false);
@@ -50,33 +51,12 @@ const closePopup = () => {
 </script>
 
 <template>
-  <div class="book-registration">
-    <div class="isbn-section">
-      <div class="isbn-row">
-        <label class="isbn-label"> ISBN<span class="required">*</span> </label>
-        <div class="isbn-checkbox">
-          <input type="checkbox" v-model="noIsbn" id="noIsbn" />
-          <label for="noIsbn">ISBN이 없거나 모르는 도서에요</label>
-        </div>
-      </div>
-      <div class="isbn-input-container">
-        <input
-          type="text"
-          v-model="isbn"
-          :disabled="noIsbn"
-          placeholder="ISBN 번호를 적어주세요"
-          class="isbn-input"
-        />
-        <button
-          class="isbn-search-button"
-          :disabled="noIsbn"
-          @click="handleIsbnCheck"
-        >
-          조회
-        </button>
-      </div>
-    </div>
-
+  <div class="book-registration-container">
+    <BookRegistrationIsbnView />
+    <!--    <BookRegistrationTitleView />-->
+    <!--    <BookRegistrationAuthorNameView />-->
+    <!--    <BookRegistrationPublisherView />-->
+    <!--    <BookRegistrationNoticeView />-->
     <div class="form-section">
       <label class="form-label"> 제목<span class="required">*</span> </label>
       <input
@@ -103,11 +83,6 @@ const closePopup = () => {
       />
     </div>
 
-    <div class="cover-image-section">
-      <label class="form-label">표지이미지</label>
-      <BookCoverUploadCard :coverUrl="coverUrl" />
-    </div>
-
     <div class="info-section">
       <strong class="info-title">유의사항</strong>
       <p>
@@ -128,73 +103,10 @@ const closePopup = () => {
 </template>
 
 <style scoped>
-.book-registration {
-  max-width: 390px;
-  margin: 0 auto;
-  padding: 0 15px;
+.book-registration-container {
+  padding: 15px;
   font-family: var(--font-family-regular), sans-serif;
   color: var(--text-primary);
-}
-
-.isbn-section {
-  margin-top: 15px;
-}
-
-.isbn-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.isbn-label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.required {
-  color: #ff0000;
-  margin-left: 2px;
-}
-
-.isbn-checkbox {
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.isbn-input-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 6px; /* Ensure a 6px gap */
-  margin-bottom: 10px;
-  width: 100%; /* Ensure the entire container is 100% of its parent */
-  max-width: 360px; /* Ensure the container does not exceed 360px */
-}
-
-.isbn-input {
-  width: calc(
-    100% - 106px
-  ); /* Adjust width to fit within the 360px constraint */
-  height: 36px;
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--surface-tertiary);
-  font-size: 14px;
-}
-
-.isbn-search-button {
-  width: 100px; /* Fixed width for the button */
-  height: 36px;
-  border: 2px solid var(--button-primary);
-  border-radius: 10px;
-  font-size: 14px;
-  color: var(--text-primary);
-  background-color: transparent;
-  cursor: pointer;
 }
 
 .form-section {

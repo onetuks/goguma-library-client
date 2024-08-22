@@ -132,7 +132,7 @@ const toggleCategorySelection = (category: Category) => {
 
 .form-title {
   width: auto;
-  font-family: var(--font-family-bold), sans-serif;
+  font-family: var(--font-family-regular), sans-serif;
   font-size: 16px;
   display: flex;
   align-items: start;
