@@ -13,7 +13,7 @@ const emits = defineEmits<{
 const localBook = ref<Book>(props.book);
 
 watch(localBook, (newLocalBook) => {
-  if (newLocalBook.title) {
+  if (newLocalBook.publisher) {
     emits("update:Book", newLocalBook);
   }
 });
@@ -21,11 +21,11 @@ watch(localBook, (newLocalBook) => {
 
 <template>
   <div class="form-container">
-    <label class="form-label">제목<span class="required">*</span> </label>
+    <label class="form-label">출판사</label>
     <input
       type="text"
-      v-model="localBook.title"
-      placeholder="도서 제목을 입력해주세요"
+      v-model="localBook.publisher"
+      placeholder="출판사를 입력해주세요"
       class="form-input"
     />
   </div>
@@ -53,10 +53,5 @@ watch(localBook, (newLocalBook) => {
   box-sizing: border-box;
   border: none;
   font-size: 14px;
-}
-
-.required {
-  color: #ff0000;
-  margin-left: 2px;
 }
 </style>

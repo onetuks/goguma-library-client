@@ -111,3 +111,20 @@ export const mapBookIsbnGetResponseToBook = (
     createdAt: null,
   };
 };
+
+export const initBook = (): Book => {
+  return {
+    bookId: null,
+    title: "",
+    authorName: "",
+    introduction: null,
+    isbn: "",
+    publisher: "",
+    categories: [],
+    coverImageUrl: "",
+    isIndie: false,
+    isPermitted: false,
+    pickCount: null,
+    createdAt: null,
+  };
+};
