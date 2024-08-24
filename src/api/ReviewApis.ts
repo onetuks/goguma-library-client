@@ -1,6 +1,6 @@
-import { buildPageQuery, get, patch, post, remove } from "@/api/ServerRequest";
+import { get, patch, post, remove } from "@/api/ServerRequest";
 import { SortBy } from "@/types/SortBy";
-import { Review } from "@/types/Review";
+import { buildPageQuery } from "@/types/Page";
 
 export interface ReviewRequest {
   reviewTitle: string;

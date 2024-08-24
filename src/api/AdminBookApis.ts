@@ -1,11 +1,7 @@
 import { BookResponse } from "@/api/BookApis";
 import { Category } from "@/types/Category";
-import {
-  buildPageQuery,
-  get,
-  patchFormData,
-  remove,
-} from "@/api/ServerRequest";
+import { get, patchFormData, remove } from "@/api/ServerRequest";
+import { buildPageQuery } from "@/types/Page";
 
 export interface BookPatchRequest {
   title: string;

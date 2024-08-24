@@ -1,5 +1,6 @@
-import { buildPageQuery, get, post, remove } from "@/api/ServerRequest";
+import { get, post, remove } from "@/api/ServerRequest";
 import { MemberResponse } from "@/api/MemberApis";
+import { buildPageQuery } from "@/types/Page";
 
 export interface FollowResponse {
   followId: number;
