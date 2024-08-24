@@ -1,4 +1,4 @@
-import { get, post } from "@/api/ServerRequest";
+import { arrayToDate, get, post } from "@/api/ServerRequest";
 
 export interface AttendanceResponse {
   attendanceId: number;
@@ -42,9 +42,4 @@ export const AttendanceApis = {
         throw error;
       });
   },
-};
-
-const arrayToDate = (date: Date): Date => {
-  const dateArray: number[] = Array.isArray(date) ? (date as number[]) : [];
-  return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
 };

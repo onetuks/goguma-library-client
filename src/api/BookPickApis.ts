@@ -1,4 +1,5 @@
-import { buildPageQuery, get, post, remove } from "@/api/ServerRequest";
+import { get, post, remove } from "@/api/ServerRequest";
+import { buildPageQuery } from "@/types/Page";
 
 export interface BookPickResponse {
   bookPickId: number;

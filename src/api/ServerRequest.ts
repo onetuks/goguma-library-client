@@ -193,12 +193,9 @@ export const remove = (uri: string): void => {
     .catch((error) => handleApiError(error));
 };
 
-export const buildPageQuery = (page?: number, size?: number): string => {
-  let query = "";
-  query += page || size ? "?" : "";
-  query += page ? `page=${page}` : "";
-  query += page && size ? "&" : "";
-  return query;
+export const arrayToDate = (date: Date): Date => {
+  const dateArray: number[] = Array.isArray(date) ? (date as number[]) : [];
+  return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
 };
 
 const handleApiError = (error: AxiosError): void => {

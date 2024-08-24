@@ -1,6 +1,7 @@
 // ISBN 도서 정보 조회
 import { Category } from "@/types/Category";
-import { buildPageQuery, get, postFormData } from "@/api/ServerRequest";
+import { get, postFormData } from "@/api/ServerRequest";
+import { buildPageQuery } from "@/types/Page";
 
 export interface BookIsbnGetResponse {
   title: string;
