@@ -14,6 +14,7 @@ import BookRegistrationNoticeView from "@/pages/book/registration/components/Boo
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import router from "@/router";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+import { ApiError } from "@/api/ServerRequest";
 
 interface ModalInfo {
   visible: boolean;
@@ -44,14 +45,13 @@ const closeModal = () => {
 
 const updateBook = (updatedBook: Book): void => {
   book.value = { ...updatedBook };
-  console.log("updatedBook", book.value);
 };
 
-const updateCoverImageFile = (file: File): void => {
+const updateCoverImageFile = (file: File | null): void => {
   coverImageFile.value = file;
 };
 
-const updateCoverImageFilename = (filename: string): void => {
+const updateCoverImageFilename = (filename: string | null): void => {
   coverImageFilename.value = filename;
 };
 
@@ -99,16 +99,43 @@ const registerBook = async () => {
   await BookApis.postNewBook(
     mapBookToBookPostRequest(book.value, coverImageFilename.value),
     coverImageFile.value
-  ).then((response) => {
-    console.log("registerBook response", response);
-    router.push(`/books/${response.bookId}/info`);
-  });
+  )
+    .then((response) => {
+      router.push(`/books/${response.bookId}/info`);
+    })
+    .catch((error) => {
+      handleBookRegistrationError(error);
+    });
+};
+
+const handleBookRegistrationError = (error: ApiError): void => {
+  const message =
+    error.code === "G010"
+      ? "이미 등록된 도서입니다"
+      : "도서 등록 중 오류가 발생했습니다";
+  modalInfo.value = {
+    visible: true,
+    message,
+    buttonText: "확인",
+  };
+};
+
+const handleIsbnSearchError = (message: string): void => {
+  modalInfo.value = {
+    visible: true,
+    message,
+    buttonText: "확인",
+  };
 };
 </script>
 
 <template>
   <div class="book-registration-container">
-    <BookRegistrationIsbnView :book="book" @update:Book="updateBook" />
+    <BookRegistrationIsbnView
+      :book="book"
+      @update:Book="updateBook"
+      @warn:InvalidIsbn="handleIsbnSearchError"
+    />
     <BookRegistrationTitleView :book="book" @update:Book="updateBook" />
     <BookRegistrationAuthorNameView :book="book" @update:Book="updateBook" />
     <BookRegistrationPublisherView :book="book" @update:Book="updateBook" />
@@ -118,9 +145,9 @@ const registerBook = async () => {
       @update:CoverImageFilename="updateCoverImageFilename"
     />
     <BookRegistrationNoticeView />
-    <div class="book-registration-button" @click="registerBook">
+    <button class="book-registration-button" @click="registerBook">
       도서 등록하기
-    </div>
+    </button>
     <ConfirmModal
       :button-text="modalInfo.buttonText"
       :visible="modalInfo.visible"
@@ -153,5 +180,11 @@ const registerBook = async () => {
   border: 2px solid var(--button-secondary);
   border-radius: 15px;
   font-family: var(--font-family-bold), sans-serif;
+  font-size: 14px;
+  background-color: transparent;
+}
+
+.book-registration-button:active {
+  background-color: var(--surface-sixth);
 }
 </style>

@@ -16,13 +16,13 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: "update:Book", book: Book): void;
+  (event: "warn:InvalidIsbn", message: string): void;
 }>();
 
 const localBook = ref<Book>({ ...props.book });
 
 const hasNoIsbn = ref<boolean>(false);
 const isbn = ref<string | null>(null);
-const isModalVisible = ref<boolean>(false);
 
 const getCheckBoxImage = (): string => {
   return hasNoIsbn.value
@@ -35,26 +35,37 @@ const toggleIsIndie = () => {
   localBook.value.isIndie = hasNoIsbn.value;
 };
 
-const isValidIsbn = (isbn: string): boolean => {
-  const regulatedIsbn = isbn.replace("-", "");
-  if (NON_DIGIT_REGEX.test(regulatedIsbn)) {
-    return false;
+const regulateIsbn = (isbn: string): string => {
+  const regulatedIsbn = isbn.replaceAll("-", "").trim();
+
+  const isInvalidIsbn =
+    !regulatedIsbn ||
+    NON_DIGIT_REGEX.test(regulatedIsbn) ||
+    regulatedIsbn.length !== ISBN_LENGTH;
+  if (isInvalidIsbn) {
+    throw new Error("ISBN이 유효하지 않습니다.");
   }
-  return regulatedIsbn.length === ISBN_LENGTH;
+
+  return regulatedIsbn;
 };
 
 const searchIsbn = () => {
-  if (!isbn.value || !isValidIsbn(isbn.value)) {
-    isModalVisible.value = true;
-    return;
-  }
+  try {
+    if (isbn.value) {
+      isbn.value = regulateIsbn(isbn.value);
 
-  BookApis.getBookWithIsbn(isbn.value).then((data: BookIsbnGetResponse) => {
-    const book: Book = mapBookIsbnGetResponseToBook(data);
-    book.isIndie = true;
-    localBook.value = { ...book };
-    emits("update:Book", { ...localBook.value });
-  });
+      BookApis.getBookWithIsbn(isbn.value).then((data: BookIsbnGetResponse) => {
+        const book: Book = mapBookIsbnGetResponseToBook(data);
+        book.isIndie = true;
+        localBook.value = { ...book };
+        emits("update:Book", { ...localBook.value });
+      });
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      emits("warn:InvalidIsbn", error.message);
+    }
+  }
 };
 </script>
 
@@ -161,7 +172,7 @@ const searchIsbn = () => {
 .isbn-input {
   background-color: var(--surface-tertiary);
   height: 36px;
-  width: 236px;
+  width: 100%;
   padding: 8px 10px;
   box-sizing: border-box;
   border: none;
@@ -170,7 +181,7 @@ const searchIsbn = () => {
 
 .isbn-input-button {
   background-color: transparent;
-  width: auto;
+  width: 30%;
   padding: 7px 30px;
   border: 1px solid var(--button-primary);
   border-radius: 10px;

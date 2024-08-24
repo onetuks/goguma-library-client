@@ -53,11 +53,6 @@ const removeCover = (): void => {
   coverImageFile.value = null;
   coverImageInput.value = null;
 };
-
-const handleError = (event: Event): void => {
-  const target = event.target as HTMLImageElement;
-  target.src = require("@/assets/icon/error/error-icon.png");
-};
 </script>
 
 <template>
@@ -76,12 +71,7 @@ const handleError = (event: Event): void => {
       />
 
       <div v-if="coverImageUrl" class="cover-preview">
-        <img
-          :src="coverImageUrl"
-          alt="Book Cover"
-          class="book-cover"
-          @error="handleError"
-        />
+        <img :src="coverImageUrl" alt="Book Cover" class="book-cover" />
         <img
           src="@/assets/icon/upload/trashcan_icon.png"
           alt="Remove Cover"

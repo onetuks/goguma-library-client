@@ -5,6 +5,7 @@ import { buildPageQuery, get, postFormData } from "@/api/ServerRequest";
 export interface BookIsbnGetResponse {
   title: string;
   authorName: string;
+  introduction: string;
   publisher: string;
   isbn: string;
   category: Category[];
@@ -27,6 +28,7 @@ export interface BookResponse {
 export interface BookPostRequest {
   title: string;
   authorName: string;
+  introduction: string | null;
   isbn: string | null;
   publisher: string | null;
   categories: Category[];
@@ -52,19 +54,22 @@ export interface Book {
 export const BookApis = {
   getBookWithIsbn: async (isbn: string): Promise<BookIsbnGetResponse> => {
     // ISBN 도서 정보 조회
-    return await get(`/books/isbn/${isbn}`).then(
-      (data) => data as BookIsbnGetResponse
-    );
+    return await get(`/books/isbn/${isbn}`)
+      .then((data) => data as BookIsbnGetResponse)
+      .catch((error) => {
+        throw error;
+      });
   },
   postNewBook: async (
     request: BookPostRequest,
     coverImage: File | null
   ): Promise<BookResponse> => {
     // 도서 등록
-    return await postFormData("/books", request, [
-      "cover-image",
-      coverImage,
-    ]).then((data) => data as BookResponse);
+    return await postFormData("/books", request, ["cover-image", coverImage])
+      .then((data) => data as BookResponse)
+      .catch((error) => {
+        throw error;
+      });
   },
   getBook: async (bookId: number): Promise<BookResponse> => {
     // 도서 단건 조회
@@ -101,7 +106,7 @@ export const mapBookIsbnGetResponseToBook = (
     bookId: null,
     title: bookIsbnGetResponse.title,
     authorName: bookIsbnGetResponse.authorName,
-    introduction: null,
+    introduction: bookIsbnGetResponse.introduction,
     isbn: bookIsbnGetResponse.isbn,
     publisher: bookIsbnGetResponse.publisher,
     categories: bookIsbnGetResponse.category,
@@ -120,6 +125,7 @@ export const mapBookToBookPostRequest = (
   return {
     title: book.title,
     authorName: book.authorName,
+    introduction: book.introduction,
     isbn: book.isbn,
     publisher: book.publisher,
     categories: book.categories,
