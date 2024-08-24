@@ -85,7 +85,7 @@ export const postWithAuthCode = async (
 export const postFormData = async (
   uri: string,
   requestBody: object,
-  ...fileEntries: [string, File?][]
+  ...fileEntries: [string, File | null][]
 ): Promise<object> => {
   const formData = new FormData();
   const jsonBlob = new Blob([JSON.stringify(requestBody)], {

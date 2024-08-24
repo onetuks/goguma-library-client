@@ -3,8 +3,6 @@ import PickButton from "@/components/button/PickButton.vue";
 import SubscribeButton from "@/components/button/SubscribeButton.vue";
 import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
 import CalendarIcon from "@/components/calendar/CalendarIcon.vue";
-import CalendarView from "@/components/calendar/CalendarView.vue";
-import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import BookFeedCard from "@/components/card/BookFeedCard.vue";
 import BookPickedCard from "@/components/card/BookPickedCard.vue";
 import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
@@ -14,9 +12,9 @@ import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
 import SortSelect from "@/components/select/SortSelect.vue";
 import ProfileImageSettingCard from "@/pages/my/setting/components/ProfileImageSettingView.vue";
-import { Book } from "@/types/Book";
 import { Review } from "@/types/Review";
 import { Member } from "@/api/MemberApis";
+import { Book } from "@/api/BookApis";
 
 const member: Member = {
   memberId: 1_000,
@@ -100,21 +98,18 @@ const review: Review = {
         <h3>캘린더 컴포넌트</h3>
         <div style="display: flex">
           <h5>캘린더 날짜 카드</h5>
-          <CalendarIcon day="1" type="notChecked" />
-          <CalendarIcon day="1" type="checked" />
-          <CalendarIcon day="1" type="todayChecked" />
-          <CalendarIcon day="1" type="todayNotChecked" />
-          <CalendarIcon day="1" type="notInMonth" />
-          <CalendarIcon day="1" type="weekday" />
+          <CalendarIcon day="1" type="DEFAULT" />
+          <CalendarIcon day="1" type="ATTENDED" />
+          <CalendarIcon day="1" type="TODAY_ATTENDED" />
+          <CalendarIcon day="1" type="TODAY_NOT_ATTENDED" />
+          <CalendarIcon day="1" type="NOT_THIS_MONTH" />
+          <CalendarIcon day="1" type="DATE" />
         </div>
-        <h3>캘린더 뷰</h3>
-        <CalendarView :month="8" :year="2024" />
       </div>
       <div>
         <h3>카드</h3>
         <div>
           <h5>도서 커버 업로드 카드</h5>
-          <BookCoverUploadCard />
           <h5>도서 피드 카드</h5>
           <BookFeedCard :book="book" :is-picked="true" />
           <h5>도서픽 카드</h5>

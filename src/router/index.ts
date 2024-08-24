@@ -6,8 +6,8 @@ import LoginPage from "@/pages/login/LoginPage.vue";
 import ProfileSettingPage from "@/pages/my/setting/ProfileSettingPage.vue";
 import ErrorPage from "@/pages/error/ErrorPage.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
-import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
 import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
+import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "고구마서재", component: SamplePage },
@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     component: MyProfilePage,
   },
   {
-    path: "/books/:bookId/registration",
+    path: "/books/registration",
     name: "도서등록",
     component: BookRegistrationPage,
   },
