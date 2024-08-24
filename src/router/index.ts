@@ -8,6 +8,7 @@ import ErrorPage from "@/pages/error/ErrorPage.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
 import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
 import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
+import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
 import PointPage from "@/pages/my/point/PointPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
