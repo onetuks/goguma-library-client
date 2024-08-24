@@ -1,5 +1,5 @@
 // ISBN 도서 정보 조회
-import { Category } from "@/types/Category";
+import { CategoryType } from "@/types/Category";
 import { get, postFormData } from "@/api/ServerRequest";
 import { buildPageQuery } from "@/types/Page";
 
@@ -9,7 +9,7 @@ export interface BookIsbnGetResponse {
   introduction: string;
   publisher: string;
   isbn: string;
-  category: Category[];
+  categories: CategoryType[];
   coverImageUrl: string;
 }
 
@@ -20,7 +20,7 @@ export interface BookResponse {
   introduction: string;
   isbn: string;
   publisher: string;
-  categories: Category[];
+  categories: CategoryType[];
   coverImageUrl: string;
   isIndie: boolean;
   isPermitted: boolean;
@@ -32,7 +32,7 @@ export interface BookPostRequest {
   introduction: string | null;
   isbn: string | null;
   publisher: string | null;
-  categories: Category[];
+  categories: CategoryType[];
   isIndie: boolean;
   coverImageFilename: string | null;
 }
@@ -44,7 +44,7 @@ export interface Book {
   introduction: string | null;
   isbn: string | null;
   publisher: string | null;
-  categories: Category[];
+  categories: CategoryType[];
   coverImageUrl: string;
   isIndie: boolean;
   isPermitted: boolean;
@@ -110,7 +110,7 @@ export const mapBookIsbnGetResponseToBook = (
     introduction: bookIsbnGetResponse.introduction,
     isbn: bookIsbnGetResponse.isbn,
     publisher: bookIsbnGetResponse.publisher,
-    categories: bookIsbnGetResponse.category,
+    categories: bookIsbnGetResponse.categories,
     coverImageUrl: bookIsbnGetResponse.coverImageUrl,
     isIndie: bookIsbnGetResponse.isbn.length === 13,
     isPermitted: false,
