@@ -131,7 +131,9 @@ export const mapBookToBookPostRequest = (
     publisher: book.publisher,
     categories: book.categories,
     isIndie: book.isIndie,
-    coverImageFilename: coverImageFilename,
+    coverImageFilename: book.coverImageUrl
+      ? book.coverImageUrl
+      : coverImageFilename,
   };
 };
 
