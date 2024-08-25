@@ -7,6 +7,12 @@ export interface BookPickResponse {
   bookId: number;
 }
 
+export interface BookPick {
+  bookPickId: number;
+  memberId: number;
+  bookId: number;
+}
+
 export const BookPickApis = {
   URI_PREFIX: "/books/picks",
   postNewBookPick: async (bookId: number): Promise<BookPickResponse> => {
@@ -24,11 +30,15 @@ export const BookPickApis = {
       `${BookPickApis.URI_PREFIX}/my-picks${buildPageQuery(page, size)}`
     ).then((data) => data as BookPickResponse[]);
   },
-  getMyBookPick: async (bookId: number): Promise<object | boolean> => {
+  getMyBookPick: async (bookId: number): Promise<BookPickResponse> => {
     // 북픽 여부 조회
-    return await get(`${BookPickApis.URI_PREFIX}?book-id=${bookId}`).then(
-      (data) => data
-    );
+    return await get(`${BookPickApis.URI_PREFIX}?book-id=${bookId}`)
+      .then((data) => {
+        return data as BookPickResponse;
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   deleteMyBookPick: async (bookPickId: number): Promise<void> => {
     // 북픽 취소
