@@ -1,28 +1,19 @@
 <script lang="ts" setup>
-import axios from "axios";
-
-interface Review {
-  memberId: number;
-  bookId: number;
-  reviewTitle: string;
-  reviewContent: string;
-}
+import { Book } from "@/api/BookApis";
 
 const props = defineProps<{
-  review: Review;
+  book: Book;
 }>();
 
-const registerReview = (): void => {
-  const response = axios.post(
-    "http://localhost:8080/api/reviews",
-    props.review
-  );
-  console.log(response);
+const moveToReviewRegistrationPage = () => {
+  console.log("moveToReviewRegistrationPage");
 };
 </script>
 
 <template>
-  <div class="registration-wrapper" @click="registerReview">서평쓰기</div>
+  <div class="registration-wrapper" @click="moveToReviewRegistrationPage">
+    서평쓰기
+  </div>
 </template>
 
 <style scoped>

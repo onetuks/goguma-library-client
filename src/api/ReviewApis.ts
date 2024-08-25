@@ -20,6 +20,17 @@ export interface ReviewResponse {
   updatedAt: Date;
 }
 
+export interface Review {
+  reviewId: number;
+  memberId: number;
+  bookId: number;
+  reviewTitle: string;
+  reviewContent: string;
+  pickCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export const ReviewApis = {
   URI_PREFIX: "/reviews",
   postNewReview: async (
