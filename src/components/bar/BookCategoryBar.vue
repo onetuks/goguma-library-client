@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import { CategoryMap, CategoryType } from "@/types/Category";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps<{
   categories: CategoryType[];
 }>();
 
 const categoryNames = ref<string[]>([]);
+
+watch(
+  () => props.categories,
+  () => {
+    fetchCategoryNames();
+  }
+);
 
 const fetchCategoryNames = () => {
   categoryNames.value = props.categories.map((categoryType: CategoryType) => {
@@ -21,8 +28,6 @@ const fetchCategoryNames = () => {
 const getCategoryNameText = (categoryNames: string[]) => {
   return categoryNames.join(", ");
 };
-
-fetchCategoryNames();
 </script>
 
 <template>
@@ -41,6 +46,8 @@ fetchCategoryNames();
 
 <style scoped>
 .book-detail-categories-container {
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 38px;
   padding: 0 15px;
@@ -50,6 +57,8 @@ fetchCategoryNames();
   display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: transparent;
+  box-sizing: border-box;
 }
 
 .book-detail-categories-image {
