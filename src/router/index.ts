@@ -10,6 +10,7 @@ import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
 import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
 import PointPage from "@/pages/my/point/PointPage.vue";
 import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
+import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "고구마서재", component: SamplePage },
@@ -34,19 +35,25 @@ const routes: Array<RouteRecordRaw> = [
     component: MyProfilePage,
   },
   {
-    path: "/books/registration",
-    name: "도서등록",
-    component: BookRegistrationPage,
-  },
-  {
     path: "/members/:memberId/points",
     name: "포인트 적립 내역",
     component: PointPage,
   },
   {
+    path: "/books/registration",
+    name: "도서등록",
+    component: BookRegistrationPage,
+  },
+  {
     path: "/books/:bookId/info",
     name: "도서 정보",
     component: BookInfoPage,
+  },
+  {
+    path: "/reviews/registration",
+    name: "서평 작성",
+    component: ReviewRegistrationPage,
+    props: (route) => ({ bookId: route.query["book-id"] }),
   },
 ];
 

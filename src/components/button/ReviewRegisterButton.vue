@@ -1,13 +1,18 @@
 <script lang="ts" setup>
 import { Book } from "@/api/BookApis";
+import router from "@/router";
 
 const props = defineProps<{
   book: Book;
 }>();
 
 const moveToReviewRegistrationPage = () => {
-  // todo : review registration page 로 이동
-  console.log("moveToReviewRegistrationPage");
+  router.push({
+    path: "/reviews/registration",
+    query: {
+      "book-id": props.book.bookId,
+    },
+  });
 };
 </script>
 
