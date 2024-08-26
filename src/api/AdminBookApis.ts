@@ -1,5 +1,5 @@
 import { BookResponse } from "@/api/BookApis";
-import { Category } from "@/types/Category";
+import { CategoryType } from "@/types/Category";
 import { get, patchFormData, remove } from "@/api/ServerRequest";
 import { buildPageQuery } from "@/types/Page";
 
@@ -9,7 +9,7 @@ export interface BookPatchRequest {
   introduction: string;
   isbn: string;
   publisher: string;
-  categories: Category[];
+  categories: CategoryType[];
   isIndie: boolean;
   isPermitted: boolean;
 }

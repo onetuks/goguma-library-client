@@ -28,7 +28,6 @@ const goBack = () => window.history.back();
 
 <style scoped>
 header {
-  margin: 20px 0;
   height: 50px;
   width: 100%;
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SubscribeButton from "@/components/button/SubscribeButton.vue";
-import PickButton from "@/components/button/PickButton.vue";
+import PickButton from "@/components/button/ReviewPickButton.vue";
 
 // 예제 데이터
 const props = {

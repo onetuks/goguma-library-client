@@ -1,4 +1,4 @@
-import { Category } from "@/types/Category";
+import { CategoryType } from "@/types/Category";
 import { get, patchFormData } from "@/api/ServerRequest";
 
 export interface Member {
@@ -6,7 +6,7 @@ export interface Member {
   nickname: string;
   introduction: string;
   instagramUrl: string;
-  interestedCategories: Category[];
+  interestedCategories: CategoryType[];
   isAlarmAccepted: boolean;
   points: number;
   profileImageUrl: string;
@@ -19,14 +19,14 @@ export interface MemberStatics {
   reviewCounts: number;
   followerCounts: number;
   followingCounts: number;
-  reviewCategoryCounts: [Category, number][];
+  reviewCategoryCounts: [CategoryType, number][];
 }
 
 export interface MemberPatchRequest {
   nickname: string;
   introduction?: string | null;
   instagramUrl?: string | null;
-  interestedCategories: Category[];
+  interestedCategories: CategoryType[];
   isAlarmAccepted: boolean;
   profileImageFilename: string | null;
   profileBackgroundImageFilename: string | null;
@@ -37,7 +37,7 @@ export interface MemberResponse {
   nickname: string;
   introduction: string;
   instagramUrl: string;
-  interestedCategories: Category[];
+  interestedCategories: CategoryType[];
   isAlarmAccepted: boolean;
   points: number;
   profileImageUrl: string;

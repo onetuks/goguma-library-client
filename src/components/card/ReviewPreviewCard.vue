@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Review } from "@/types/Review";
-import { Book } from "@/types/Book";
+import { Review } from "@/api/ReviewApis";
+import { Book } from "@/api/BookApis";
 
 defineProps<{
   review: Review;
@@ -16,7 +16,7 @@ defineProps<{
     <div class="info-container">
       <div class="title-author-container">
         <div class="title">{{ book.title }}</div>
-        <div class="author">{{ book.authorName }}</div>
+        <div class="author">|&nbsp;&nbsp;&nbsp;&nbsp;{{ book.authorName }}</div>
       </div>
       <div class="review-title">{{ review.reviewTitle }}</div>
       <div class="review-content">{{ review.reviewContent }}</div>
@@ -26,19 +26,20 @@ defineProps<{
 
 <style scoped>
 .review-preview {
-  width: 360px;
+  width: 100%;
   height: 140px;
   display: flex;
   align-items: center;
-  font-family: "NanumSquare", sans-serif;
   background-color: var(--surface-tertiary);
   border: 2px solid var(--border-primary);
   border-radius: 5px;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .image-container {
   width: 80px;
+  border-radius: 5px;
 }
 
 .book-cover {
@@ -49,53 +50,65 @@ defineProps<{
 }
 
 .info-container {
-  margin-left: 10px;
-  flex: 1;
+  padding: 0 10px;
+  width: calc(100% - 90px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .title-author-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 250px;
-  height: 20px;
-  margin-bottom: 5px;
+  width: 100%;
 }
 
 .title {
-  color: var(--text-fourth);
-  max-width: 70%;
+  flex-grow: 1;
+  flex-basis: 0;
+  flex-shrink: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 16px;
+  color: var(--text-fourth);
+  font-family: var(--font-family-bold), sans-serif;
+  font-size: 14px;
   font-weight: bold;
 }
 
 .author {
+  margin-left: 5px;
   color: var(--text-fourth);
   text-align: right;
-  width: 80px;
-  font-size: 14px;
-}
-
-.review-title {
-  display: flex;
-  width: 250px;
-  height: 16px;
-  color: var(--text-fourth);
-  margin-bottom: 5px;
-  font-size: 14px;
-}
-
-.review-content {
-  display: flex;
-  width: 250px;
-  height: 64px;
-  color: var(--text-fourth);
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex-grow: 1;
+  flex-basis: 0;
+  flex-shrink: 1;
+}
+
+.review-title {
+  width: 100%;
+  color: var(--text-primary);
+  font-family: var(--font-family-bold), sans-serif;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.review-content {
+  width: 100%;
+  color: var(--text-primary);
+  overflow: hidden;
   font-size: 12px;
+  flex-grow: 1;
+  flex-basis: 0;
+  flex-shrink: 1;
 }
 </style>

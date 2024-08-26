@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import { Categories, Category } from "@/types/Category";
+import { CategoryMap, CategoryType } from "@/types/Category";
 import { Member } from "@/api/MemberApis";
 
 const props = defineProps<{
@@ -17,13 +17,13 @@ watch(localMember, (newMember) => {
   emits("update:Member", newMember);
 });
 
-const isSelectable = (category: Category): boolean => {
+const isSelectable = (category: CategoryType): boolean => {
   const isUnderLimit = localMember.value.interestedCategories.length < 3;
   const isSelected = localMember.value.interestedCategories.includes(category);
   return isUnderLimit || isSelected;
 };
 
-const toggleCategorySelection = (category: Category) => {
+const toggleCategorySelection = (category: CategoryType) => {
   const isSelected = localMember.value.interestedCategories.includes(category);
   if (!isSelected) {
     pushCategory();
@@ -96,19 +96,19 @@ const toggleCategorySelection = (category: Category) => {
       </div>
       <div class="category-container">
         <label
-          v-for="(category, index) in Categories"
+          v-for="([categoryType, categoryName], index) in CategoryMap.entries()"
           :key="index"
           class="checkbox-label"
         >
           <input
             type="checkbox"
-            :value="category.key"
-            :checked="localMember.interestedCategories.includes(category.key)"
-            :disabled="!isSelectable(category.key)"
-            @click="toggleCategorySelection(category.key)"
+            :value="categoryType"
+            :checked="localMember.interestedCategories.includes(categoryType)"
+            :disabled="!isSelectable(categoryType)"
+            @click="toggleCategorySelection(categoryType)"
           />
           <span class="custom-checkbox"></span>
-          <span class="custom-checkbox-label">{{ category.value }}</span>
+          <span class="custom-checkbox-label">{{ categoryName }}</span>
         </label>
       </div>
     </div>

@@ -3,7 +3,13 @@ import { isSameMonth, isToday } from "date-fns";
 import CalendarIcon, {
   CalendarIconType,
 } from "@/components/calendar/CalendarIcon.vue";
-import { Day, WEEKDAYS } from "@/types/Calendar";
+
+export interface Day {
+  date: Date;
+  attended: boolean;
+}
+
+const WEEKDAYS: string[] = ["일", "월", "화", "수", "목", "금", "토"];
 
 const props = defineProps<{
   days: Day[];
@@ -24,15 +30,15 @@ const getDayType = (day: Day): CalendarIconType => {
   return day.attended ? "ATTENDED" : "DEFAULT";
 };
 
-const getGridRows = () => {
+function getGridRows() {
   return props.days.length / 7;
-};
+}
 </script>
 
 <template>
   <div
     class="calendar"
-    :style="{ gridTemplateRows: `46px repeat(${getGridRows()}, 46px)` }"
+    :style="{ gridTemplateRows: `46px repeat(${getGridRows}, 46px)` }"
   >
     <!-- 요일 헤더 -->
     <div class="weekdays">

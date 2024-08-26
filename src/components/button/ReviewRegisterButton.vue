@@ -1,28 +1,25 @@
 <script lang="ts" setup>
-import axios from "axios";
-
-interface Review {
-  memberId: number;
-  bookId: number;
-  reviewTitle: string;
-  reviewContent: string;
-}
+import { Book } from "@/api/BookApis";
+import router from "@/router";
 
 const props = defineProps<{
-  review: Review;
+  book: Book;
 }>();
 
-const registerReview = (): void => {
-  const response = axios.post(
-    "http://localhost:8080/api/reviews",
-    props.review
-  );
-  console.log(response);
+const moveToReviewRegistrationPage = () => {
+  router.push({
+    path: "/reviews/registration",
+    query: {
+      "book-id": props.book.bookId,
+    },
+  });
 };
 </script>
 
 <template>
-  <div class="registration-wrapper" @click="registerReview">서평쓰기</div>
+  <div class="registration-wrapper" @click="moveToReviewRegistrationPage">
+    서평쓰기
+  </div>
 </template>
 
 <style scoped>
@@ -36,5 +33,14 @@ const registerReview = (): void => {
   border-radius: 10px;
   color: var(--black);
   background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.registration-wrapper:hover {
+  background-color: var(--surface-sixth);
+}
+
+.registration-wrapper:active {
+  background-color: var(--surface-sixth);
 }
 </style>
