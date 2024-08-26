@@ -1,4 +1,3 @@
-// ISBN 도서 정보 조회
 import { CategoryType } from "@/types/Category";
 import { get, postFormData } from "@/api/ServerRequest";
 import { buildPageQuery } from "@/types/Page";
@@ -24,6 +23,8 @@ export interface BookResponse {
   coverImageUrl: string;
   isIndie: boolean;
   isPermitted: boolean;
+  pickCount: number;
+  createdAt: Date;
 }
 
 export interface BookPostRequest {
