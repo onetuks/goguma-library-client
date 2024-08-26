@@ -6,6 +6,7 @@ const props = defineProps<{
 }>();
 
 const moveToReviewRegistrationPage = () => {
+  // todo : review registration page 로 이동
   console.log("moveToReviewRegistrationPage");
 };
 </script>
@@ -27,5 +28,14 @@ const moveToReviewRegistrationPage = () => {
   border-radius: 10px;
   color: var(--black);
   background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.registration-wrapper:hover {
+  background-color: var(--surface-sixth);
+}
+
+.registration-wrapper:active {
+  background-color: var(--surface-sixth);
 }
 </style>
