@@ -9,16 +9,11 @@ import {
 } from "date-fns";
 import { onBeforeMount, ref } from "vue";
 import { AttendanceApis, AttendanceResponse } from "@/api/AttendanceApis";
-import { Day } from "@/types/Calendar";
 import CalendarTitleView from "@/components/calendar/CalendarTitleView.vue";
-import CalendarView from "@/components/calendar/CalendarView.vue";
+import CalendarView, { Day } from "@/components/calendar/CalendarView.vue";
 import CalendarInfoView from "@/components/calendar/CalendarInfoView.vue";
+import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
-
-interface ModalInfo {
-  visible: boolean;
-  message: string;
-}
 
 const TODAY = new Date();
 
@@ -33,10 +28,7 @@ onBeforeMount(() => {
 
 const days = ref<Day[]>([]);
 const attendanceCounts = ref<number>(0);
-const modalInfo = ref<ModalInfo>({
-  visible: false,
-  message: "",
-});
+const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
 
 const generateCalendar = (): void => {
   const startDay: Date = startOfWeek(
@@ -55,10 +47,7 @@ const generateCalendar = (): void => {
 };
 
 const closeModal = (): void => {
-  modalInfo.value = {
-    visible: false,
-    message: "",
-  };
+  confirmModalInfo.value = initModalInfo();
 };
 
 const updateAttendances = (): void => {
@@ -82,17 +71,19 @@ const attendToday = async (): Promise<void> => {
       if (targetDay) {
         targetDay.attended = true;
         attendanceCounts.value += 1;
-        modalInfo.value = {
+        confirmModalInfo.value = {
           visible: true,
           message: "출석완료!\n1P 적립",
+          buttonText: "확인",
         };
       }
     })
     .catch((error) => {
       if (error.code == "G010") {
-        modalInfo.value = {
+        confirmModalInfo.value = {
           visible: true,
           message: "출석체크는 매일 1회 참여할 수 있습니다",
+          buttonText: "확인",
         };
       }
     });
@@ -111,9 +102,7 @@ const getTargetDay = (attendance: AttendanceResponse): Day | undefined => {
     <div class="attendance-button" @click="attendToday">출석하기</div>
     <CalendarInfoView />
     <ConfirmModal
-      button-text="확인"
-      :visible="modalInfo.visible"
-      :message="modalInfo.message"
+      :confirm-modal-info="confirmModalInfo"
       @modal:Close="closeModal"
     />
   </div>

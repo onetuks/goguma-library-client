@@ -13,20 +13,9 @@ import BookRegistrationPublisherView from "@/pages/book/registration/components/
 import BookRegistrationNoticeView from "@/pages/book/registration/components/BookRegistrationNoticeView.vue";
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import router from "@/router";
-import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ApiError } from "@/api/ServerRequest";
-
-interface ModalInfo {
-  visible: boolean;
-  message: string;
-  buttonText: string;
-}
-
-const initModalInfo = (): ModalInfo => ({
-  visible: false,
-  message: "",
-  buttonText: "",
-});
+import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 type BookRegistrationImpossibleType =
   | "NOT_ENOUGH_INFOS"
@@ -37,14 +26,19 @@ const book = ref<Book>(initBook());
 const coverImageFile = ref<File | null>(null);
 const coverImageFilename = ref<string | null>(null);
 
-const modalInfo = ref<ModalInfo>(initModalInfo());
+const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
 
 const closeModal = () => {
-  modalInfo.value = initModalInfo();
+  confirmModalInfo.value = initModalInfo();
 };
 
 const updateBook = (updatedBook: Book): void => {
   book.value = { ...updatedBook };
+
+  if (book.value.coverImageUrl) {
+    coverImageFile.value = null;
+    coverImageFilename.value = null;
+  }
 };
 
 const updateCoverImageFile = (file: File | null): void => {
@@ -88,13 +82,19 @@ const getImpossibleMessage = (type: BookRegistrationImpossibleType): string => {
 const registerBook = async () => {
   const impossibleType = getBookRegistrationImpossibleType();
   if (impossibleType) {
-    modalInfo.value = {
+    confirmModalInfo.value = {
       visible: true,
       message: getImpossibleMessage(impossibleType),
       buttonText: "확인",
     };
     return;
   }
+
+  /* 도서 이미지 등록
+  1. 중앙도서관 이미지 -> file : X, url: O
+  2. 기본이미지 -> file: X, url: X
+  3. 커스텀 이미지 -> file: O, url: O
+   */
 
   await BookApis.postNewBook(
     mapBookToBookPostRequest(book.value, coverImageFilename.value),
@@ -113,7 +113,7 @@ const handleBookRegistrationError = (error: ApiError): void => {
     error.code === "G010"
       ? "이미 등록된 도서입니다"
       : "도서 등록 중 오류가 발생했습니다";
-  modalInfo.value = {
+  confirmModalInfo.value = {
     visible: true,
     message,
     buttonText: "확인",
@@ -121,7 +121,7 @@ const handleBookRegistrationError = (error: ApiError): void => {
 };
 
 const handleIsbnSearchError = (message: string): void => {
-  modalInfo.value = {
+  confirmModalInfo.value = {
     visible: true,
     message,
     buttonText: "확인",
@@ -149,9 +149,7 @@ const handleIsbnSearchError = (message: string): void => {
       도서 등록하기
     </button>
     <ConfirmModal
-      :button-text="modalInfo.buttonText"
-      :visible="modalInfo.visible"
-      :message="modalInfo.message"
+      :confirm-modal-info="confirmModalInfo"
       @modal:Close="closeModal"
     />
   </div>

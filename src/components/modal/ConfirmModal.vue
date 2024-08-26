@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { ConfirmModalInfo } from "@/types/Modal";
+
 defineProps<{
-  visible: boolean;
-  message: string;
-  buttonText: string;
+  confirmModalInfo: ConfirmModalInfo;
 }>();
 
 const emits = defineEmits<{
@@ -16,11 +16,11 @@ const confirm = () => {
 
 <template>
   <transition name="modal-fade">
-    <div v-if="visible" class="checkout-modal-overlay">
+    <div v-if="confirmModalInfo.visible" class="checkout-modal-overlay">
       <div class="checkout-modal-wrapper">
-        <div class="checkout-modal-message">{{ message }}</div>
+        <div class="checkout-modal-message">{{ confirmModalInfo.message }}</div>
         <div class="checkout-modal-button" @click="confirm">
-          {{ buttonText }}
+          {{ confirmModalInfo.buttonText }}
         </div>
       </div>
     </div>
@@ -62,6 +62,15 @@ const confirm = () => {
   border-radius: 15px;
   padding: 16px 120px;
   font-family: var(--font-family-bold), sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-modal-button:hover {
+  background-color: var(--surface-fourth);
+}
+
+.checkout-modal-button:active {
+  background-color: var(--button-fourth);
 }
 
 .modal-fade-enter-active,
