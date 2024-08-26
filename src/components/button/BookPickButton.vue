@@ -61,6 +61,11 @@ button {
   border: none;
   cursor: pointer;
   margin-right: 5px;
+  transition: transform 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.8);
 }
 
 .heart-icon {
