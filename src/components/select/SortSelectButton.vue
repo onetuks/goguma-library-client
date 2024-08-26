@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SortType } from "@/types/SortType";
+import { SortType, SortTypes } from "@/types/SortType";
 import { onBeforeMount } from "vue";
 
 const props = withDefaults(
@@ -13,13 +13,6 @@ const props = withDefaults(
 );
 
 onBeforeMount(() => getDirectionImage());
-
-const getSortTypeText = (): string => {
-  if (props.sortType === "LATEST") {
-    return "최신순";
-  }
-  return "추천순";
-};
 
 const getDirectionImage = () => {
   switch (props.index) {
@@ -35,7 +28,7 @@ const getDirectionImage = () => {
 
 <template>
   <div class="sort-button">
-    <div class="sort-button-text-content">{{ getSortTypeText() }}</div>
+    <div class="sort-button-text-content">{{ SortTypes.get(sortType) }}</div>
     <div class="sort-button-image-content">
       <img
         :src="getDirectionImage()"
@@ -52,12 +45,14 @@ const getDirectionImage = () => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: var(--background-primary);
 }
 
 .sort-button-text-content {
   width: 55px;
   height: 100%;
   text-align: right;
+  font-size: 11px;
 }
 
 .sort-button-image-content {
