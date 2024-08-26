@@ -17,7 +17,7 @@ export interface PointHistoryResponse {
   createdAt: Date;
 }
 
-export interface PointHistoryResponses {
+interface PointHistoryResponses {
   responses: Page<PointHistoryResponse>;
 }
 

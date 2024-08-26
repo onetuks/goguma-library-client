@@ -1,6 +1,6 @@
-import { get, patch, post, remove } from "@/api/ServerRequest";
+import { arrayToDate, get, patch, post, remove } from "@/api/ServerRequest";
 import { SortBy } from "@/types/SortBy";
-import { buildPageQuery } from "@/types/Page";
+import { buildPageQuery, Page } from "@/types/Page";
 
 export interface ReviewRequest {
   reviewTitle: string;
@@ -29,6 +29,10 @@ export interface Review {
   pickCount: number;
   createdAt: Date;
   updatedAt: Date;
+}
+
+interface ReviewResponses {
+  responses: Page<ReviewResponse>;
 }
 
 export const ReviewApis = {
@@ -70,21 +74,37 @@ export const ReviewApis = {
     // 서평 단건 조회 (서평 피드)
     return await get(
       `${ReviewApis.URI_PREFIX}?sort=${sort}${buildPageQuery(page, size)}`
-    ).then((data) => data as ReviewResponse[]);
+    )
+      .then((data) => data as ReviewResponse[])
+      .catch((error) => {
+        throw error;
+      });
   },
   getReviewsOfBook: async (
     bookId: number,
     sort: SortBy,
     page?: number,
     size?: number
-  ): Promise<ReviewResponse[]> => {
+  ): Promise<Page<ReviewResponse>> => {
     // 도서 서평 다건 조회
     return await get(
       `${ReviewApis.URI_PREFIX}/book/${bookId}?sort=${sort}${buildPageQuery(
         page,
         size
       )}`
-    ).then((data) => data as ReviewResponse[]);
+    )
+      .then((response) => {
+        const typedResponse = response as ReviewResponses;
+        const responses = typedResponse.responses as Page<ReviewResponse>;
+        responses.content.forEach((item) => {
+          item.createdAt = arrayToDate(item.createdAt);
+          item.updatedAt = arrayToDate(item.updatedAt);
+        });
+        return responses;
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   getReviewsOfMember: async (
     memberId: number,
