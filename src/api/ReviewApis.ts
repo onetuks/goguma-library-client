@@ -1,10 +1,23 @@
 import { arrayToDate, get, patch, post, remove } from "@/api/ServerRequest";
-import { SortBy } from "@/types/SortBy";
 import { buildPageQuery, Page } from "@/types/Page";
+import { SortType } from "@/types/SortType";
 
-export interface ReviewRequest {
+export interface Review {
+  reviewId: number;
+  memberId: number;
+  nickname: string;
+  bookId: number;
+  bookTitle: string;
   reviewTitle: string;
   reviewContent: string;
+  pickCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ReviewRequest {
+  reviewTitle: string | null;
+  reviewContent: string | null;
 }
 
 export interface ReviewResponse {
@@ -67,7 +80,7 @@ export const ReviewApis = {
     );
   },
   getReviews: async (
-    sort: SortBy,
+    sort: SortType,
     page?: number,
     size?: number
   ): Promise<ReviewResponse[]> => {
@@ -82,7 +95,7 @@ export const ReviewApis = {
   },
   getReviewsOfBook: async (
     bookId: number,
-    sort: SortBy,
+    sort: SortType,
     page?: number,
     size?: number
   ): Promise<Page<ReviewResponse>> => {
@@ -125,4 +138,11 @@ export const ReviewApis = {
       `${ReviewApis.URI_PREFIX}/recommend${buildPageQuery(page, size)}`
     ).then((data) => data as ReviewResponse[]);
   },
+};
+
+export const initReviewRequest = (): ReviewRequest => {
+  return {
+    reviewTitle: null,
+    reviewContent: null,
+  };
 };
