@@ -9,6 +9,7 @@ import WarningPage from "@/pages/error/WarningPage.vue";
 import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
 import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
 import PointPage from "@/pages/my/point/PointPage.vue";
+import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "고구마서재", component: SamplePage },
@@ -41,6 +42,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/members/:memberId/points",
     name: "포인트 적립 내역",
     component: PointPage,
+  },
+  {
+    path: "/books/:bookId/info",
+    name: "도서 정보",
+    component: BookInfoPage,
   },
 ];
 
