@@ -11,12 +11,16 @@ import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage
 import PointPage from "@/pages/my/point/PointPage.vue";
 import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
+<<<<<<< HEAD
 import PickedReviewsListPage from "@/pages/review/list/PickedReviewsListPage.vue";
 import MyReviewsListPage from "@/pages/review/list/MyReviewsListPage.vue";
 import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
 import BookReviewsListPage from "@/pages/review/list/BookReviewsListPage.vue";
 import FollowerListPage from "@/pages/my/follow/FollowerListPage.vue";
 import FollowingListPage from "@/pages/my/follow/FollowingListPage.vue";
+=======
+import FeedPage from "@/pages/review/feed/FeedPage.vue";
+>>>>>>> b4fd49f (Feat: 서평 피드 페이지 조언 주석 추가)
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -81,6 +85,7 @@ const routes: Array<RouteRecordRaw> = [
     props: (route) => ({ bookId: route.query["book-id"] }),
   },
   {
+<<<<<<< HEAD
     path: "/reviews/my",
     name: "나의 서평",
     component: MyReviewsListPage,
@@ -100,6 +105,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/reviews/:reviewId",
     name: "서평",
     component: ReviewDetailPage,
+=======
+    path: "/reviews/feeds",
+    name: "서평 피드",
+    component: FeedPage,
+>>>>>>> b4fd49f (Feat: 서평 피드 페이지 조언 주석 추가)
   },
 ];
 
