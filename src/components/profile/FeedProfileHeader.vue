@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SubscribeButton from "@/components/button/SubscribeButton.vue";
+import SubscribeButton from "@/components/button/FollowButton.vue";
 import PickButton from "@/components/button/ReviewPickButton.vue";
 
 // 예제 데이터
@@ -21,7 +21,7 @@ const props = {
     />
     <div class="profile-info">
       <span class="username">{{ props.username }}</span>
-      <SubscribeButton :isSubscribed="props.isSubscribed" />
+      <SubscribeButton :isFollowed="props.isSubscribed" />
     </div>
     <PickButton
       :pickCount="props.pickCount"
