@@ -123,11 +123,18 @@ export const ReviewApis = {
     memberId: number,
     page?: number,
     size?: number
-  ): Promise<ReviewResponse[]> => {
+  ): Promise<Page<ReviewResponse>> => {
     // 멤버 서평 다건 조회
     return await get(
       `${ReviewApis.URI_PREFIX}/member/${memberId}${buildPageQuery(page, size)}`
-    ).then((data) => data as ReviewResponse[]);
+    )
+      .then((response) => {
+        const typedResponse = response as ReviewResponses;
+        return typedResponse.responses as Page<ReviewResponse>;
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   getRecommendedReviews: async (
     page?: number,
