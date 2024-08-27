@@ -8,10 +8,7 @@ import { ref } from "vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import { emptyPage, Page } from "@/types/Page";
-import { useRoute } from "vue-router";
 import { LOGIN_ID } from "@/types/AuthWords";
-
-const route = useRoute();
 
 const sortType = ref<SortType>("LATEST");
 const reviews = ref<Page<Review>>(emptyPage());
