@@ -13,6 +13,7 @@ import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
 import PickedReviewsListPage from "@/pages/review/list/PickedReviewsListPage.vue";
 import MyReviewsListPage from "@/pages/review/list/MyReviewsListPage.vue";
+import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -76,6 +77,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/reviews/pick",
     name: "서평 Pick",
     component: PickedReviewsListPage,
+  },
+  {
+    path: "/reviews/:reviewId",
+    name: "서평",
+    component: ReviewDetailPage,
   },
 ];
 

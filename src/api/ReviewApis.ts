@@ -75,9 +75,16 @@ export const ReviewApis = {
   },
   getReview: async (reviewId: number): Promise<ReviewResponse> => {
     // 서평 단건 조회
-    return await get(`${ReviewApis.URI_PREFIX}/${reviewId}`).then(
-      (data) => data as ReviewResponse
-    );
+    return await get(`${ReviewApis.URI_PREFIX}/${reviewId}`)
+      .then((response) => {
+        const data = response as ReviewResponse;
+        data.createdAt = arrayToDate(data.createdAt);
+        data.updatedAt = arrayToDate(data.updatedAt);
+        return data;
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   getReviews: async (
     sort: SortType,
