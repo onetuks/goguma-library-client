@@ -172,7 +172,7 @@ const handleIsbnSearchError = (message: string): void => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 40px 30px;
+  margin: 40px 30px 0px 30px;
   width: auto;
   height: 50px;
   border: 2px solid var(--button-secondary);

@@ -89,8 +89,9 @@ fetchReviewsOfBook();
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   padding: 15px 0;
   box-sizing: border-box;
 }
@@ -101,7 +102,6 @@ fetchReviewsOfBook();
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   background-color: var(--surface-fifth);
   border: 1px solid var(--border-primary);
   border-radius: 5px;

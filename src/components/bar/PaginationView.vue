@@ -71,7 +71,6 @@ fetchPageInfo();
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-bottom: 25px;
   box-sizing: border-box;
   font-family: var(--font-family-regular), sans-serif;
   font-size: 14px;
