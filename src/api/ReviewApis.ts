@@ -83,12 +83,20 @@ export const ReviewApis = {
     sort: SortType,
     page?: number,
     size?: number
-  ): Promise<ReviewResponse[]> => {
+  ): Promise<Page<ReviewResponse>> => {
     // 서평 단건 조회 (서평 피드)
     return await get(
       `${ReviewApis.URI_PREFIX}?sort=${sort}${buildPageQuery(page, size)}`
     )
-      .then((data) => data as ReviewResponse[])
+      .then((response) => {
+        const typedResponse = response as ReviewResponses;
+        const responses = typedResponse.responses as Page<ReviewResponse>;
+        responses.content.forEach((item) => {
+          item.createdAt = arrayToDate(item.createdAt);
+          item.updatedAt = arrayToDate(item.updatedAt);
+        });
+        return responses;
+      })
       .catch((error) => {
         throw error;
       });

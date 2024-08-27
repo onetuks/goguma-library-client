@@ -11,6 +11,7 @@ import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage
 import PointPage from "@/pages/my/point/PointPage.vue";
 import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
+import FeedPage from "@/pages/review/feed/FeedPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "고구마서재", component: SamplePage },
@@ -54,6 +55,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "서평 작성",
     component: ReviewRegistrationPage,
     props: (route) => ({ bookId: route.query["book-id"] }),
+  },
+  {
+    path: "/reviews/feeds",
+    name: "서평 피드",
+    component: FeedPage,
   },
 ];
 

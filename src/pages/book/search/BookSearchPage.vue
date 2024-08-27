@@ -50,7 +50,7 @@ onMounted(() => {
         @input="searchBooks"
       />
       <img
-        src="@/assets/icon/search/search_icon.png"
+        src="../../../assets/icon/search/search_icon.png"
         alt="Search Icon"
         class="search-icon"
       />
