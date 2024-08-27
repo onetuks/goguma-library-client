@@ -5,6 +5,7 @@ import { SortType } from "@/types/SortType";
 import { ref, watch } from "vue";
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
+import router from "@/router";
 
 const props = defineProps<{
   book: Book;
@@ -26,8 +27,12 @@ const selectSortType = (sortType: SortType): void => {
 };
 
 const moveToReviewListPage = (): void => {
-  // todo : review list page로 이동
-  console.log("moveToReviewListPAge");
+  router.push({
+    path: "/reviews",
+    query: {
+      bookId: props.book.bookId,
+    },
+  });
 };
 
 const fetchReviewsOfBook = async () => {

@@ -1,5 +1,5 @@
 import { arrayToDate, get, patch, post, remove } from "@/api/ServerRequest";
-import { buildPageQuery, Page } from "@/types/Page";
+import { buildPageQuery, buildPageQueryWithSort, Page } from "@/types/Page";
 import { SortType } from "@/types/SortType";
 
 export interface Review {
@@ -108,7 +108,8 @@ export const ReviewApis = {
   ): Promise<Page<ReviewResponse>> => {
     // 도서 서평 다건 조회
     return await get(
-      `${ReviewApis.URI_PREFIX}/book/${bookId}?sort=${sort}${buildPageQuery(
+      `${ReviewApis.URI_PREFIX}/book/${bookId}${buildPageQueryWithSort(
+        sort,
         page,
         size
       )}`
@@ -128,12 +129,17 @@ export const ReviewApis = {
   },
   getReviewsOfMember: async (
     memberId: number,
+    sort: SortType,
     page?: number,
     size?: number
   ): Promise<Page<ReviewResponse>> => {
     // 멤버 서평 다건 조회
     return await get(
-      `${ReviewApis.URI_PREFIX}/member/${memberId}${buildPageQuery(page, size)}`
+      `${ReviewApis.URI_PREFIX}/member/${memberId}${buildPageQueryWithSort(
+        sort,
+        page,
+        size
+      )}`
     )
       .then((response) => {
         const typedResponse = response as ReviewResponses;

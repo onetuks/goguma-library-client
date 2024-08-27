@@ -1,3 +1,5 @@
+import { SortType } from "@/types/SortType";
+
 export const PAGE_LIMIT = 5;
 
 export interface Page<T> {
@@ -63,6 +65,20 @@ export const emptyPage = <T>(): Page<T> => {
 export const buildPageQuery = (page?: number, size?: number): string => {
   let query = "";
   query += page || size ? "?" : "";
+  query += page ? `page=${page - 1}` : "";
+  query += page && size ? "&" : "";
+  query += size ? `size=${size}` : "";
+  return query;
+};
+
+export const buildPageQueryWithSort = (
+  sort: SortType,
+  page?: number,
+  size?: number
+): string => {
+  let query = "?";
+  query += `sort=${sort}`;
+  query += page || size ? "&" : "";
   query += page ? `page=${page - 1}` : "";
   query += page && size ? "&" : "";
   query += size ? `size=${size}` : "";

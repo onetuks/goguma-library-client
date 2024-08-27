@@ -14,6 +14,7 @@ import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrati
 import PickedReviewsListPage from "@/pages/review/list/PickedReviewsListPage.vue";
 import MyReviewsListPage from "@/pages/review/list/MyReviewsListPage.vue";
 import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
+import BookReviewsListPage from "@/pages/review/list/BookReviewsListPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -76,6 +77,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/reviews/picks",
     name: "서평 Pick",
     component: PickedReviewsListPage,
+  },
+  {
+    path: "/reviews",
+    name: "도서 서평",
+    component: BookReviewsListPage,
+    props: (route) => ({ bookId: route.query["book-id"] }),
   },
   {
     path: "/reviews/:reviewId",
