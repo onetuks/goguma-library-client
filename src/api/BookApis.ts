@@ -14,6 +14,7 @@ export interface BookIsbnGetResponse {
 
 export interface BookResponse {
   bookId: number;
+  memberId: number;
   title: string;
   authorName: string;
   introduction: string;
@@ -40,6 +41,7 @@ export interface BookPostRequest {
 
 export interface Book {
   bookId: number | null;
+  memberId: number | null;
   title: string;
   authorName: string;
   introduction: string | null;
@@ -75,7 +77,11 @@ export const BookApis = {
   },
   getBook: async (bookId: number): Promise<BookResponse> => {
     // 도서 단건 조회
-    return await get(`/books/${bookId}`).then((data) => data as BookResponse);
+    return await get(`/books/${bookId}`)
+      .then((data) => data as BookResponse)
+      .catch((error) => {
+        throw error;
+      });
   },
   getBooksWithKeyword: async (
     keyword: string,
@@ -106,6 +112,7 @@ export const mapBookIsbnGetResponseToBook = (
 ): Book => {
   return {
     bookId: null,
+    memberId: null,
     title: bookIsbnGetResponse.title,
     authorName: bookIsbnGetResponse.authorName,
     introduction: bookIsbnGetResponse.introduction,
@@ -141,6 +148,7 @@ export const mapBookToBookPostRequest = (
 export const initBook = (): Book => {
   return {
     bookId: null,
+    memberId: null,
     title: "",
     authorName: "",
     introduction: null,
