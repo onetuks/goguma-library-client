@@ -17,7 +17,7 @@ export const BookPickApis = {
   URI_PREFIX: "/books/picks",
   postNewBookPick: async (bookId: number): Promise<BookPickResponse> => {
     // 북픽 등록
-    return await post(`${BookPickApis.URI_PREFIX}?book-id=${bookId}`)
+    return await post(`/books/${bookId}/picks`)
       .then((data) => data as BookPickResponse)
       .catch((error) => {
         throw error;
@@ -34,7 +34,7 @@ export const BookPickApis = {
   },
   getMyBookPick: async (bookId: number): Promise<BookPickResponse> => {
     // 북픽 여부 조회
-    return await get(`${BookPickApis.URI_PREFIX}?book-id=${bookId}`)
+    return await get(`/books/${bookId}/picks`)
       .then((data) => {
         return data as BookPickResponse;
       })

@@ -21,9 +21,9 @@ export const ReviewPickApis = {
   URI_PREFIX: "/reviews/picks",
   postNewReviewPick: async (reviewId: number): Promise<ReviewPickResponse> => {
     // 서평픽 등록
-    return await post(
-      `${ReviewPickApis.URI_PREFIX}?review-id=${reviewId}`
-    ).then((data) => data as ReviewPickResponse);
+    return await post(`/reviews/${reviewId}/picks`).then(
+      (data) => data as ReviewPickResponse
+    );
   },
   deleteReviewPick: async (reviewPickId: number): Promise<void> => {
     // 서평픽 취소
@@ -45,10 +45,19 @@ export const ReviewPickApis = {
         throw error;
       });
   },
-  getMyReviewPick: async (reviewId: number): Promise<object | boolean> => {
+  getMyReviewPick: async (reviewId: number): Promise<ReviewPickResponse> => {
     // 서평픽 여부 조회
-    return await get(`${ReviewPickApis.URI_PREFIX}?review-id=${reviewId}`).then(
-      (data) => data
-    );
+    return await get(`/reviews/${reviewId}/picks`)
+      .then((data) => data as ReviewPickResponse)
+      .catch((error) => {
+        throw error;
+      });
+  },
+  getMyReviewPickCount: async (reviewId: number): Promise<number> => {
+    return await get(`/reviews/${reviewId}/picks/count`)
+      .then((response) => Number(response))
+      .catch((error) => {
+        throw error;
+      });
   },
 };
