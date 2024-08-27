@@ -37,7 +37,7 @@ export const emptyPage = <T>(): Page<T> => {
     last: true,
     number: 1,
     numberOfElements: 0,
-    size: 0,
+    size: 5,
     sort: {
       empty: true,
       unsorted: true,
