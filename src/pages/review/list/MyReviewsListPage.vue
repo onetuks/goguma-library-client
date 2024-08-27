@@ -9,6 +9,7 @@ import { Book, BookApis } from "@/api/BookApis";
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import { emptyPage, Page } from "@/types/Page";
 import { useRoute } from "vue-router";
+import { LOGIN_ID } from "@/types/AuthWords";
 
 const route = useRoute();
 
@@ -30,7 +31,7 @@ const fetchBook = async (bookId: number): Promise<Book> => {
 };
 
 const fetchReviews = async (): Promise<void> => {
-  const memberId = Number(route.query["member-id"]);
+  const memberId = Number(localStorage.getItem(LOGIN_ID));
   await ReviewApis.getReviewsOfMember(
     memberId,
     reviews.value.number,

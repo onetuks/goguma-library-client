@@ -12,6 +12,8 @@ import { useRoute } from "vue-router";
 import router from "@/router";
 import ProfileInfoSettingView from "@/pages/my/setting/components/ProfileInfoSettingView.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import { IS_NEW_MEMBER } from "@/types/AuthWords";
 
 const route = useRoute();
 
@@ -23,10 +25,14 @@ const profileImageFile = ref<File | null>(null);
 const profileBackgroundImageFilename = ref<string | null>(null);
 const profileBackgroundImageFile = ref<File | null>(null);
 
-const isModalVisible = ref<boolean>(false);
+const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
 
 const closeModal = () => {
-  isModalVisible.value = false;
+  confirmModalInfo.value = {
+    visible: false,
+    message: "",
+    buttonText: "",
+  };
 };
 
 const fetchMemberProfile = async () => {
@@ -73,7 +79,11 @@ const notEnoughInfo = () => {
 
 const submitForm = async () => {
   if (notEnoughInfo()) {
-    isModalVisible.value = true;
+    confirmModalInfo.value = {
+      visible: true,
+      message: "정보를 모두 입력해주세요",
+      buttonText: "확인",
+    };
     return;
   }
 
@@ -92,7 +102,10 @@ const submitForm = async () => {
     memberPatchRequest,
     profileImageFile.value,
     profileBackgroundImageFile.value
-  ).then(() => router.push("/"));
+  ).then(() => {
+    localStorage.setItem(IS_NEW_MEMBER, "false");
+    router.push("/");
+  });
 };
 
 fetchMemberProfile();
@@ -115,9 +128,7 @@ fetchMemberProfile();
     />
     <button @click="submitForm" class="submit-button">가입하기</button>
     <ConfirmModal
-      :visible="isModalVisible"
-      message="정보를 모두 입력해주세요"
-      button-text="확인"
+      :confirm-modal-info="confirmModalInfo"
       @modal:Close="closeModal"
     />
   </div>
@@ -131,7 +142,7 @@ fetchMemberProfile();
 }
 
 .submit-button {
-  margin: 11px 30px 0 30px;
+  margin: 11px 30px 11px 30px;
   padding: 15px;
   color: var(--text-primary);
   border: 2px solid var(--button-secondary);

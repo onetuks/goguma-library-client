@@ -31,54 +31,67 @@ const autoResize = (): void => {
   }
 };
 
-const showInvalidReviewTitleModal = () => {
+const showInvalidReviewTitleModal = (): void => {
   const invalidReviewTitle =
     reviewRequest.value.reviewTitle === null ||
     reviewRequest.value.reviewTitle?.length === 0;
 
   if (invalidReviewTitle) {
-    confirmModalInfo.value = {
-      message: "서평 제목을 입력해주세요",
-      buttonText: "확인",
-      visible: true,
-    };
+    throw new Error("서평 제목을 입력해주세요");
   }
 };
 
-const showInvalidReviewContentModal = () => {
+const showInvalidReviewContentModal = (): void => {
   const invalidReviewContent =
     reviewRequest.value.reviewContent === null ||
     reviewRequest.value.reviewContent?.length === 0;
 
   if (invalidReviewContent) {
-    confirmModalInfo.value = {
-      message: "서평 내용을 입력해주세요",
-      buttonText: "확인",
-      visible: true,
-    };
+    throw new Error("서평 내용을 입력해주세요");
   }
 };
 
 const registerReview = async (): Promise<void> => {
-  showInvalidReviewTitleModal();
-  showInvalidReviewContentModal();
+  try {
+    showInvalidReviewTitleModal();
+    showInvalidReviewContentModal();
 
-  if (book.value.bookId) {
-    await ReviewApis.postNewReview(book.value.bookId, reviewRequest.value).then(
-      () => {
-        confirmModalInfo.value = {
-          message: "서평이 등록되었습니다",
-          buttonText: "확인",
-          visible: true,
-        };
-      }
-    );
+    if (book.value.bookId) {
+      await ReviewApis.postNewReview(book.value.bookId, reviewRequest.value)
+        .then(() => {
+          confirmModalInfo.value = {
+            message: "서평이 등록되었습니다",
+            buttonText: "확인",
+            visible: true,
+          };
+        })
+        .catch((error) => {
+          console.error("ReviewRegistrationPage registerReview", error);
+          confirmModalInfo.value = {
+            message: "서평 등록에 실패했습니다",
+            buttonText: "확인",
+            visible: true,
+          };
+        });
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      confirmModalInfo.value = {
+        message: error.message,
+        buttonText: "확인",
+        visible: true,
+      };
+    }
   }
 };
 
 const moveToMyReviewPage = (): void => {
+  const isError: boolean = confirmModalInfo.value.visible;
   confirmModalInfo.value = initModalInfo();
-  router.push("/reviews/my");
+
+  if (!isError) {
+    router.push("/reviews/my");
+  }
 };
 
 fetchBook();

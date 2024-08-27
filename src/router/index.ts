@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
   // 마이페이지
   {
     path: "/members/:memberId/settings",
-    name: "프로필수정",
+    name: localStorage.getItem("isNewMember") ? "회원가입" : "프로필수정",
     component: ProfileSettingPage,
   },
   {
@@ -68,13 +68,12 @@ const routes: Array<RouteRecordRaw> = [
     props: (route) => ({ bookId: route.query["book-id"] }),
   },
   {
-    path: "/reviews",
+    path: "/reviews/my",
     name: "작성 서평",
     component: MyReviewsListPage,
-    props: (route) => ({ memberId: route.query["member-id"] }),
   },
   {
-    path: "/reviews/pick",
+    path: "/reviews/picks",
     name: "서평 Pick",
     component: PickedReviewsListPage,
   },

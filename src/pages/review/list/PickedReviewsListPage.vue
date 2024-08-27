@@ -24,16 +24,26 @@ const selectSortType = (type: SortType) => {
 };
 
 const fetchBook = async (bookId: number): Promise<Book> => {
-  return await BookApis.getBook(bookId).then((response) => response as Book);
+  return await BookApis.getBook(bookId)
+    .then((response) => response as Book)
+    .catch((error) => {
+      console.log("yes");
+      throw error;
+    });
 };
 
 const fetchReviews = async (reviewIds: number[]): Promise<void> => {
   for (const reviewId of reviewIds) {
-    await ReviewApis.getReview(reviewId).then(async (response) => {
-      const review = response as Review;
-      const book = fetchBook(review.bookId);
-      reviewBookMap.value.set(review, await book.then((data) => data));
-    });
+    await ReviewApis.getReview(reviewId)
+      .then(async (response) => {
+        const review = response as Review;
+        const book = fetchBook(review.bookId);
+        reviewBookMap.value.set(review, await book.then((data) => data));
+      })
+      .catch((error) => {
+        console.log("no");
+        throw error;
+      });
   }
 };
 
@@ -41,12 +51,16 @@ const fetchReviewPicks = async (): Promise<void> => {
   await ReviewPickApis.getMyReviewPicks(
     reviewPicks.value.number,
     reviewPicks.value.size
-  ).then((response) => {
-    reviewPicks.value = response as Page<ReviewPick>;
-    fetchReviews(
-      reviewPicks.value.content.map((reviewPick) => reviewPick.reviewId)
-    );
-  });
+  )
+    .then((response) => {
+      reviewPicks.value = response as Page<ReviewPick>;
+      fetchReviews(
+        reviewPicks.value.content.map((reviewPick) => reviewPick.reviewId)
+      );
+    })
+    .catch((error) => {
+      console.error("PickedReviewListPage fetchReviewPicks error", error);
+    });
 };
 
 fetchReviewPicks();
