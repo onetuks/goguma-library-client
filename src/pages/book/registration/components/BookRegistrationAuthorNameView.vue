@@ -1,29 +1,35 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { Book } from "@/api/BookApis";
+import { BookPostRequest } from "@/api/BookApis";
 
 const props = defineProps<{
-  book: Book;
+  bookPostRequest: BookPostRequest;
 }>();
 
 const emits = defineEmits<{
-  (event: "update:Book", book: Book): void;
+  (event: "update:BookPostRequest", bookPostRequest: BookPostRequest): void;
 }>();
 
-const localBook = ref<Book>({ ...props.book });
+const localBookPostRequest = ref<BookPostRequest>({ ...props.bookPostRequest });
 
 watch(
-  () => props.book.authorName,
-  (newAuthorName) => {
-    localBook.value.authorName = newAuthorName;
+  () => props.bookPostRequest,
+  (newBookPostRequest) => {
+    localBookPostRequest.value = { ...newBookPostRequest };
   }
 );
 
-watch(localBook, (newBook) => {
-  if (newBook.authorName && newBook.authorName.length > 0) {
-    emits("update:Book", { ...newBook });
+watch(
+  () => localBookPostRequest.value.authorName,
+  (newAuthorName) => {
+    if (newAuthorName.length > 0) {
+      emits("update:BookPostRequest", {
+        ...localBookPostRequest.value,
+        authorName: newAuthorName,
+      });
+    }
   }
-});
+);
 </script>
 
 <template>
@@ -31,7 +37,7 @@ watch(localBook, (newBook) => {
     <label class="form-label">작가<span class="required">*</span> </label>
     <input
       type="text"
-      v-model="localBook.authorName"
+      v-model="localBookPostRequest.authorName"
       placeholder="작가를 입력해주세요"
       class="form-input"
     />

@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import {
-  Book,
-  BookApis,
-  BookIsbnGetResponse,
-  mapBookIsbnGetResponseToBook,
-} from "@/api/BookApis";
+import { ref, watch } from "vue";
+import { BookApis, BookPostRequest } from "@/api/BookApis";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
 
-const NON_DIGIT_REGEX = /[^0-9]/;
 const ISBN_LENGTH = 13;
+const NON_DIGIT_REGEX = /[^0-9]/;
 
 const props = defineProps<{
-  book: Book;
+  bookPostRequest: BookPostRequest;
+  hasIsbn: boolean;
 }>();
 
 const emits = defineEmits<{
-  (event: "update:Book", book: Book): void;
-  (event: "warn:InvalidIsbn", message: string): void;
+  (event: "update:BookPostRequest", bookPostRequest: BookPostRequest): void;
+  (event: "update:HasIsbn"): void;
 }>();
 
-const localBook = ref<Book>({ ...props.book });
+const localBookPostRequest = ref<BookPostRequest>({ ...props.bookPostRequest });
 
-const hasNoIsbn = ref<boolean>(false);
-const isbn = ref<string | null>(null);
+const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
 
-const getCheckBoxImage = (): string => {
-  return hasNoIsbn.value
-    ? require("@/assets/icon/checkbox/checked-icon.png")
-    : require("@/assets/icon/checkbox/unchecked-icon.png");
-};
+watch(localBookPostRequest, (newBookPostRequest) => {
+  emits("update:BookPostRequest", { ...newBookPostRequest });
+});
 
-const toggleIsIndie = () => {
-  hasNoIsbn.value = !hasNoIsbn.value;
-  localBook.value.isIndie = hasNoIsbn.value;
-};
+watch(
+  () => localBookPostRequest.value.isbn,
+  (newIsbn) => {
+    emits("update:BookPostRequest", {
+      ...localBookPostRequest.value,
+      isbn: newIsbn,
+    });
+  }
+);
 
 const regulateIsbn = (isbn: string): string => {
   const regulatedIsbn = isbn.replaceAll("-", "").trim();
@@ -43,29 +43,66 @@ const regulateIsbn = (isbn: string): string => {
     NON_DIGIT_REGEX.test(regulatedIsbn) ||
     regulatedIsbn.length !== ISBN_LENGTH;
   if (isInvalidIsbn) {
-    throw new Error("ISBN이 유효하지 않습니다.");
+    throw new Error("올바른 ISBN 번호를 입력해주세요");
   }
 
   return regulatedIsbn;
 };
 
-const searchIsbn = () => {
-  try {
-    if (isbn.value) {
-      isbn.value = regulateIsbn(isbn.value);
+const searchBookWithIsbn = async (): Promise<void> => {
+  if (!localBookPostRequest.value.isbn) {
+    return;
+  }
 
-      BookApis.getBookWithIsbn(isbn.value).then((data: BookIsbnGetResponse) => {
-        const book: Book = mapBookIsbnGetResponseToBook(data);
-        book.isIndie = true;
-        localBook.value = { ...book };
-        emits("update:Book", { ...localBook.value });
+  try {
+    localBookPostRequest.value.isbn = regulateIsbn(
+      localBookPostRequest.value.isbn
+    );
+
+    await BookApis.getBookWithIsbn(localBookPostRequest.value.isbn)
+      .then((response) => {
+        localBookPostRequest.value = {
+          ...response,
+          isIndie: true,
+          coverImageFilename: response.coverImageUrl,
+        };
+      })
+      .catch((error) => {
+        console.error("BookRegistrationIsbnView.searchBookWithIsbn", error);
+        handleIsbnSearchError("확인되지 않는 ISBN 번호입니다");
       });
-    }
   } catch (error) {
     if (error instanceof Error) {
-      emits("warn:InvalidIsbn", error.message);
+      handleIsbnSearchError(error.message);
     }
+    return;
   }
+};
+
+const toggleHasIsbn = (): void => {
+  if (!props.hasIsbn) {
+    localBookPostRequest.value.isbn = null;
+  }
+
+  emits("update:HasIsbn");
+};
+
+const getCheckBoxImage = (): string => {
+  return props.hasIsbn
+    ? require("@/assets/icon/checkbox/unchecked-icon.png")
+    : require("@/assets/icon/checkbox/checked-icon.png");
+};
+
+const handleIsbnSearchError = (message: string): void => {
+  confirmModalInfo.value = {
+    visible: true,
+    message,
+    buttonText: "확인",
+  };
+};
+
+const closeModal = (): void => {
+  confirmModalInfo.value = initModalInfo();
 };
 </script>
 
@@ -78,7 +115,7 @@ const searchIsbn = () => {
           :src="getCheckBoxImage()"
           alt="checkbox"
           class="isbn-checkbox-image"
-          @click="toggleIsIndie"
+          @click="toggleHasIsbn"
         />
         <label class="isbn-checkbox-label">ISBN이 없거나 모르는 도서에요</label>
       </div>
@@ -86,15 +123,15 @@ const searchIsbn = () => {
     <div class="isbn-input-container">
       <input
         type="text"
-        v-model="isbn"
-        :disabled="hasNoIsbn"
+        v-model="localBookPostRequest.isbn"
+        :disabled="!hasIsbn"
         placeholder="ISBN 번호를 적어주세요"
         class="isbn-input"
       />
       <button
         class="isbn-input-button"
-        :disabled="hasNoIsbn"
-        @click="searchIsbn"
+        :disabled="!hasIsbn"
+        @click="searchBookWithIsbn"
       >
         조회
       </button>
@@ -115,6 +152,10 @@ const searchIsbn = () => {
         />
       </div>
     </div>
+    <ConfirmModal
+      :confirm-modal-info="confirmModalInfo"
+      @modal:Close="closeModal"
+    />
   </div>
 </template>
 

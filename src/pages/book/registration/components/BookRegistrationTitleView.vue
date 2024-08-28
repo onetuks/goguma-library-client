@@ -1,29 +1,35 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { Book } from "@/api/BookApis";
+import { BookPostRequest } from "@/api/BookApis";
 
 const props = defineProps<{
-  book: Book;
+  bookPostRequest: BookPostRequest;
 }>();
 
 const emits = defineEmits<{
-  (event: "update:Book", book: Book): void;
+  (event: "update:BookPostRequest", bookPostRequest: BookPostRequest): void;
 }>();
 
-const localBook = ref<Book>({ ...props.book });
+const localBookPostRequest = ref<BookPostRequest>({ ...props.bookPostRequest });
 
 watch(
-  () => props.book.title,
-  (newTitle) => {
-    localBook.value.title = newTitle;
+  () => props.bookPostRequest,
+  (newBookPostRequest) => {
+    localBookPostRequest.value = { ...newBookPostRequest };
   }
 );
 
-watch(localBook, (newBook) => {
-  if (newBook.title && newBook.title.length > 0) {
-    emits("update:Book", { ...newBook });
+watch(
+  () => localBookPostRequest.value.title,
+  (newTitle) => {
+    if (newTitle.length > 0) {
+      emits("update:BookPostRequest", {
+        ...localBookPostRequest.value,
+        title: newTitle,
+      });
+    }
   }
-});
+);
 </script>
 
 <template>
@@ -31,7 +37,7 @@ watch(localBook, (newBook) => {
     <label class="form-label">제목<span class="required">*</span> </label>
     <input
       type="text"
-      v-model="localBook.title"
+      v-model="localBookPostRequest.title"
       placeholder="도서 제목을 입력해주세요"
       class="form-input"
     />
