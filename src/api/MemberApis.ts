@@ -74,20 +74,3 @@ export const MemberApis = {
     );
   },
 };
-
-export const mapMemberResponseToMember = (
-  memberResponse: MemberResponse
-): Member => {
-  return {
-    memberId: memberResponse.memberId,
-    nickname: memberResponse.nickname,
-    introduction: memberResponse.introduction,
-    instagramUrl: memberResponse.instagramUrl,
-    interestedCategories: memberResponse.interestedCategories,
-    isAlarmAccepted: memberResponse.isAlarmAccepted,
-    points: memberResponse.points,
-    profileImageUrl: memberResponse.profileImageUrl,
-    profileBackgroundImageUrl: memberResponse.profileBackgroundImageUrl,
-    memberStatics: memberResponse.memberStatics,
-  };
-};

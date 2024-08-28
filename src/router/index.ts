@@ -15,6 +15,7 @@ import PickedReviewsListPage from "@/pages/review/list/PickedReviewsListPage.vue
 import MyReviewsListPage from "@/pages/review/list/MyReviewsListPage.vue";
 import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
 import BookReviewsListPage from "@/pages/review/list/BookReviewsListPage.vue";
+import FollowListPage from "@/pages/my/follow/FollowListPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -47,6 +48,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/members/:memberId/points",
     name: "포인트 적립 내역",
     component: PointPage,
+  },
+  {
+    path: "/members/:memberId/follows",
+    name: "팔로우",
+    component: FollowListPage,
   },
 
   // 도서

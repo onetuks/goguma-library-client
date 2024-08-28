@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import FollowButton from "@/components/button/FollowButton.vue";
-import {
-  mapMemberResponseToMember,
-  Member,
-  MemberApis,
-} from "@/api/MemberApis";
+import { Member, MemberApis } from "@/api/MemberApis";
 import { ref } from "vue";
 
 const props = defineProps<{
@@ -20,7 +16,7 @@ const handleProfileImageError = (event: Event) => {
 
 const fetchMember = async (): Promise<void> => {
   await MemberApis.getMemberProfile(props.memberId).then((response) => {
-    member.value = mapMemberResponseToMember(response);
+    member.value = { ...response } as Member;
   });
 };
 

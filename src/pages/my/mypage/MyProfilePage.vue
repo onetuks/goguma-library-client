@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { ref } from "vue";
-import {
-  mapMemberResponseToMember,
-  Member,
-  MemberApis,
-  MemberResponse,
-} from "@/api/MemberApis";
+import { Member, MemberApis, MemberResponse } from "@/api/MemberApis";
 import ProfileView from "@/pages/my/mypage/components/ProfileView.vue";
 import ProfileAttendanceView from "@/pages/my/mypage/components/ProfileAttendanceView.vue";
 import ProfileBadgeView from "@/pages/my/mypage/components/ProfileBadgeView.vue";
@@ -16,10 +11,10 @@ const route = useRoute();
 const memberIdParam = Number(route.params.memberId);
 const member = ref<Member | null>(null);
 
-const fetchMemberProfile = async () => {
+const fetchMemberProfile = async (): Promise<void> => {
   MemberApis.getMemberProfile(memberIdParam).then(
-    (memberResponse: MemberResponse) => {
-      member.value = mapMemberResponseToMember(memberResponse);
+    (response: MemberResponse) => {
+      member.value = { ...response } as Member;
     }
   );
 };

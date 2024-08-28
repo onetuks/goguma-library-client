@@ -1,6 +1,6 @@
 import { get, post, remove } from "@/api/ServerRequest";
 import { MemberResponse } from "@/api/MemberApis";
-import { buildPageQuery } from "@/types/Page";
+import { buildPageQuery, Page } from "@/types/Page";
 
 export interface FollowResponse {
   followId: number;
@@ -12,6 +12,10 @@ export interface Follow {
   followId: number;
   followerId: number;
   followeeId: number;
+}
+
+interface MemberPageResponse {
+  responses: Page<MemberResponse>;
 }
 
 export const FollowApis = {
@@ -40,20 +44,28 @@ export const FollowApis = {
     memberId: number,
     page?: number,
     size?: number
-  ): Promise<MemberResponse[]> => {
+  ): Promise<Page<MemberResponse>> => {
     // 팔로워(나를 팔로우하는 멤버) 목록 조회
     return await get(
       `/members/${memberId}/followers${buildPageQuery(page, size)}`
-    ).then((data) => data as MemberResponse[]);
+    )
+      .then((response) => (response as MemberPageResponse).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
   getFollowings: async (
     memberId: number,
     page?: number,
     size?: number
-  ): Promise<MemberResponse[]> => {
+  ): Promise<Page<MemberResponse>> => {
     // 팔로잉(내가 팔로우하는 멤버) 목록 조회
     return await get(
       `/members/${memberId}/followings${buildPageQuery(page, size)}`
-    ).then((data) => data as MemberResponse[]);
+    )
+      .then((response) => (response as MemberPageResponse).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
 };
