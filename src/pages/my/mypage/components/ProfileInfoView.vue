@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import UserStatCounter from "@/pages/my/mypage/components/ProfileStaticsView.vue";
 import { Member } from "@/api/MemberApis";
+import router from "@/router";
 
 const props = defineProps<{
   member: Member;
 }>();
+
+const moveToMyReviewPage = () => {
+  router.push("/reviews/my");
+};
+
+const moveToFollowerPage = () => {
+  router.push(`/members/${props.member.memberId}/followers`);
+};
+
+const moveToFollowingPage = () => {
+  router.push(`/members/${props.member.memberId}/followings`);
+};
 
 const moveToInstagram = () => {
   window.open(
@@ -25,14 +38,17 @@ const moveToInstagram = () => {
         <UserStatCounter
           label="서평"
           :count="member.memberStatics.reviewCounts"
+          @click="moveToMyReviewPage"
         />
         <UserStatCounter
           label="팔로워"
           :count="member.memberStatics.followerCounts"
+          @click="moveToFollowerPage"
         />
         <UserStatCounter
           label="팔로잉"
           :count="member.memberStatics.followingCounts"
+          @click="moveToFollowingPage"
         />
       </div>
       <img
