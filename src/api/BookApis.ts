@@ -6,8 +6,8 @@ export interface BookIsbnGetResponse {
   title: string;
   authorName: string;
   introduction: string;
-  publisher: string;
   isbn: string;
+  publisher: string;
   categories: CategoryType[];
   coverImageUrl: string;
 }
@@ -160,5 +160,18 @@ export const initBook = (): Book => {
     isPermitted: false,
     pickCount: null,
     createdAt: null,
+  };
+};
+
+export const initBookPostRequest = (): BookPostRequest => {
+  return {
+    title: "",
+    authorName: "",
+    introduction: null,
+    isbn: null,
+    publisher: null,
+    categories: [],
+    isIndie: true,
+    coverImageFilename: null,
   };
 };

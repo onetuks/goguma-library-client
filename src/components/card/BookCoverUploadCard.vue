@@ -1,35 +1,36 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { Book } from "@/api/BookApis";
+import { BookPostRequest } from "@/api/BookApis";
+import {
+  formatFilename,
+  ImageFileUploadProps,
+  initImageFileUploadProps,
+} from "@/types/ImageFile";
 
 const props = defineProps<{
-  book: Book;
+  bookPostRequest: BookPostRequest;
 }>();
 
 const emits = defineEmits<{
-  (event: "update:CoverImageFile", file: File | null): void;
-  (event: "update:CoverImageFilename", filename: string | null): void;
+  (event: "update:CoverImageData", data: ImageFileUploadProps): void;
 }>();
 
-const coverImageUrl = ref<string | null>(props.book.coverImageUrl); // 이미지 미리보기 URL
-const coverImageFile = ref<File | null>(null); // 실제 파일
-const coverImageFilename = ref<string | null>(null); // 서버 요청에 제공할 파일명
-const coverImageInput = ref<HTMLInputElement | null>(null); // 파일 선택 input
+const localBookPostRequest = ref<BookPostRequest>({ ...props.bookPostRequest });
 
-watch(
-  () => props.book.coverImageUrl,
-  (newCoverImageUrl) => {
-    coverImageUrl.value = newCoverImageUrl;
-  }
+// 파일 선택 input
+const coverImageInput = ref<HTMLInputElement | null>(null);
+// 이미지 미리보기 URL
+const coverImageUrl = ref<string | null>(
+  props.bookPostRequest.coverImageFilename
 );
 
-watch(coverImageFile, (newCoverImageFile) => {
-  emits("update:CoverImageFile", newCoverImageFile);
-});
-
-watch(coverImageFilename, (newCoverImageFilename) => {
-  emits("update:CoverImageFilename", newCoverImageFilename);
-});
+watch(
+  () => props.bookPostRequest,
+  (newBookPostRequest) => {
+    localBookPostRequest.value = { ...newBookPostRequest };
+    coverImageUrl.value = newBookPostRequest.coverImageFilename;
+  }
+);
 
 const changeCoverImageFile = (e: Event): void => {
   const target = e.target as HTMLInputElement;
@@ -37,9 +38,10 @@ const changeCoverImageFile = (e: Event): void => {
   if (file) {
     const newUrl = URL.createObjectURL(file);
     coverImageUrl.value = newUrl;
-    coverImageFile.value = file;
-    coverImageFilename.value =
-      newUrl.split("/").pop() + file.type.replace("image/", ".");
+    emits("update:CoverImageData", {
+      file: file,
+      filename: formatFilename(newUrl, file),
+    });
   }
 };
 
@@ -48,20 +50,16 @@ const triggerChangeFileClick = (): void => {
 };
 
 const removeCover = (): void => {
-  coverImageFilename.value = null;
   coverImageUrl.value = null;
-  coverImageFile.value = null;
   coverImageInput.value = null;
+  emits("update:CoverImageData", initImageFileUploadProps());
 };
 </script>
 
 <template>
   <div class="book-cover-container">
     <label class="form-label">표지이미지</label>
-    <div
-      class="book-cover-uploader"
-      :class="{ 'has-cover': coverImageFile !== null }"
-    >
+    <div class="book-cover-uploader" :class="{ 'has-cover': coverImageUrl }">
       <input
         type="file"
         accept="image/*"

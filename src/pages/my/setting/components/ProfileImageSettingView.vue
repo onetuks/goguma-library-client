@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 import { Member } from "@/api/MemberApis";
 import { S3_URL } from "@/assets/S3Url";
+import { formatFilename } from "@/types/ImageFile";
 
 const props = defineProps<{ member: Member }>();
 const emits = defineEmits<{
@@ -69,8 +70,7 @@ const changeProfileImage = (event: Event) => {
     const newUrl = URL.createObjectURL(file);
     localMember.value.profileImageUrl = newUrl;
     profileImageFile.value = file;
-    profileImageFilename.value =
-      newUrl.split("/").pop() + file.type.replace("image/", ".");
+    profileImageFilename.value = formatFilename(newUrl, file);
   }
 };
 
@@ -81,8 +81,7 @@ const changeProfileBackgroundImage = (event: Event) => {
     const newUrl = URL.createObjectURL(file);
     localMember.value.profileBackgroundImageUrl = newUrl;
     profileBackgroundImageFile.value = file;
-    profileBackgroundImageFilename.value =
-      newUrl.split("/").pop() + file.type.replace("image/", ".");
+    profileBackgroundImageFilename.value = formatFilename(newUrl, file);
   }
 };
 </script>

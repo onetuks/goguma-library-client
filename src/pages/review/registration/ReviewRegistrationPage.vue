@@ -9,6 +9,8 @@ import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
 import router from "@/router";
 
+const REVIEW_REGISTRATION_SUCCESS_MESSAGE = "서평이 등록되었습니다";
+
 const route = useRoute();
 
 const book = ref<Book>(initBook());
@@ -60,7 +62,7 @@ const registerReview = async (): Promise<void> => {
       await ReviewApis.postNewReview(book.value.bookId, reviewRequest.value)
         .then(() => {
           confirmModalInfo.value = {
-            message: "서평이 등록되었습니다",
+            message: REVIEW_REGISTRATION_SUCCESS_MESSAGE,
             buttonText: "확인",
             visible: true,
           };
@@ -86,12 +88,11 @@ const registerReview = async (): Promise<void> => {
 };
 
 const moveToMyReviewPage = (): void => {
-  const isError: boolean = confirmModalInfo.value.visible;
-  confirmModalInfo.value = initModalInfo();
-
-  if (!isError) {
+  if (confirmModalInfo.value.message === REVIEW_REGISTRATION_SUCCESS_MESSAGE) {
     router.push("/reviews/my");
   }
+
+  confirmModalInfo.value = initModalInfo();
 };
 
 fetchBook();
