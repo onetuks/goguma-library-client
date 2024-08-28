@@ -2,7 +2,6 @@
 import ProfileImageSettingView from "@/pages/my/setting/components/ProfileImageSettingView.vue";
 import { ref } from "vue";
 import {
-  mapMemberResponseToMember,
   Member,
   MemberApis,
   MemberPatchRequest,
@@ -35,10 +34,10 @@ const closeModal = () => {
   };
 };
 
-const fetchMemberProfile = async () => {
+const fetchMemberProfile = async (): Promise<void> => {
   MemberApis.getMemberProfile(memberIdParam).then(
-    (memberResponse: MemberResponse) => {
-      localMember.value = mapMemberResponseToMember(memberResponse);
+    (response: MemberResponse) => {
+      localMember.value = { ...response } as Member;
     }
   );
 };

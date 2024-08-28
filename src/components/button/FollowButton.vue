@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Follow, FollowApis } from "@/api/FollowApis";
 import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+import { ApiError } from "@/api/ServerRequest";
 
 const props = defineProps<{
   memberId: number;
@@ -27,6 +28,7 @@ const toggleFollowStatus = async (): Promise<void> => {
       })
       .catch((error) => {
         console.error("FollowButton toggleFollowStatus - delete", error);
+        handleError(error);
       });
     return;
   }
@@ -37,11 +39,7 @@ const toggleFollowStatus = async (): Promise<void> => {
     })
     .catch((error) => {
       console.error("FollowButton toggleFollowStatus - post", error);
-      confirmModalInfo.value = {
-        message: "자기자신은 팔로우 할 수 없습니다",
-        buttonText: "확인",
-        visible: true,
-      };
+      handleError(error);
     });
 };
 
@@ -53,6 +51,27 @@ const fetchFollow = async (): Promise<void> => {
     .catch(() => {
       follow.value = null;
     });
+};
+
+const handleError = (error: ApiError): void => {
+  let message: string;
+  switch (error.code) {
+    case "G007":
+      message = "팔로우 할 수 없는 멤버입니다";
+      break;
+    case "E001":
+      message = "자기자신은 팔로우 할 수 없습니다";
+      break;
+    default:
+      message = "팔로우 할 수 없습니다";
+      break;
+  }
+
+  confirmModalInfo.value = {
+    message: message,
+    buttonText: "확인",
+    visible: true,
+  };
 };
 
 fetchFollow();
