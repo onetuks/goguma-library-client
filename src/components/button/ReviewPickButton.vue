@@ -1,43 +1,70 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import activeHeartImage from "@/assets/icon/heart/heart_icon_active.png";
-import inactiveHeartImage from "@/assets/icon/heart/heart_icon_inactive.png";
+import { ReviewPick, ReviewPickApis } from "@/api/ReviewPickApis";
 
-const props = withDefaults(
-  defineProps<{
-    pickCount: number;
-    isPicked: boolean;
-  }>(),
-  {
-    pickCount: 0,
-    isPicked: false,
+const props = defineProps<{
+  reviewId: number;
+}>();
+
+const reviewPick = ref<ReviewPick | null>(null);
+const pickCount = ref<number>(0);
+
+const toggleReviewPickStatus = async (): Promise<void> => {
+  if (reviewPick.value) {
+    pickCount.value -= 1;
+    await ReviewPickApis.deleteReviewPick(reviewPick.value?.reviewPickId).then(
+      () => {
+        reviewPick.value = null;
+        console.log("toggleReviewPickStatus", reviewPick.value);
+      }
+    );
+  } else {
+    pickCount.value += 1;
+    await ReviewPickApis.postNewReviewPick(props.reviewId)
+      .then((response) => {
+        reviewPick.value = { ...response } as ReviewPick;
+        console.log("toggleReviewPickStatus", reviewPick.value);
+      })
+      .catch((error) => console.error("toggleReviewPickStatus error", error));
   }
-);
 
-const localPickCount = ref(props.pickCount);
-const localIsPicked = ref(props.isPicked);
-
-const toggleStatus = (): void => {
-  localIsPicked.value = !localIsPicked.value;
-
-  if (localIsPicked.value) {
-    localPickCount.value += 1;
-    return;
-  }
-  localPickCount.value -= 1;
+  console.log("toggleReviewPickStatus", reviewPick.value);
 };
+
+const getHeartIcon = () => {
+  return reviewPick.value
+    ? require("@/assets/icon/heart/heart_icon_active.png")
+    : require("@/assets/icon/heart/heart_icon_inactive.png");
+};
+
+const fetchReviewPick = async (): Promise<ReviewPick | null> => {
+  return await ReviewPickApis.getMyReviewPick(props.reviewId)
+    .then((response) => {
+      return response ? ({ ...response } as ReviewPick) : null;
+    })
+    .catch(() => null);
+};
+
+const fetchReviewPickCount = async (): Promise<number> => {
+  return await ReviewPickApis.getMyReviewPickCount(props.reviewId)
+    .then((response) => response as number)
+    .catch(() => 0);
+};
+
+const fetchData = async (): Promise<void> => {
+  reviewPick.value = await fetchReviewPick();
+  pickCount.value = await fetchReviewPickCount();
+};
+
+fetchData();
 </script>
 
 <template>
   <div class="heart-container">
-    <button @click="toggleStatus">
-      <img
-        :src="localIsPicked ? activeHeartImage : inactiveHeartImage"
-        alt="Heart Icon"
-        class="heart-icon"
-      />
+    <button class="heart-button" @click="toggleReviewPickStatus">
+      <img :src="getHeartIcon()" alt="Heart Icon" class="heart-icon" />
     </button>
-    <span>{{ localPickCount }}</span>
+    <span>{{ pickCount }}</span>
   </div>
 </template>
 
@@ -47,7 +74,7 @@ const toggleStatus = (): void => {
   align-items: center;
 }
 
-button {
+.heart-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -56,6 +83,6 @@ button {
 
 .heart-icon {
   width: 24px;
-  height: 24px;
+  height: 22px;
 }
 </style>

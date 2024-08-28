@@ -1,25 +1,36 @@
 <script setup lang="ts">
 import { Review } from "@/api/ReviewApis";
 import { Book } from "@/api/BookApis";
+import router from "@/router";
 
-defineProps<{
+const props = defineProps<{
   review: Review;
   book: Book;
 }>();
+
+const moveToReviewDetail = (): void => {
+  router.push(`/reviews/${props.review.reviewId}`);
+};
 </script>
 
 <template>
-  <div class="review-preview">
+  <div class="review-preview" @click="moveToReviewDetail">
     <div class="image-container">
-      <img :src="book.coverImageUrl" alt="Book Cover" class="book-cover" />
+      <img
+        :src="props.book.coverImageUrl"
+        alt="Book Cover"
+        class="book-cover"
+      />
     </div>
     <div class="info-container">
       <div class="title-author-container">
-        <div class="title">{{ book.title }}</div>
-        <div class="author">|&nbsp;&nbsp;&nbsp;&nbsp;{{ book.authorName }}</div>
+        <div class="title">{{ props.book.title }}</div>
+        <div class="author">
+          |&nbsp;&nbsp;&nbsp;&nbsp;{{ props.book.authorName }}
+        </div>
       </div>
-      <div class="review-title">{{ review.reviewTitle }}</div>
-      <div class="review-content">{{ review.reviewContent }}</div>
+      <div class="review-title">{{ props.review.reviewTitle }}</div>
+      <div class="review-content">{{ props.review.reviewContent }}</div>
     </div>
   </div>
 </template>
@@ -35,6 +46,15 @@ defineProps<{
   border-radius: 5px;
   padding: 10px;
   box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+.review-preview:hover {
+  background-color: var(--surface-fourth);
+}
+
+.review-preview:active {
+  background-color: var(--surface-sixth);
 }
 
 .image-container {

@@ -70,6 +70,6 @@ button:active {
 
 .heart-icon {
   width: 24px;
-  height: 24px;
+  height: 22px;
 }
 </style>

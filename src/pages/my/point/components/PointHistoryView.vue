@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import { PointHistory } from "@/api/PointApis";
+import { formatDate } from "@/types/DateUtil";
 
 const props = defineProps<{
   pointHistory: PointHistory[];
 }>();
-
-const formatDate = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${year}.${month}.${day}`;
-};
 
 const formatPoints = (points: number): string => {
   return `${points > 0 ? "+" : "-"}${points}P`;

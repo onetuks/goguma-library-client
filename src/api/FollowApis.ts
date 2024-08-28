@@ -8,23 +8,33 @@ export interface FollowResponse {
   followeeId: number;
 }
 
+export interface Follow {
+  followId: number;
+  followerId: number;
+  followeeId: number;
+}
+
 export const FollowApis = {
   URI_PREFIX: "/members/follows",
-  postNewFollow: async (followeeId: number): Promise<FollowResponse> => {
+  postNewFollow: async (targetMemberId: number): Promise<FollowResponse> => {
     // 팔로우 등록
-    return await post(
-      `${FollowApis.URI_PREFIX}?followee-id=${followeeId}`
-    ).then((data) => data as FollowResponse);
+    return await post(`/members/${targetMemberId}/follows`)
+      .then((data) => data as FollowResponse)
+      .catch((error) => {
+        throw error;
+      });
   },
   deleteFollow: async (followId: number): Promise<void> => {
     // 팔로우 취소
     remove(`${FollowApis.URI_PREFIX}/${followId}`);
   },
-  getMyFollow: async (followeeId: number): Promise<object | boolean> => {
+  getMyFollow: async (targetMemberId: number): Promise<FollowResponse> => {
     // 팔로우 여부 조회
-    return await get(`${FollowApis.URI_PREFIX}?followee-id=${followeeId}`).then(
-      (data) => data
-    );
+    return await get(`/members/${targetMemberId}/follows`)
+      .then((data) => data as FollowResponse)
+      .catch((error) => {
+        throw error;
+      });
   },
   getFollowers: async (
     memberId: number,

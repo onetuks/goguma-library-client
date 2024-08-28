@@ -1,5 +1,5 @@
 import { arrayToDate, get, patch, post, remove } from "@/api/ServerRequest";
-import { buildPageQuery, Page } from "@/types/Page";
+import { buildPageQuery, buildPageQueryWithSort, Page } from "@/types/Page";
 import { SortType } from "@/types/SortType";
 
 export interface Review {
@@ -75,9 +75,16 @@ export const ReviewApis = {
   },
   getReview: async (reviewId: number): Promise<ReviewResponse> => {
     // 서평 단건 조회
-    return await get(`${ReviewApis.URI_PREFIX}/${reviewId}`).then(
-      (data) => data as ReviewResponse
-    );
+    return await get(`${ReviewApis.URI_PREFIX}/${reviewId}`)
+      .then((response) => {
+        const data = response as ReviewResponse;
+        data.createdAt = arrayToDate(data.createdAt);
+        data.updatedAt = arrayToDate(data.updatedAt);
+        return data;
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   getReviews: async (
     sort: SortType,
@@ -101,7 +108,8 @@ export const ReviewApis = {
   ): Promise<Page<ReviewResponse>> => {
     // 도서 서평 다건 조회
     return await get(
-      `${ReviewApis.URI_PREFIX}/book/${bookId}?sort=${sort}${buildPageQuery(
+      `${ReviewApis.URI_PREFIX}/book/${bookId}${buildPageQueryWithSort(
+        sort,
         page,
         size
       )}`
@@ -121,13 +129,25 @@ export const ReviewApis = {
   },
   getReviewsOfMember: async (
     memberId: number,
+    sort: SortType,
     page?: number,
     size?: number
-  ): Promise<ReviewResponse[]> => {
+  ): Promise<Page<ReviewResponse>> => {
     // 멤버 서평 다건 조회
     return await get(
-      `${ReviewApis.URI_PREFIX}/member/${memberId}${buildPageQuery(page, size)}`
-    ).then((data) => data as ReviewResponse[]);
+      `${ReviewApis.URI_PREFIX}/member/${memberId}${buildPageQueryWithSort(
+        sort,
+        page,
+        size
+      )}`
+    )
+      .then((response) => {
+        const typedResponse = response as ReviewResponses;
+        return typedResponse.responses as Page<ReviewResponse>;
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   getRecommendedReviews: async (
     page?: number,
