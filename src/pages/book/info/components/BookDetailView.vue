@@ -33,6 +33,7 @@ const toggleIntroductionSpread = () => {
     <BookPickButton v-if="book.bookId" :book-id="book.bookId" />
     <div class="book-detail-title">{{ props.book.title }}</div>
     <div class="book-detail-author-name">{{ props.book.authorName }}</div>
+    <div class="book-detail-publisher">{{ props.book.publisher }}</div>
     <div
       class="book-detail-introduction"
       :class="{ expanded: isIntroductionExpanded }"
@@ -91,6 +92,13 @@ const toggleIntroductionSpread = () => {
 }
 
 .book-detail-author-name {
+  font-size: 16px;
+  font-family: var(--font-family-bold), sans-serif;
+  color: var(--text-fourth);
+  padding: 0 15px;
+}
+
+.book-detail-publisher {
   font-size: 16px;
   font-family: var(--font-family-bold), sans-serif;
   color: var(--text-fourth);
