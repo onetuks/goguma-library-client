@@ -1,5 +1,5 @@
 import { get, post, remove } from "@/api/ServerRequest";
-import { buildPageQuery } from "@/types/Page";
+import { buildPageQuery, Page } from "@/types/Page";
 
 export interface BookPickResponse {
   bookPickId: number;
@@ -11,6 +11,10 @@ export interface BookPick {
   bookPickId: number;
   memberId: number;
   bookId: number;
+}
+
+interface BookPickResponses {
+  responses: Page<BookPickResponse>;
 }
 
 export const BookPickApis = {
@@ -26,11 +30,17 @@ export const BookPickApis = {
   getMyBookPicks: async (
     page?: number,
     size?: number
-  ): Promise<BookPickResponse[]> => {
+  ): Promise<Page<BookPickResponse>> => {
     // 나의 북픽 도서 다건 조회
     return await get(
       `${BookPickApis.URI_PREFIX}/my-picks${buildPageQuery(page, size)}`
-    ).then((data) => data as BookPickResponse[]);
+    )
+      .then((response) => {
+        return (response as BookPickResponses).responses;
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   getMyBookPick: async (bookId: number): Promise<BookPickResponse> => {
     // 북픽 여부 조회

@@ -4,7 +4,7 @@ import SubscribeButton from "@/components/button/FollowButton.vue";
 import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
 import CalendarIcon from "@/components/calendar/CalendarIcon.vue";
 import BookFeedCard from "@/components/card/BookFeedCard.vue";
-import BookPickedCard from "@/components/card/BookPickedCard.vue";
+import BookPickCard from "@/components/card/BookPickCard.vue";
 import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 import ReviewDetailCard from "@/components/card/ReviewDetailCard.vue";
@@ -113,7 +113,7 @@ const review: Review = {
           <h5>도서 피드 카드</h5>
           <BookFeedCard :book="book" :is-picked="true" />
           <h5>도서픽 카드</h5>
-          <BookPickedCard :book="book" />
+          <BookPickCard :book="book" />
           <h5>도서 검색 결과 카드</h5>
           <BookSearchResultCard :book="book" />
           <h5>추천 도서 카드</h5>

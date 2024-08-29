@@ -11,12 +11,13 @@ import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage
 import PointPage from "@/pages/my/point/PointPage.vue";
 import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
-import PickedReviewsListPage from "@/pages/review/list/PickedReviewsListPage.vue";
-import MyReviewsListPage from "@/pages/review/list/MyReviewsListPage.vue";
+import ReviewPickListPage from "@/pages/review/list/ReviewPickListPage.vue";
+import MyReviewListPage from "@/pages/review/list/MyReviewListPage.vue";
 import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
-import BookReviewsListPage from "@/pages/review/list/BookReviewsListPage.vue";
+import BookReviewListPage from "@/pages/review/list/BookReviewListPage.vue";
 import FollowerListPage from "@/pages/my/follow/FollowerListPage.vue";
 import FollowingListPage from "@/pages/my/follow/FollowingListPage.vue";
+import BookPickListPage from "@/pages/book/list/BookPickListPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -72,6 +73,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "도서 정보",
     component: BookInfoPage,
   },
+  {
+    path: "/books/picks",
+    name: "북 Pick",
+    component: BookPickListPage,
+  },
 
   // 서평
   {
@@ -83,17 +89,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/reviews/my",
     name: "나의 서평",
-    component: MyReviewsListPage,
+    component: MyReviewListPage,
   },
   {
     path: "/reviews/picks",
     name: "서평 Pick",
-    component: PickedReviewsListPage,
+    component: ReviewPickListPage,
   },
   {
     path: "/reviews",
     name: "도서 서평",
-    component: BookReviewsListPage,
+    component: BookReviewListPage,
     props: (route) => ({ bookId: route.query["book-id"] }),
   },
   {
