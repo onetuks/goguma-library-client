@@ -45,9 +45,7 @@ export const BookPickApis = {
   getMyBookPick: async (bookId: number): Promise<BookPickResponse> => {
     // 북픽 여부 조회
     return await get(`/books/${bookId}/picks`)
-      .then((data) => {
-        return data as BookPickResponse;
-      })
+      .then((data) => data as BookPickResponse)
       .catch((error) => {
         throw error;
       });
