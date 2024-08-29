@@ -18,6 +18,7 @@ import BookReviewListPage from "@/pages/review/list/BookReviewListPage.vue";
 import FollowerListPage from "@/pages/my/follow/FollowerListPage.vue";
 import FollowingListPage from "@/pages/my/follow/FollowingListPage.vue";
 import BookPickListPage from "@/pages/book/list/BookPickListPage.vue";
+import BookSearchPage from "@/pages/book/search/BookSearchPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -72,6 +73,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/books/:bookId/info",
     name: "도서 정보",
     component: BookInfoPage,
+  },
+  {
+    path: "/books/search",
+    name: "도서 검색",
+    component: BookSearchPage,
   },
   {
     path: "/books/picks",

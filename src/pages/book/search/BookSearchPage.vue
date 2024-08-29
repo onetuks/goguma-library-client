@@ -1,75 +1,53 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import SearchResultItem from "@/components/card/BookSearchResultCard.vue";
+import { ref } from "vue";
+import { sleep } from "@/util/SleeperUtil";
+import { Book, BookApis } from "@/api/BookApis";
+import { emptyPage, Page } from "@/types/Page";
+import SearchBar from "@/pages/book/search/components/SearchBar.vue";
+import BookRegistrationButton from "@/pages/book/search/components/BookRegistrationButton.vue";
+import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
+import WarningPage from "@/pages/error/WarningPage.vue";
+import PaginationView from "@/components/bar/PaginationView.vue";
 
-const query = ref("");
+const books = ref<Page<Book>>(emptyPage());
 
-const books = ref([
-  {
-    title: "어쩌다 우리가 만나서 어쩌다 이런 사랑을 하고",
-    author: "김현경",
-    coverImage: "@/assets/test/picture_test.png",
-  },
-  {
-    title: "안녕, 둔촌주공아파트 vol.2",
-    author: "이인규",
-    coverImage: "@/assets/test/picture_test.png",
-  },
-  {
-    title: "이제야, 그렇지만 또 이제라도",
-    author: "김예랑",
-    coverImage: "@/assets/test/picture_test.png",
-  },
-]);
+const loading = ref<boolean>(false);
 
-const filteredBooks = computed(() => {
-  return books.value.filter((book) => book.title.includes(query.value));
-});
+const searchBooks = async (searchKeyword: string | null): Promise<void> => {
+  loading.value = true;
+  await sleep(200);
+  await BookApis.getBooksWithKeyword(searchKeyword, books.value.number)
+    .then((response) => {
+      books.value = response as Page<Book>;
+    })
+    .catch((error) => {
+      console.error("BookSearchPage.searchBooks", error);
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+};
 
-function searchBooks() {
-  // 검색 기능을 구현합니다.
-}
-
-onMounted(() => {
-  // 초기화 시 search-results가 올바르게 렌더링되도록 설정
-  if (!query.value) {
-    query.value = " "; // 임시 공백 설정
-    query.value = ""; // 다시 초기화
-  }
-});
+searchBooks(null);
 </script>
 
 <template>
   <div class="search-page">
-    <div class="search-container">
-      <input
-        type="text"
-        placeholder="플레이스홀더"
-        class="search-input"
-        v-model="query"
-        @input="searchBooks"
-      />
-      <img
-        src="../../../assets/icon/search/search_icon.png"
-        alt="Search Icon"
-        class="search-icon"
-      />
+    <SearchBar @search:Books="searchBooks" />
+    <div v-if="loading" class="loading-wrapper">
+      <div class="loading-spinner" />
     </div>
-
-    <div class="search-results">
-      <SearchResultItem
-        v-for="(book, index) in filteredBooks"
-        :key="index"
-        :book="book"
-      />
-    </div>
-
-    <div v-if="filteredBooks.length === 0" class="no-results">
-      <p>
-        찾으시는 책이 없으신가요?<br />
-        책을 직접 등록하신 후 서평을 작성해보세요!
-      </p>
-      <button class="register-book-button">도서등록하기</button>
+    <div v-else class="search-results-wrapper">
+      <div class="search-results" v-if="books.totalElements > 0">
+        <BookSearchResultCard
+          v-for="(book, index) in books.content"
+          :key="index"
+          :book="book"
+        />
+      </div>
+      <WarningPage v-else />
+      <BookRegistrationButton />
+      <PaginationView :page-info="books" />
     </div>
   </div>
 </template>
@@ -77,69 +55,44 @@ onMounted(() => {
 <style scoped>
 .search-page {
   width: 100%;
-  max-width: 390px;
-  margin: 0 auto;
-  padding-bottom: 60px;
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 390px;
-}
-
-.search-input {
-  flex-grow: 1;
-  width: 328.11px;
-  height: 37px;
-  padding: 10px;
-  border: 1px solid var(--border-primary);
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-
-.search-icon {
-  width: 41.89px;
-  height: 36.31px;
-  margin-left: 10px;
-  cursor: pointer;
 }
 
 .search-results {
+  width: 100%;
+  padding: 0 15px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* 좌측 정렬 */
-  gap: 20px;
-  padding: 0 0px 20px 0px; /* 좌우 padding 제거 */
-  max-height: 100%;
+  box-sizing: border-box;
+}
+
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
 }
 
-.no-results {
-  text-align: center;
-  margin-top: 20px;
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: var(--text-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-sizing: border-box;
 }
 
-.register-book-button {
-  width: 130px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid var(--button-secondary);
-  background-color: var(--border-fourth);
-  color: #000000;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-results-wrapper {
+  width: 100%;
 }
 </style>
