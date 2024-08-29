@@ -27,7 +27,6 @@ const fetchBook = async (bookId: number): Promise<Book> => {
   return await BookApis.getBook(bookId)
     .then((response) => response as Book)
     .catch((error) => {
-      console.log("yes");
       throw error;
     });
 };
@@ -41,7 +40,6 @@ const fetchReviews = async (reviewIds: number[]): Promise<void> => {
         reviewBookMap.value.set(review, await book.then((data) => data));
       })
       .catch((error) => {
-        console.log("no");
         throw error;
       });
   }
