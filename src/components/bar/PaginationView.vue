@@ -20,7 +20,6 @@ watch(
 const selectPage = (index: number): void => {
   page.value.number = index;
   pageNumbers.value = getPageNumbers(index);
-  console.log(index, page.value, pageNumbers.value);
 };
 
 const getPageNumbers = (index: number): number[] => {
