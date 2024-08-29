@@ -11,6 +11,11 @@ const props = defineProps<{
 const moveToReviewDetail = (): void => {
   router.push(`/reviews/${props.review.reviewId}`);
 };
+
+const handleError = (event: Event): void => {
+  const target = event.target as HTMLImageElement;
+  target.src = require("@/assets/icon/book/default-cover.png");
+};
 </script>
 
 <template>
@@ -20,6 +25,7 @@ const moveToReviewDetail = (): void => {
         :src="props.book.coverImageUrl"
         alt="Book Cover"
         class="book-cover"
+        @error="handleError"
       />
     </div>
     <div class="info-container">

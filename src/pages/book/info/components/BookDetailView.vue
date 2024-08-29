@@ -12,7 +12,7 @@ const isIntroductionExpanded = ref<boolean>(false);
 
 const handleCoverImageError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  target.src = require("@/assets/icon/error/error-icon.png");
+  target.src = require("@/assets/icon/book/default-cover.png");
 };
 
 const toggleIntroductionSpread = () => {
