@@ -1,6 +1,10 @@
 import { CategoryType } from "@/types/Category";
 import { get, postFormData } from "@/api/ServerRequest";
-import { buildPageQuery } from "@/types/Page";
+import {
+  buildPageQuery,
+  buildPageQueryWithOutQuestionMark,
+  Page,
+} from "@/types/Page";
 
 export interface BookIsbnGetResponse {
   title: string;
@@ -26,6 +30,10 @@ export interface BookResponse {
   isPermitted: boolean;
   pickCount: number;
   createdAt: Date;
+}
+
+interface BookResponses {
+  responses: Page<BookResponse>;
 }
 
 export interface BookPostRequest {
@@ -84,14 +92,20 @@ export const BookApis = {
       });
   },
   getBooksWithKeyword: async (
-    keyword: string,
+    keyword: string | null,
     page?: number,
     size?: number
-  ): Promise<BookResponse[]> => {
+  ): Promise<Page<BookResponse>> => {
     // 제목/저자/출판사 포함 도서 다건 조회
-    return await get(
-      `/books?keyword=${keyword}${buildPageQuery(page, size)}`
-    ).then((data) => data as BookResponse[]);
+    let uri = "/books/search";
+    uri += keyword
+      ? `?keyword=${keyword}${buildPageQueryWithOutQuestionMark(page, size)}`
+      : `${buildPageQuery(page, size)}`;
+    return await get(uri)
+      .then((response) => (response as BookResponses).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
   getBooksWithInterestedCategories: async (): Promise<BookResponse[]> => {
     // 관심 카테고리 포함 도서 다건 조회
