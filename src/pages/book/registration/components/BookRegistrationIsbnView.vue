@@ -136,19 +136,19 @@ const closeModal = (): void => {
         조회
       </button>
     </div>
-    <div class="isbn-info-container">
-      <div class="isbn-info-title">*ISBN이란?</div>
-      <div class="isbn-info-content">
-        <div class="isbn-info-content-item">
+    <div class="form-info-container">
+      <div class="form-info-title">*ISBN이란?</div>
+      <div class="form-info-content">
+        <div class="form-info-content-item">
           도서의 유통을 편리하게 하기 위해
         </div>
-        <div class="isbn-info-content-item">
+        <div class="form-info-content-item">
           각 도서에 부여된 고유번호입니다
         </div>
         <img
           src="@/assets/isbn/ISBN.png"
           alt="isbn"
-          class="isbn-info-content-image"
+          class="form-info-content-image"
         />
       </div>
     </div>
@@ -229,7 +229,7 @@ const closeModal = (): void => {
   font-size: 14px;
 }
 
-.isbn-info-container {
+.form-info-container {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -239,7 +239,7 @@ const closeModal = (): void => {
   border-radius: 5px;
 }
 
-.isbn-info-title {
+.form-info-title {
   font-family: var(--font-family-bold), sans-serif;
   color: var(--text-fourth);
   font-size: 16px;
@@ -247,11 +247,11 @@ const closeModal = (): void => {
   margin-bottom: 7px;
 }
 
-.isbn-info-content-item {
+.form-info-content-item {
   font-size: 14px;
 }
 
-.isbn-info-content-image {
+.form-info-content-image {
   width: auto;
   height: auto;
   margin-top: 10px;
