@@ -11,37 +11,23 @@ import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage
 import PointPage from "@/pages/my/point/PointPage.vue";
 import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
-<<<<<<< HEAD
-import PickedReviewsListPage from "@/pages/review/list/PickedReviewsListPage.vue";
-import MyReviewsListPage from "@/pages/review/list/MyReviewsListPage.vue";
-import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
-import BookReviewsListPage from "@/pages/review/list/BookReviewsListPage.vue";
-import FollowerListPage from "@/pages/my/follow/FollowerListPage.vue";
-import FollowingListPage from "@/pages/my/follow/FollowingListPage.vue";
-=======
 import FeedPage from "@/pages/review/feed/FeedPage.vue";
->>>>>>> b4fd49f (Feat: 서평 피드 페이지 조언 주석 추가)
 
 const routes: Array<RouteRecordRaw> = [
-  // 기본 페이지
   { path: "/", name: "고구마서재", component: SamplePage },
+  { path: "/sample", name: "컴포넌트 샘플 페이지", component: SamplePage },
   { path: "/home", name: "메인화면", component: HomePage },
   { path: "/error", name: "", component: ErrorPage },
   { path: "/warning", name: "", component: WarningPage },
-  { path: "/sample", name: "컴포넌트 샘플 페이지", component: SamplePage },
-
-  // 로그인
   { path: "/login", name: "로그인", component: LoginPage },
   {
     path: "/login/oauth2/callback/:provider",
     name: "로그인 핸들러",
     component: LoginHandlerView,
   },
-
-  // 마이페이지
   {
     path: "/members/:memberId/settings",
-    name: localStorage.getItem("isNewMember") ? "회원가입" : "프로필수정",
+    name: "프로필수정",
     component: ProfileSettingPage,
   },
   {
@@ -55,18 +41,6 @@ const routes: Array<RouteRecordRaw> = [
     component: PointPage,
   },
   {
-    path: "/members/:memberId/follows",
-    name: "팔로우",
-    component: FollowerListPage,
-  },
-  {
-    path: "/members/:memberId/followings",
-    name: "팔로잉",
-    component: FollowingListPage,
-  },
-
-  // 도서
-  {
     path: "/books/registration",
     name: "도서등록",
     component: BookRegistrationPage,
@@ -76,8 +50,6 @@ const routes: Array<RouteRecordRaw> = [
     name: "도서 정보",
     component: BookInfoPage,
   },
-
-  // 서평
   {
     path: "/reviews/registration",
     name: "서평 작성",
@@ -85,31 +57,9 @@ const routes: Array<RouteRecordRaw> = [
     props: (route) => ({ bookId: route.query["book-id"] }),
   },
   {
-<<<<<<< HEAD
-    path: "/reviews/my",
-    name: "나의 서평",
-    component: MyReviewsListPage,
-  },
-  {
-    path: "/reviews/picks",
-    name: "서평 Pick",
-    component: PickedReviewsListPage,
-  },
-  {
-    path: "/reviews",
-    name: "도서 서평",
-    component: BookReviewsListPage,
-    props: (route) => ({ bookId: route.query["book-id"] }),
-  },
-  {
-    path: "/reviews/:reviewId",
-    name: "서평",
-    component: ReviewDetailPage,
-=======
     path: "/reviews/feeds",
     name: "서평 피드",
     component: FeedPage,
->>>>>>> b4fd49f (Feat: 서평 피드 페이지 조언 주석 추가)
   },
 ];
 

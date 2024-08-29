@@ -1,51 +1,4 @@
 <script setup lang="ts">
-<<<<<<< HEAD
-import FeedCard from "@/components/card/BookFeedCard.vue";
-import SortRecentBestButton from "@/components/select/SortRecentBestButton.vue";
-import { ref, onMounted } from "vue";
-
-const currentTab = ref("latest");
-
-const feeds = ref([
-  {
-    username: "치킨인더콘",
-    title: "제목이 들어가는 영역",
-    content: "본문 미리보기가 들어갑니다",
-    date: "YYYY.MM.DD",
-    likes: 1,
-  },
-  {
-    username: "치킨인더콘",
-    title: "제목이 들어가는 영역",
-    content: "본문 미리보기가 들어갑니다",
-    date: "YYYY.MM.DD",
-    likes: 1,
-  },
-  {
-    username: "치킨인더콘",
-    title: "제목이 들어가는 영역",
-    content: "본문 미리보기가 들어갑니다",
-    date: "YYYY.MM.DD",
-    likes: 1,
-  },
-]);
-
-const currentPage = ref(1);
-const pageSize = 3; // 한 번에 가져올 피드 개수
-
-// 실제 API 호출로 교체할 수 있는 더미 데이터 추가 함수
-function loadMoreFeeds() {
-  for (let i = 0; i < pageSize; i++) {
-    feeds.value.push({
-      username: "추가된 유저",
-      title: `추가된 제목 ${feeds.value.length + 1}`,
-      content: "추가된 본문 미리보기",
-      date: "YYYY.MM.DD",
-      likes: feeds.value.length + 1,
-    });
-  }
-}
-=======
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import FeedCard from "@/components/card/BookFeedCard.vue";
 import SortRecentBestButton from "@/components/select/SortRecentBestButton.vue";
@@ -94,7 +47,6 @@ const fetchReviews = async (): Promise<void> => {
     reviews.value.concat(data.content);
   });
 };
->>>>>>> b4fd49f (Feat: 서평 피드 페이지 조언 주석 추가)
 
 function handleScroll() {
   const bottomOffset = 10; // 페이지 하단으로부터의 오프셋 (px)
@@ -103,21 +55,6 @@ function handleScroll() {
     window.innerHeight + window.scrollY >=
     document.documentElement.scrollHeight - bottomOffset
   ) {
-<<<<<<< HEAD
-    currentPage.value++;
-    loadMoreFeeds();
-  }
-}
-
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-});
-
-function setTab(tab: string) {
-  currentTab.value = tab;
-  // 탭 변경에 따라 다른 피드 데이터를 가져오는 로직을 추가할 수 있습니다.
-}
-=======
     // Page 타입 선언해놓은거 보면서 각 필드가 어떤 의미인지 알아보세요.
     // 그러면 이게 뭔 소린지 이해될거에요. 3분이면 봄.
     reviewPage.value.number += 1;
@@ -131,26 +68,10 @@ function setTab(tab: string) {
 // 다시 말해서 위에 있는 코드와 아래에 있는 코드가 성공적으로 실행되려면 setup 생명주기 안에서 fetch 가 실행되야해요.
 // 그래서 여기에 fetchReviews() 메소드를 실행시킨거에요.
 fetchReviews();
->>>>>>> b4fd49f (Feat: 서평 피드 페이지 조언 주석 추가)
 </script>
 
 <template>
   <div class="feed-page">
-<<<<<<< HEAD
-    <header>
-      <SortRecentBestButton :currentTab="currentTab" @setTab="setTab" />
-    </header>
-
-    <div class="feed-cards">
-      <FeedCard
-        v-for="(feed, index) in feeds"
-        :key="index"
-        :username="feed.username"
-        :title="feed.title"
-        :content="feed.content"
-        :date="feed.date"
-        :initialLikes="feed.likes"
-=======
     <!--  이미 헤더가 있어서 더 쓰면 안돼요(제거요망)  -->
     <header>
       <SortRecentBestButton />
@@ -166,7 +87,6 @@ fetchReviews();
         :content="review.reviewContent"
         :date="review.updatedAt"
         :initialLikes="review.likes"
->>>>>>> b4fd49f (Feat: 서평 피드 페이지 조언 주석 추가)
       />
     </div>
   </div>
