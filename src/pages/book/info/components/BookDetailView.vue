@@ -8,7 +8,7 @@ const props = defineProps<{
   book: Book;
 }>();
 
-const isSpreadIntroduction = ref<boolean>(false);
+const isIntroductionExpanded = ref<boolean>(false);
 
 const handleCoverImageError = (event: Event) => {
   const target = event.target as HTMLImageElement;
@@ -16,7 +16,7 @@ const handleCoverImageError = (event: Event) => {
 };
 
 const toggleIntroductionSpread = () => {
-  isSpreadIntroduction.value = !isSpreadIntroduction.value;
+  isIntroductionExpanded.value = !isIntroductionExpanded.value;
 };
 </script>
 
@@ -35,7 +35,7 @@ const toggleIntroductionSpread = () => {
     <div class="book-detail-author-name">{{ props.book.authorName }}</div>
     <div
       class="book-detail-introduction"
-      :class="{ expanded: isSpreadIntroduction }"
+      :class="{ expanded: isIntroductionExpanded }"
     >
       {{ props.book.introduction }}
     </div>
@@ -43,7 +43,7 @@ const toggleIntroductionSpread = () => {
       class="book-detail-introduction-button"
       @click="toggleIntroductionSpread"
     >
-      {{ isSpreadIntroduction ? "접기" : "더보기" }}
+      {{ isIntroductionExpanded ? "접기" : "더보기" }}
     </button>
   </div>
 </template>

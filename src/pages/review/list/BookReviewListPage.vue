@@ -39,7 +39,7 @@ const fetchReviewsOfBook = async (bookId: number): Promise<void> => {
       reviews.value = response as Page<Review>;
     })
     .catch((error) => {
-      console.error("BookReviewsListPage fetchReviewsOfBook", error);
+      console.error("BookReviewListPage fetchReviewsOfBook", error);
     });
 };
 
@@ -53,7 +53,7 @@ const fetchBook = async (): Promise<void> => {
       }
     })
     .catch((error) => {
-      console.error("BookReviewsListPage fetchBook", error);
+      console.error("BookReviewListPage fetchBook", error);
     });
 };
 
