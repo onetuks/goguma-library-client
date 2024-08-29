@@ -25,7 +25,7 @@ export const get = async (uri: string): Promise<object> => {
       },
     })
     .then((response) => {
-      const data = response.data;
+      const data = response.data || null;
       console.log(
         "[GET] URL - (",
         BASE_SERVER_URL + uri + ") - Response : ",

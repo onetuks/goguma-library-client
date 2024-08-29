@@ -28,6 +28,8 @@ const fetchCategoryNames = () => {
 const getCategoryNameText = (categoryNames: string[]) => {
   return categoryNames.join(", ");
 };
+
+fetchCategoryNames();
 </script>
 
 <template>

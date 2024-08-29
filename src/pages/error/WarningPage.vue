@@ -43,5 +43,14 @@ const goBack = () => {
   border-radius: 10px;
   margin-top: 30px;
   font-family: var(--font-family-bold), sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.error-button:hover {
+  background-color: var(--surface-fourth);
+}
+
+.error-button:active {
+  background-color: var(--surface-sixth);
 }
 </style>

@@ -5,7 +5,7 @@ import { Review, ReviewApis } from "@/api/ReviewApis";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import ReviewDetailMemberInfoView from "@/pages/review/detail/components/ReviewDetailMemberInfoView.vue";
-import { formatDate } from "@/types/DateUtil";
+import { formatDate } from "@/util/DateUtil";
 
 const route = useRoute();
 

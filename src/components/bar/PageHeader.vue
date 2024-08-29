@@ -52,9 +52,14 @@ header {
 .back-button {
   background-color: var(--background-primary);
   position: absolute;
+  transition: background-color 0.3s ease;
 }
 
 .back-button:hover {
   background-color: var(--surface-fourth);
+}
+
+.back-button:active {
+  background-color: var(--surface-sixth);
 }
 </style>

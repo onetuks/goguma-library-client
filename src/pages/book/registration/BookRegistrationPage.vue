@@ -16,6 +16,7 @@ import {
 } from "@/types/ImageFile";
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import { CategoryType } from "@/types/Category";
+import BookRegistrationIsIndieView from "@/pages/book/registration/components/BookRegistrationIsIndieView.vue";
 
 const BOOK_REGISTRATION_SUCCESS_MESSAGE = "도서가 등록되었습니다";
 
@@ -135,6 +136,10 @@ const closeModal = () => {
 
 <template>
   <div class="book-registration-container">
+    <BookRegistrationIsIndieView
+      :book-post-request="bookPostRequest"
+      @update:BookPostRequest="updateBookPostRequest"
+    />
     <BookRegistrationIsbnView
       :book-post-request="bookPostRequest"
       :hasIsbn="hasIsbn"

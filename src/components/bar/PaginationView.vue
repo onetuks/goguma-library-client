@@ -6,20 +6,16 @@ const props = defineProps<{
   pageInfo: Page<object>;
 }>();
 
-const page = ref<Page<object>>(props.pageInfo);
+const page = ref<Page<object>>({ ...props.pageInfo });
 const pageNumbers = ref<number[]>([]);
 
 watch(
   () => props.pageInfo,
   (newPage) => {
     page.value = newPage;
-    fetchPageInfo();
+    selectPage(page.value.number);
   }
 );
-
-const fetchPageInfo = (): void => {
-  pageNumbers.value = getPageNumbers(page.value.number);
-};
 
 const selectPage = (index: number): void => {
   page.value.number = index;
@@ -42,7 +38,7 @@ const getPageNumbers = (index: number): number[] => {
   return numbers;
 };
 
-fetchPageInfo();
+selectPage(page.value.number);
 </script>
 
 <template>
@@ -55,7 +51,7 @@ fetchPageInfo();
         :key="index"
         @click="selectPage(index)"
       >
-        <span :class="['page', { active: index === page.number }]">
+        <span :class="['page', { active: index === page.number + 1 }]">
           {{ index }}
         </span>
       </button>

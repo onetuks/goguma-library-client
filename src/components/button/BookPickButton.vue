@@ -11,15 +11,9 @@ const props = defineProps<{
 const bookPick = ref<BookPick | null>(null);
 
 const fetchBookPickedStatus = async () => {
-  await BookPickApis.getMyBookPick(props.bookId)
-    .then((response) => {
-      bookPick.value = { ...response } as BookPick;
-    })
-    .catch((error) => {
-      if (error.code === "G007") {
-        bookPick.value = null;
-      }
-    });
+  await BookPickApis.getMyBookPick(props.bookId).then((response) => {
+    bookPick.value = response as BookPick;
+  });
 };
 
 const togglePickStatus = async () => {

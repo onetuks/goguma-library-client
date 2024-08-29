@@ -13,22 +13,14 @@ const toggleReviewPickStatus = async (): Promise<void> => {
   if (reviewPick.value) {
     pickCount.value -= 1;
     await ReviewPickApis.deleteReviewPick(reviewPick.value?.reviewPickId).then(
-      () => {
-        reviewPick.value = null;
-        console.log("toggleReviewPickStatus", reviewPick.value);
-      }
+      () => (reviewPick.value = null)
     );
   } else {
     pickCount.value += 1;
     await ReviewPickApis.postNewReviewPick(props.reviewId)
-      .then((response) => {
-        reviewPick.value = { ...response } as ReviewPick;
-        console.log("toggleReviewPickStatus", reviewPick.value);
-      })
+      .then((response) => (reviewPick.value = { ...response } as ReviewPick))
       .catch((error) => console.error("toggleReviewPickStatus error", error));
   }
-
-  console.log("toggleReviewPickStatus", reviewPick.value);
 };
 
 const getHeartIcon = () => {
@@ -37,12 +29,10 @@ const getHeartIcon = () => {
     : require("@/assets/icon/heart/heart_icon_inactive.png");
 };
 
-const fetchReviewPick = async (): Promise<ReviewPick | null> => {
-  return await ReviewPickApis.getMyReviewPick(props.reviewId)
-    .then((response) => {
-      return response ? ({ ...response } as ReviewPick) : null;
-    })
-    .catch(() => null);
+const fetchReviewPick = async (): Promise<ReviewPick> => {
+  return await ReviewPickApis.getMyReviewPick(props.reviewId).then(
+    (response) => response as ReviewPick
+  );
 };
 
 const fetchReviewPickCount = async (): Promise<number> => {

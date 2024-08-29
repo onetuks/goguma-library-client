@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PointHistory } from "@/api/PointApis";
-import { formatDate } from "@/types/DateUtil";
+import { formatDate } from "@/util/DateUtil";
 
 const props = defineProps<{
   pointHistory: PointHistory[];

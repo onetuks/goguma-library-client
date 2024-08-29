@@ -8,15 +8,15 @@ const props = defineProps<{
   book: Book;
 }>();
 
-const isSpreadIntroduction = ref<boolean>(false);
+const isIntroductionExpanded = ref<boolean>(false);
 
 const handleCoverImageError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  target.src = require("@/assets/icon/error/error-icon.png");
+  target.src = require("@/assets/icon/book/default-cover.png");
 };
 
 const toggleIntroductionSpread = () => {
-  isSpreadIntroduction.value = !isSpreadIntroduction.value;
+  isIntroductionExpanded.value = !isIntroductionExpanded.value;
 };
 </script>
 
@@ -33,9 +33,10 @@ const toggleIntroductionSpread = () => {
     <BookPickButton v-if="book.bookId" :book-id="book.bookId" />
     <div class="book-detail-title">{{ props.book.title }}</div>
     <div class="book-detail-author-name">{{ props.book.authorName }}</div>
+    <div class="book-detail-publisher">{{ props.book.publisher }}</div>
     <div
       class="book-detail-introduction"
-      :class="{ expanded: isSpreadIntroduction }"
+      :class="{ expanded: isIntroductionExpanded }"
     >
       {{ props.book.introduction }}
     </div>
@@ -43,7 +44,7 @@ const toggleIntroductionSpread = () => {
       class="book-detail-introduction-button"
       @click="toggleIntroductionSpread"
     >
-      {{ isSpreadIntroduction ? "접기" : "더보기" }}
+      {{ isIntroductionExpanded ? "접기" : "더보기" }}
     </button>
   </div>
 </template>
@@ -91,6 +92,13 @@ const toggleIntroductionSpread = () => {
 }
 
 .book-detail-author-name {
+  font-size: 16px;
+  font-family: var(--font-family-bold), sans-serif;
+  color: var(--text-fourth);
+  padding: 0 15px;
+}
+
+.book-detail-publisher {
   font-size: 16px;
   font-family: var(--font-family-bold), sans-serif;
   color: var(--text-fourth);

@@ -23,37 +23,25 @@ const isFollowed = (): boolean => {
 const toggleFollowStatus = async (): Promise<void> => {
   if (follow.value) {
     await FollowApis.deleteFollow(follow.value.followId)
-      .then(() => {
-        follow.value = null;
-      })
-      .catch((error) => {
-        console.error("FollowButton toggleFollowStatus - delete", error);
-        handleError(error);
-      });
+      .then(() => (follow.value = null))
+      .catch((error) => handleError(error));
     return;
   }
 
   await FollowApis.postNewFollow(props.memberId)
-    .then((response) => {
-      follow.value = { ...response } as Follow;
-    })
-    .catch((error) => {
-      console.error("FollowButton toggleFollowStatus - post", error);
-      handleError(error);
-    });
+    .then((response) => (follow.value = { ...response } as Follow))
+    .catch((error) => handleError(error));
 };
 
 const fetchFollow = async (): Promise<void> => {
-  await FollowApis.getMyFollow(props.memberId)
-    .then((response) => {
-      follow.value = response as Follow;
-    })
-    .catch(() => {
-      follow.value = null;
-    });
+  await FollowApis.getMyFollow(props.memberId).then(
+    (response) => (follow.value = response as Follow)
+  );
 };
 
 const handleError = (error: ApiError): void => {
+  console.error("FollowButton toggleFollowStatus", error);
+
   let message: string;
   switch (error.code) {
     case "G007":

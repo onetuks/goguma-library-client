@@ -71,13 +71,11 @@ export const buildPageQuery = (page?: number, size?: number): string => {
   return query;
 };
 
-export const buildPageQueryWithSort = (
-  sort: SortType,
+export const buildPageQueryWithOutQuestionMark = (
   page?: number,
   size?: number
 ): string => {
-  let query = "?";
-  query += `sort=${sort}`;
+  let query = "";
   query += page || size ? "&" : "";
   query += page ? `page=${page - 1}` : "";
   query += page && size ? "&" : "";
