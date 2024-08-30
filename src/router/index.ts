@@ -19,6 +19,7 @@ import FollowerListPage from "@/pages/my/follow/FollowerListPage.vue";
 import FollowingListPage from "@/pages/my/follow/FollowingListPage.vue";
 import BookPickListPage from "@/pages/book/list/BookPickListPage.vue";
 import BookSearchPage from "@/pages/book/search/BookSearchPage.vue";
+import MyStudyPage from "@/pages/my/study/MyStudyPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -61,6 +62,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/members/:memberId/followings",
     name: "팔로잉",
     component: FollowingListPage,
+  },
+  {
+    path: "/members/:memberId/study",
+    name: "나의 서재",
+    component: MyStudyPage,
   },
 
   // 도서

@@ -1,4 +1,4 @@
-import { CategoryType } from "@/types/Category";
+import { CategoryMap, CategoryType } from "@/types/Category";
 import { get, patchFormData } from "@/api/ServerRequest";
 
 export interface Member {
@@ -19,7 +19,7 @@ export interface MemberStatics {
   reviewCounts: number;
   followerCounts: number;
   followingCounts: number;
-  reviewCategoryCounts: [CategoryType, number][];
+  reviewCategoryCounts: Map<CategoryType, number>;
 }
 
 export interface MemberPatchRequest {
@@ -73,4 +73,12 @@ export const MemberApis = {
       (data) => data as MemberResponse[]
     );
   },
+};
+
+export const initReviewCategoryCounts = (): Map<CategoryType, number> => {
+  const reviewCategoryCounts = new Map<CategoryType, number>();
+  CategoryMap.forEach((categoryName, categoryType) => {
+    reviewCategoryCounts.set(categoryType, 0);
+  });
+  return reviewCategoryCounts;
 };

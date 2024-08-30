@@ -80,7 +80,7 @@ searchBooks(null);
   width: 40px;
   height: 40px;
   border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top-color: var(--text-primary);
+  border-top-color: var(--surface-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   box-sizing: border-box;

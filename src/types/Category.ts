@@ -19,10 +19,10 @@ export const CategoryMap: Map<CategoryType, string> = new Map([
   ["ESSAY", "에세이"],
   ["TRAVEL", "기행문"],
   ["PHOTO", "사진집"],
-  ["ILLUSTRATION", "일러스트집"],
-  ["CARTOON", "만화책"],
+  ["ILLUSTRATION", "일러스트"],
+  ["CARTOON", "만화"],
   ["MAGAZINE", "잡지"],
-  ["NOVEL", "소설집"],
+  ["NOVEL", "소설"],
   ["ART_BOOK", "미술"],
   ["NON_LITERATURE", "비문학"],
 ]);
