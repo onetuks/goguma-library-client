@@ -74,11 +74,3 @@ export const MemberApis = {
     );
   },
 };
-
-export const initReviewCategoryCounts = (): Map<CategoryType, number> => {
-  const reviewCategoryCounts = new Map<CategoryType, number>();
-  CategoryMap.forEach((categoryName, categoryType) => {
-    reviewCategoryCounts.set(categoryType, 0);
-  });
-  return reviewCategoryCounts;
-};

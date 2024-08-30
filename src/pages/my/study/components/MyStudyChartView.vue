@@ -13,10 +13,11 @@ import {
   Tooltip,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { initReviewCategoryCounts, Member, MemberApis } from "@/api/MemberApis";
+import { Member, MemberApis } from "@/api/MemberApis";
 import { CategoryMap, CategoryType } from "@/types/Category";
 
 const CHART_COLOR_PALETTE = [
+  "#b4b4b4", // 예외 색상
   "#FF9696",
   "#FFF8B5",
   "#C6CCFF",
@@ -30,28 +31,11 @@ const CHART_COLOR_PALETTE = [
   "#FFF5C2",
 ];
 
-const props = defineProps<{
-  memberId: number;
-}>();
-
-const reviewCategoryCounts = ref<Map<CategoryType, number>>(
-  initReviewCategoryCounts()
-);
-
-const fetchMemberStatics = async (memberId: number): Promise<void> => {
-  await MemberApis.getMemberProfile(memberId)
-    .then(
-      (response) =>
-        (reviewCategoryCounts.value = (
-          response as Member
-        ).memberStatics.reviewCategoryCounts)
-    )
-    .catch((error) =>
-      console.error("MyStudyChartView.fetchMemberStatics", error)
-    );
-};
-
-fetchMemberStatics(props.memberId);
+interface CategoryChartData {
+  categoryName: string;
+  reviewedCount: number;
+  color: string;
+}
 
 ChartJS.register(
   Title,
@@ -62,34 +46,13 @@ ChartJS.register(
   ChartDataLabels
 );
 
-const parseData = (
-  reviewCategoryCounts: Map<CategoryType, number>
-): [string, number][] => {
-  const data: [string, number][] = [];
-  Array.from(reviewCategoryCounts).forEach(([category, count]) => {
-    const categoryName = CategoryMap.get(category);
-    if (category !== "ALL" && categoryName && count > 0) {
-      data.push([categoryName, count]);
-    }
-  });
+const props = defineProps<{
+  memberId: number;
+}>();
 
-  if (data.length <= 0) {
-    data.push(["서평 없어요", 1]);
-  }
-  return data;
-};
+const categoryChartData = ref<CategoryChartData[]>([]);
 
-const data = ref<ChartData<"doughnut">>({
-  labels: parseData(reviewCategoryCounts.value).map(([label]) => label),
-  datasets: [
-    {
-      label: "등록서평수",
-      data: parseData(reviewCategoryCounts.value).map(([, count]) => count),
-      backgroundColor: CHART_COLOR_PALETTE,
-      hoverBackgroundColor: CHART_COLOR_PALETTE,
-    },
-  ],
-});
+const data = ref<ChartData<"doughnut"> | null>(null);
 
 const options = ref<ChartOptions<"doughnut">>({
   responsive: true,
@@ -141,11 +104,75 @@ const options = ref<ChartOptions<"doughnut">>({
     },
   },
 });
+
+const buildChartData = (
+  categoryChartData: CategoryChartData[]
+): ChartData<"doughnut"> => {
+  return {
+    labels: categoryChartData.map((categoryData) => categoryData.categoryName),
+    datasets: [
+      {
+        label: "등록서평수",
+        data: categoryChartData.map(
+          (categoryData) => categoryData.reviewedCount
+        ),
+        backgroundColor: categoryChartData.map(
+          (categoryData) => categoryData.color
+        ),
+        hoverBackgroundColor: categoryChartData.map(
+          (categoryData) => categoryData.color
+        ),
+      },
+    ],
+  };
+};
+
+const parseReviewCategoryCounts = (
+  reviewCategoryCounts: Map<CategoryType, number>
+): CategoryChartData[] => {
+  const data: CategoryChartData[] = [];
+  Array.from(reviewCategoryCounts).forEach(([category, count], index) => {
+    const categoryName = CategoryMap.get(category);
+    if (category !== "ALL" && categoryName && count > 0) {
+      data.push({
+        categoryName: categoryName,
+        reviewedCount: count,
+        color: CHART_COLOR_PALETTE[index + 1],
+      });
+    }
+  });
+
+  if (data.length <= 0) {
+    data.push({
+      categoryName: "서평 없어요",
+      reviewedCount: 1,
+      color: CHART_COLOR_PALETTE[0],
+    });
+  }
+
+  return data;
+};
+
+const fetchMemberStatics = async (memberId: number): Promise<void> => {
+  await MemberApis.getMemberProfile(memberId)
+    .then((response) => {
+      categoryChartData.value = parseReviewCategoryCounts(
+        (response as Member).memberStatics.reviewCategoryCounts
+      );
+
+      data.value = buildChartData(categoryChartData.value);
+    })
+    .catch((error) =>
+      console.error("MyStudyChartView.fetchMemberStatics", error)
+    );
+};
+
+fetchMemberStatics(props.memberId);
 </script>
 
 <template>
   <div class="my-study-chart-container">
-    <Doughnut :data="data" :options="options" />
+    <Doughnut v-if="data" :data="data" :options="options" />
   </div>
 </template>
 
@@ -154,7 +181,7 @@ const options = ref<ChartOptions<"doughnut">>({
   width: auto;
   background-color: var(--surface-tertiary);
   position: relative;
-  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.3),
-    inset 0 -10px 10px -10px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2),
+    inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
 }
 </style>
