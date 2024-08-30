@@ -35,15 +35,15 @@ const props = {
 .profile-header {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensures the space between items */
-  width: 360px;
-  height: 40px;
-  margin: 0 auto; /* Center the component */
+  justify-content: space-between;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 
 .profile-picture {
-  width: 40px;
-  height: 40px;
+  width: 12%;
+  height: 12%;
   border-radius: 50%;
 }
 
@@ -51,21 +51,13 @@ const props = {
   display: flex;
   align-items: center;
   flex-grow: 1;
-  margin-left: 10px; /* Adjust this margin as needed */
+  margin-left: 10px;
 }
 
 .username {
-  font-size: 14px; /* 제목 중 크기 */
+  font-size: 14px;
   color: var(--text-secondary);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Drop shadow */
-  margin-right: 10px;
-}
-
-.subscribe-button {
-  margin-right: 10px;
-}
-
-.pick-button {
-  margin-right: 25px; /* Ensure 10px margin from the right */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-right: 5%;
 }
 </style>

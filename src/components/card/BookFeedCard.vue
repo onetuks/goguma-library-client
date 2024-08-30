@@ -1,30 +1,37 @@
 <script setup lang="ts">
 import ProfileHeader from "@/components/profile/FeedProfileHeader.vue";
 import { format } from "date-fns";
+import { computed } from "vue";
+// import { Book, BookApis } from "@/api/BookApis";
 
 const book = {
-  title: "제목이 들어가는 영역",
+  title: "전차는 아프리카에서 전진한다",
   authorName: "치킨인더군",
   introduction:
-    "서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다.",
+    "서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다.서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다.서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다. 서평이 들어가는 영역입니다.",
   coverImageUrl: require("@/assets/test/picture_test.png"),
   createdAt: new Date(),
   pickCount: 1,
 };
+
+const truncatedTitle = computed(() => {
+  const maxLength = 11;
+  return book.title.length > maxLength
+    ? book.title.substring(0, maxLength) + "..."
+    : book.title;
+});
 </script>
 
 <template>
   <div class="feed-card">
-    <!-- 이미지 영역 -->
     <div class="card-image">
       <img :src="book.coverImageUrl" alt="Book Cover" class="book-cover" />
     </div>
 
-    <!-- 정보 영역 -->
     <div class="card-info">
       <ProfileHeader class="profile-header" />
       <div class="card-body">
-        <h2 class="title">{{ book.title }}</h2>
+        <h2 class="title">{{ truncatedTitle }}</h2>
         <p class="content">{{ book.introduction }}</p>
       </div>
       <div class="card-footer">
@@ -36,31 +43,32 @@ const book = {
 
 <style scoped>
 .feed-card {
-  width: 360px;
-  height: 532px;
+  width: 30%;
+  height: auto;
   position: relative;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
 }
 
 .card-image {
   width: 100%;
-  height: 100%; /* 전체 카드 높이에 맞게 설정 */
+  height: 100%;
 }
 
 .book-cover {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 이미지가 전체 영역을 커버하면서 비율 유지 */
-  object-position: center; /* 이미지 중앙을 기준으로 맞춤 */
+  object-fit: cover;
+  object-position: center;
 }
 
 .card-info {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 172px;
+  height: auto;
   background: linear-gradient(
     180deg,
     rgba(234, 228, 216, 0.4) 0%,
@@ -68,7 +76,7 @@ const book = {
     /* FEFDF6 at 100% opacity */ var(--background-primary) 100%
   );
   backdrop-filter: blur(2px); /* Background blur 효과 */
-  padding: 5px 15px 15px 15px;
+  padding: 10px 15px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -87,9 +95,9 @@ const book = {
   font-family: var(--font-family-kopub), sans-serif;
   font-size: 31px; /* 헤드라인 대_Kopub */
   color: var(--text-fourth);
-  margin: 10px 0 10px 0; /* 상단 10px, 하단 10px 간격 추가 */
+  margin: 0 2px;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Drop shadow */
-  text-align: left; /* 좌측 정렬 */
+  text-align: left;
 }
 
 .content {
@@ -108,8 +116,8 @@ const book = {
 }
 
 .card-footer {
-  width: 70px;
-  height: 18px;
+  width: auto;
+  height: auto;
   position: absolute;
   left: 15px; /* 좌단에서 15px 떨어짐 */
   bottom: 5px; /* 하단에서 5px 떨어짐 */
