@@ -56,7 +56,7 @@ fetchReviews();
         :book="book"
         :key="index"
       />
-      <WarningPage v-if="emptyReviews()" />
+      <WarningPage v-if="emptyReviews()" :is-visible-button="true" />
     </div>
     <PaginationView :page-info="reviews" />
   </div>

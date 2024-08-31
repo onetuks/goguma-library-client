@@ -45,7 +45,7 @@ searchBooks(null);
           :book="book"
         />
       </div>
-      <WarningPage v-else />
+      <WarningPage v-else :is-visible-button="false" />
       <BookRegistrationButton />
       <PaginationView :page-info="books" />
     </div>
