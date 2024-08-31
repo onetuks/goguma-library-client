@@ -21,6 +21,16 @@ defineProps<{
   justify-content: space-between;
   gap: 8px;
   text-align: center;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.stat-counter:hover {
+  background-color: var(--surface-fourth);
+}
+
+.stat-counter:active {
+  background-color: var(--surface-sixth);
 }
 
 .label {

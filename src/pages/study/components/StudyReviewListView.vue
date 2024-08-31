@@ -1,54 +1,52 @@
 <script setup lang="ts">
-import MyStudyTitleView from "@/pages/my/study/components/MyStudyTitleView.vue";
-import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
-import ShowMoreButton from "@/components/button/ShowMoreButton.vue";
-import router from "@/router";
 import { ref } from "vue";
-import { Book, BookApis } from "@/api/BookApis";
-import { Review } from "@/api/ReviewApis";
-import { ReviewPickApis } from "@/api/ReviewPickApis";
+import { Review, ReviewApis } from "@/api/ReviewApis";
 import { Page } from "@/types/Page";
+import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
+import router from "@/router";
+import { Book, BookApis } from "@/api/BookApis";
+import MyStudyTitleView from "@/pages/study/components/StudyTitleView.vue";
+import ShowMoreButton from "@/components/button/ShowMoreButton.vue";
 import AddMoreButton from "@/components/button/AddMoreButton.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
 
-const reviewBookMap = ref<Map<Review, Book>>(new Map<Review, Book>());
+const props = defineProps<{
+  memberId: number;
+}>();
 
-const moveToReviewPickListPage = (): void => {
-  router.push("/reviews/picks");
-};
+const reviewBookMap = ref<Map<Review, Book>>(new Map());
 
 const moveToReviewListPage = (): void => {
-  router.push("/reviews/");
+  router.push("/reviews/my");
 };
 
-const fetchPickedReviewBookMap = async (): Promise<void> => {
-  await ReviewPickApis.getMyReviewPicks()
+const moveToBookSearchPage = (): void => {
+  router.push("/books/search");
+};
+
+const fetchMyReviews = async (): Promise<void> => {
+  await ReviewApis.getReviewsOfMember(props.memberId, "LATEST")
     .then((response) => {
       const reviews: Review[] = (response as Page<Review>).content;
-      reviews.map(async (review) => {
+      reviews.forEach(async (review) => {
         await BookApis.getBook(review.bookId)
-          .then((response) => {
-            reviewBookMap.value.set(review, response as Book);
-          })
+          .then((response) => reviewBookMap.value.set(review, response as Book))
           .catch((error) =>
-            console.error(
-              "MyStudyReviewPickListView.fetchPickedReviewBookMap",
-              error
-            )
+            console.error("MyStudyReviewListView.fetchMyReviews", error)
           );
       });
     })
     .catch((error) =>
-      console.error("MyStudyReviewPickListView.fetchPickedReviewBookMap", error)
+      console.error("MyStudyReviewListView.fetchMyReviews", error)
     );
 };
 
-fetchPickedReviewBookMap();
+fetchMyReviews();
 </script>
 
 <template>
-  <div class="my-study-review-pick-list-container">
-    <MyStudyTitleView title="서평 Pick" />
+  <div class="my-study-review-list-container">
+    <MyStudyTitleView title="작성한 서평" />
     <div class="review-preview-list-container">
       <WarningPage v-if="reviewBookMap.size === 0" :is-visible-button="false" />
       <ReviewPreviewCard
@@ -61,18 +59,18 @@ fetchPickedReviewBookMap();
     </div>
     <ShowMoreButton
       v-if="reviewBookMap.size > 0"
-      @move:ToShowMorePage="moveToReviewPickListPage"
+      @move:ToShowMorePage="moveToReviewListPage"
     />
     <AddMoreButton
       v-else
-      action="픽할 서평 찾기"
-      @move:ToAddMorePage="moveToReviewListPage"
+      action="서평 남길 도서 찾기"
+      @move:ToAddMorePage="moveToBookSearchPage"
     />
   </div>
 </template>
 
 <style scoped>
-.my-study-review-pick-list-container {
+.my-study-review-list-container {
   width: 100%;
   box-sizing: border-box;
   padding: 20px 15px;

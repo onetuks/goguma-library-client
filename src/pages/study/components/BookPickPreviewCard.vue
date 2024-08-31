@@ -9,6 +9,11 @@ const props = defineProps<{
 const moveToBookInfoPage = (): void => {
   router.push(`/books/${props.book.bookId}/info`);
 };
+
+const handleError = (event: Event) => {
+  const target = event.target as HTMLImageElement;
+  target.src = require("@/assets/icon/book/default-cover.png");
+};
 </script>
 
 <template>
@@ -18,6 +23,7 @@ const moveToBookInfoPage = (): void => {
         :src="book.coverImageUrl"
         :alt="book.title"
         class="book-pick-preview-image"
+        @error="handleError"
       />
     </div>
     <div class="book-pick-preview-title">{{ book.title }}</div>

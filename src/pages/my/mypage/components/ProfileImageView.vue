@@ -3,6 +3,7 @@ import { Member } from "@/api/MemberApis";
 import router from "@/router";
 import { ref } from "vue";
 import { GradeType } from "@/types/GradeType";
+import { LOGIN_ID } from "@/types/AuthWords";
 
 const props = defineProps<{
   member: Member;
@@ -15,12 +16,16 @@ const goToSettingPage = () => {
 };
 
 const goToPointReceiptsPage = () => {
-  router.push("/points/receipts");
+  router.push(`/members/${props.member.memberId}/points`);
 };
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement;
   target.src = require("@/assets/icon/profile/default-profile.png");
+};
+
+const isEditable = (): boolean => {
+  return Number(localStorage.getItem(LOGIN_ID)) === props.member.memberId;
 };
 
 const getGradeType = (points: number): GradeType => {
@@ -58,7 +63,7 @@ getGradeType(props.member.points);
         backgroundImage: `url(${props.member.profileBackgroundImageUrl})`,
       }"
     >
-      <div class="setting-button-wrapper">
+      <div class="setting-button-wrapper" v-if="isEditable()">
         <div class="setting-button" @click="goToSettingPage">프로필 수정</div>
       </div>
     </div>
@@ -194,16 +199,23 @@ getGradeType(props.member.points);
   display: flex;
   flex-direction: column;
   font-size: var(--font-size-14);
-  font-family: var(--font-family-regular), sans-serif;
 }
 
 .profile-point-query {
   width: 20px;
   height: 20px;
   margin-left: 15px;
+  border-radius: 40%;
+  transition: background-color 0.3s ease;
+}
+
+.profile-point-query:hover {
+  background-color: var(--surface-fourth);
 }
 
 .profile-point-info-item {
+  font-family: var(--font-family-regular), sans-serif;
   margin: 0;
+  font-size: 12px;
 }
 </style>

@@ -93,8 +93,9 @@ const closeBadgeDetail = () => {
   gap: 10px;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
-  padding: 0 15px;
+  padding: 15px;
   box-sizing: border-box;
+  background-color: var(--background-primary);
 }
 
 .badge {
@@ -109,6 +110,15 @@ const closeBadgeDetail = () => {
   justify-content: center;
   margin: 0 auto;
   box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+.badge:hover {
+  background-color: var(--surface-fourth);
+}
+
+.badge:active {
+  background-color: var(--surface-sixth);
 }
 
 .badge-image {

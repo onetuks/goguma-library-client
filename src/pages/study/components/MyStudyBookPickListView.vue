@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import MyStudyTitleView from "@/pages/my/study/components/MyStudyTitleView.vue";
+import MyStudyTitleView from "@/pages/study/components/StudyTitleView.vue";
 import { ref } from "vue";
 import { Book } from "@/api/BookApis";
 import { BookPickApis } from "@/api/BookPickApis";
 import { Page } from "@/types/Page";
-import BookPickPreviewCard from "@/pages/my/study/components/BookPickPreviewCard.vue";
+import BookPickPreviewCard from "@/pages/study/components/BookPickPreviewCard.vue";
 import ShowMoreButton from "@/components/button/ShowMoreButton.vue";
 import router from "@/router";
 import AddMoreButton from "@/components/button/AddMoreButton.vue";
