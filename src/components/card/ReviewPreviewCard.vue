@@ -101,8 +101,7 @@ const handleError = (event: Event): void => {
   text-overflow: ellipsis;
   color: var(--text-fourth);
   font-family: var(--font-family-bold), sans-serif;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 16px;
 }
 
 .author {
