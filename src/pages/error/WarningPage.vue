@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import router from "@/router";
 
+defineProps<{
+  isVisibleButton: boolean;
+}>();
+
 const goBack = () => {
   router.back();
 };
@@ -14,7 +18,9 @@ const goBack = () => {
       class="error-image"
     />
     <p>내역이 없습니다</p>
-    <div class="error-button" @click="goBack">뒤로가기</div>
+    <div v-if="isVisibleButton" class="error-button" @click="goBack">
+      뒤로가기
+    </div>
   </div>
 </template>
 
