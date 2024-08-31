@@ -31,6 +31,7 @@ const fetchReviews = async (): Promise<void> => {
   const memberId = Number(localStorage.getItem(LOGIN_ID));
   await ReviewApis.getReviewsOfMember(
     memberId,
+    sortType.value,
     reviews.value.number,
     reviews.value.size
   ).then((response) => {

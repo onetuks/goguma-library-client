@@ -1,4 +1,4 @@
-import { CategoryMap, CategoryType } from "@/types/Category";
+import { CategoryType } from "@/types/Category";
 import { get, patchFormData } from "@/api/ServerRequest";
 
 export interface Member {

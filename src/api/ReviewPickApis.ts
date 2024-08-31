@@ -1,14 +1,11 @@
 import { get, post, remove } from "@/api/ServerRequest";
 import { buildPageQuery, Page } from "@/types/Page";
+import { ReviewPageResponses, ReviewResponse } from "@/api/ReviewApis";
 
 export interface ReviewPickResponse {
   reviewPickId: number;
   memberId: number;
   reviewId: number;
-}
-
-export interface ReviewPickResponses {
-  responses: Page<ReviewPickResponse>;
 }
 
 export interface ReviewPick {
@@ -32,15 +29,12 @@ export const ReviewPickApis = {
   getMyReviewPicks: async (
     page?: number,
     size?: number
-  ): Promise<Page<ReviewPickResponse>> => {
+  ): Promise<Page<ReviewResponse>> => {
     // 나의 서평픽 다건 조회
     return await get(
       `${ReviewPickApis.URI_PREFIX}/my-picks${buildPageQuery(page, size)}`
     )
-      .then((response) => {
-        const typedResponse = response as ReviewPickResponses;
-        return typedResponse.responses as Page<ReviewPickResponse>;
-      })
+      .then((response) => (response as ReviewPageResponses).responses)
       .catch((error) => {
         throw error;
       });

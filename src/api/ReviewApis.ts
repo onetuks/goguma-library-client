@@ -37,6 +37,10 @@ export interface ReviewResponse {
   updatedAt: Date;
 }
 
+export interface ReviewPageResponses {
+  responses: Page<ReviewResponse>;
+}
+
 export interface Review {
   reviewId: number;
   memberId: number;
@@ -46,10 +50,6 @@ export interface Review {
   pickCount: number;
   createdAt: Date;
   updatedAt: Date;
-}
-
-interface ReviewResponses {
-  responses: Page<ReviewResponse>;
 }
 
 export const ReviewApis = {
@@ -120,7 +120,7 @@ export const ReviewApis = {
       )}`
     )
       .then((response) => {
-        const typedResponse = response as ReviewResponses;
+        const typedResponse = response as ReviewPageResponses;
         const responses = typedResponse.responses as Page<ReviewResponse>;
         responses.content.forEach((item) => {
           item.createdAt = arrayToDate(item.createdAt);
@@ -148,7 +148,7 @@ export const ReviewApis = {
       )}`
     )
       .then((response) => {
-        const typedResponse = response as ReviewResponses;
+        const typedResponse = response as ReviewPageResponses;
         return typedResponse.responses as Page<ReviewResponse>;
       })
       .catch((error) => {

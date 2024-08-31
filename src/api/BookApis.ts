@@ -32,7 +32,7 @@ export interface BookResponse {
   createdAt: Date;
 }
 
-interface BookResponses {
+export interface BookResponses {
   responses: Page<BookResponse>;
 }
 
