@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { Book, BookApis, initBook } from "@/api/BookApis";
 import { ref } from "vue";
-import { initReviewRequest, ReviewApis, ReviewRequest } from "@/api/ReviewApis";
+import {
+  initReviewRequest,
+  Review,
+  ReviewApis,
+  ReviewRequest,
+} from "@/api/ReviewApis";
 import ReviewRegistrationBookCoverImageView from "@/pages/review/registration/components/ReviewRegistrationBookCoverImageView.vue";
 import { useRoute } from "vue-router";
 import ReviewBookInfoBar from "@/pages/review/registration/components/ReviewBookCategoryBar.vue";
@@ -9,7 +14,7 @@ import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
 import router from "@/router";
 
-const REVIEW_REGISTRATION_SUCCESS_MESSAGE = "서평이 등록되었습니다";
+const REVIEW_EDIT_SUCCESS_MESSAGE = "서평을 수정했습니다";
 
 const route = useRoute();
 
@@ -19,10 +24,24 @@ const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
 
 const textArea = ref<HTMLTextAreaElement | null>(null);
 
-const fetchBook = async () => {
-  const bookId = Number(route.query["book-id"]);
+const fetchBook = async (bookId: number): Promise<void> => {
   await BookApis.getBook(bookId).then((response) => {
     book.value = { ...response } as Book;
+  });
+};
+
+const fetchReview = async (): Promise<void> => {
+  const reviewId = Number(route.params.reviewId);
+  await ReviewApis.getReview(reviewId).then(async (response) => {
+    const review = response as Review;
+    reviewRequest.value = {
+      reviewTitle: review.reviewTitle,
+      reviewContent: review.reviewContent,
+    };
+
+    if (review.bookId) {
+      await fetchBook(review.bookId);
+    }
   });
 };
 
@@ -53,29 +72,28 @@ const showInvalidReviewContentModal = (): void => {
   }
 };
 
-const registerReview = async (): Promise<void> => {
+const editReview = async (): Promise<void> => {
   try {
     showInvalidReviewTitleModal();
     showInvalidReviewContentModal();
 
-    if (book.value.bookId) {
-      await ReviewApis.postNewReview(book.value.bookId, reviewRequest.value)
-        .then(() => {
-          confirmModalInfo.value = {
-            message: REVIEW_REGISTRATION_SUCCESS_MESSAGE,
-            buttonText: "확인",
-            visible: true,
-          };
-        })
-        .catch((error) => {
-          console.error("ReviewRegistrationPage registerReview", error);
-          confirmModalInfo.value = {
-            message: "서평 등록에 실패했습니다",
-            buttonText: "확인",
-            visible: true,
-          };
-        });
-    }
+    const reviewId = Number(route.params.reviewId);
+    await ReviewApis.patchReview(reviewId, reviewRequest.value)
+      .then(() => {
+        confirmModalInfo.value = {
+          message: REVIEW_EDIT_SUCCESS_MESSAGE,
+          buttonText: "확인",
+          visible: true,
+        };
+      })
+      .catch((error) => {
+        console.error("ReviewRegistrationPage.editReview", error);
+        confirmModalInfo.value = {
+          message: "서평 수정에 실패했습니다",
+          buttonText: "확인",
+          visible: true,
+        };
+      });
   } catch (error) {
     if (error instanceof Error) {
       confirmModalInfo.value = {
@@ -88,14 +106,14 @@ const registerReview = async (): Promise<void> => {
 };
 
 const moveToMyReviewPage = (): void => {
-  if (confirmModalInfo.value.message === REVIEW_REGISTRATION_SUCCESS_MESSAGE) {
+  if (confirmModalInfo.value.message === REVIEW_EDIT_SUCCESS_MESSAGE) {
     router.push("/reviews/my");
   }
 
   confirmModalInfo.value = initModalInfo();
 };
 
-fetchBook();
+fetchReview();
 </script>
 
 <template>
@@ -127,9 +145,7 @@ fetchBook();
       </div>
     </div>
 
-    <button class="review-registration-button" @click="registerReview">
-      등록하기
-    </button>
+    <button class="review-edit-button" @click="editReview">수정하기</button>
 
     <ConfirmModal
       :confirm-modal-info="confirmModalInfo"
@@ -178,7 +194,7 @@ fetchBook();
   background-color: var(--surface-tertiary);
 }
 
-.review-registration-button {
+.review-edit-button {
   width: 330px;
   margin: 17px 30px;
   padding: 16px 0;
@@ -192,11 +208,11 @@ fetchBook();
   transition: background-color 0.3s ease, margin 0.3s ease;
 }
 
-.review-registration-button:hover {
+.review-edit-button:hover {
   background-color: var(--surface-fourth);
 }
 
-.review-registration-button:active {
+.review-edit-button:active {
   background-color: var(--button-fourth);
   margin: 18px 32px;
 }

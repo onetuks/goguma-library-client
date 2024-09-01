@@ -10,7 +10,6 @@ import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
 import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
 import PointPage from "@/pages/my/point/PointPage.vue";
 import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
-import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
 import ReviewPickListPage from "@/pages/review/list/ReviewPickListPage.vue";
 import MyReviewListPage from "@/pages/review/list/MyReviewListPage.vue";
 import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
@@ -21,6 +20,8 @@ import BookPickListPage from "@/pages/book/list/BookPickListPage.vue";
 import BookSearchPage from "@/pages/book/search/BookSearchPage.vue";
 import MyStudyPage from "@/pages/study/MyStudyPage.vue";
 import OthersStudyPage from "@/pages/study/OthersStudyPage.vue";
+import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
+import ReviewEditPage from "@/pages/review/registration/ReviewEditPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -106,6 +107,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "서평 작성",
     component: ReviewRegistrationPage,
     props: (route) => ({ bookId: route.query["book-id"] }),
+  },
+  {
+    path: "/reviews/:reviewId/edit",
+    name: "서평 수정",
+    component: ReviewEditPage,
   },
   {
     path: "/reviews/my",

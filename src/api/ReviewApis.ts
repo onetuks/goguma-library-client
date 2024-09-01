@@ -41,17 +41,6 @@ export interface ReviewPageResponses {
   responses: Page<ReviewResponse>;
 }
 
-export interface Review {
-  reviewId: number;
-  memberId: number;
-  bookId: number;
-  reviewTitle: string;
-  reviewContent: string;
-  pickCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export const ReviewApis = {
   URI_PREFIX: "/reviews",
   postNewReview: async (
@@ -69,9 +58,11 @@ export const ReviewApis = {
     request: ReviewRequest
   ): Promise<ReviewResponse> => {
     // 서평 수정
-    return await patch(`${ReviewApis.URI_PREFIX}/${reviewId}`, request).then(
-      (data) => data as ReviewResponse
-    );
+    return await patch(`${ReviewApis.URI_PREFIX}/${reviewId}`, request)
+      .then((data) => data as ReviewResponse)
+      .catch((error) => {
+        throw error;
+      });
   },
   deleteReview: async (reviewId: number): Promise<void> => {
     // 서평 삭제
