@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { eventBus } from "@/util/EventBus";
+import { ref } from "vue";
+
 const props = withDefaults(
   defineProps<{
     headerTitle: string;
@@ -8,7 +11,15 @@ const props = withDefaults(
   }
 );
 
+const nickname = ref<string>();
+
 const goBack = () => window.history.back();
+
+eventBus.on("update:Nickname", (newNickname) => {
+  if (newNickname) {
+    nickname.value = newNickname as string;
+  }
+});
 </script>
 
 <template>
@@ -20,7 +31,9 @@ const goBack = () => window.history.back();
         @click="goBack"
         class="back-button"
       />
-      <p class="header-title">{{ props.headerTitle }}</p>
+      <p class="header-title">
+        {{ nickname ? nickname : "" }}{{ props.headerTitle }}
+      </p>
     </div>
     <div class="header-division"></div>
   </header>
@@ -53,6 +66,7 @@ header {
   background-color: var(--background-primary);
   position: absolute;
   transition: background-color 0.3s ease;
+  border-radius: 0 50% 50% 0;
 }
 
 .back-button:hover {

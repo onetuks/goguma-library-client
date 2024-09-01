@@ -6,6 +6,7 @@ import { Member, MemberApis } from "@/api/MemberApis";
 import MyStudyChartView from "@/pages/study/components/StudyChartView.vue";
 import StudyReviewListView from "@/pages/study/components/StudyReviewListView.vue";
 import ProfileBadgeView from "@/pages/my/mypage/components/ProfileBadgeView.vue";
+import { eventBus } from "@/util/EventBus";
 
 const route = useRoute();
 
@@ -14,7 +15,13 @@ const member = ref<Member>();
 const fetchMember = async (): Promise<void> => {
   const memberId = Number(route.query["member-id"]);
   await MemberApis.getMemberProfile(memberId)
-    .then((response) => (member.value = response as Member))
+    .then((response) => {
+      member.value = response as Member;
+
+      if (member.value.nickname) {
+        eventBus.emit("update:Nickname", member.value.nickname);
+      }
+    })
     .catch((error) => console.error("OthersStudyPage.fetchMember", error));
 };
 
