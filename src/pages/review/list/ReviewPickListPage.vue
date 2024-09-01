@@ -6,16 +6,16 @@ import { ref } from "vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import { emptyPage, Page } from "@/types/Page";
-import { ReviewPick, ReviewPickApis } from "@/api/ReviewPickApis";
+import { ReviewPickApis } from "@/api/ReviewPickApis";
 import { SortType } from "@/types/SortType";
 import WarningPage from "@/pages/error/WarningPage.vue";
 
-const reviewPicks = ref<Page<ReviewPick>>(emptyPage());
+const reviews = ref<Page<Review>>(emptyPage());
 const reviewBookMap = ref<Map<Review, Book>>(new Map());
 const sortType = ref<SortType>("LATEST");
 
 const emptyReviewPicks = (): boolean => {
-  return reviewPicks.value.content.length === 0;
+  return reviews.value.content.length === 0;
 };
 
 const selectSortType = (type: SortType) => {
@@ -35,6 +35,7 @@ const fetchReviews = async (reviewIds: number[]): Promise<void> => {
   for (const reviewId of reviewIds) {
     await ReviewApis.getReview(reviewId)
       .then(async (response) => {
+        reviewBookMap.value.clear();
         const review = response as Review;
         const book = fetchBook(review.bookId);
         reviewBookMap.value.set(review, await book.then((data) => data));
@@ -47,13 +48,13 @@ const fetchReviews = async (reviewIds: number[]): Promise<void> => {
 
 const fetchReviewPicks = async (): Promise<void> => {
   await ReviewPickApis.getMyReviewPicks(
-    reviewPicks.value.number,
-    reviewPicks.value.size
+    reviews.value.number,
+    reviews.value.size
   )
     .then((response) => {
-      reviewPicks.value = response as Page<ReviewPick>;
+      reviews.value = response as Page<Review>;
       fetchReviews(
-        reviewPicks.value.content.map((reviewPick) => reviewPick.reviewId)
+        reviews.value.content.map((reviewPick) => reviewPick.reviewId)
       );
     })
     .catch((error) => {
@@ -76,7 +77,7 @@ fetchReviewPicks();
       />
       <WarningPage v-if="emptyReviewPicks()" :is-visible-button="true" />
     </div>
-    <PaginationView :page-info="reviewPicks" />
+    <PaginationView :page-info="reviews" />
   </div>
 </template>
 

@@ -35,6 +35,7 @@ const fetchReviews = async (): Promise<void> => {
     reviews.value.number,
     reviews.value.size
   ).then((response) => {
+    reviewBookMap.value.clear();
     reviews.value = response as Page<Review>;
     reviews.value.content.forEach(async (review) => {
       const book = await fetchBook(review.bookId);
