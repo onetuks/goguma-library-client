@@ -12,11 +12,11 @@ const props = defineProps<{
 const grade = ref<GradeType>("고구마씨앗");
 
 const goToSettingPage = () => {
-  router.push(`/members/${props.member.memberId}/settings`);
+  router.push(`/members/my/settings`);
 };
 
 const goToPointReceiptsPage = () => {
-  router.push(`/members/${props.member.memberId}/points`);
+  router.push(`/members/my/points`);
 };
 
 const handleImageError = (event: Event) => {

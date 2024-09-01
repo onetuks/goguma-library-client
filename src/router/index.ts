@@ -23,6 +23,7 @@ import OthersStudyPage from "@/pages/study/OthersStudyPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
 import ReviewEditPage from "@/pages/review/registration/ReviewEditPage.vue";
 import WithdrawPage from "@/pages/login/WithdrawPage.vue";
+import AlarmPage from "@/pages/my/alarm/AlarmPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -47,19 +48,24 @@ const routes: Array<RouteRecordRaw> = [
 
   // 마이페이지
   {
-    path: "/members/:memberId/settings",
+    path: "/members/my/settings",
     name: localStorage.getItem("isNewMember") ? "회원가입" : "프로필수정",
     component: ProfileSettingPage,
+  },
+  {
+    path: "/members/my/points",
+    name: "포인트 적립 내역",
+    component: PointPage,
+  },
+  {
+    path: "/members/my/alarms",
+    name: "알림 내역",
+    component: AlarmPage,
   },
   {
     path: "/members/:memberId/profiles",
     name: "마이페이지",
     component: MyProfilePage,
-  },
-  {
-    path: "/members/:memberId/points",
-    name: "포인트 적립 내역",
-    component: PointPage,
   },
   {
     path: "/members/:memberId/follows",

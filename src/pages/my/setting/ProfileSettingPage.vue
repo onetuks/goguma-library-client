@@ -7,16 +7,13 @@ import {
   MemberPatchRequest,
   MemberResponse,
 } from "@/api/MemberApis";
-import { useRoute } from "vue-router";
 import router from "@/router";
 import ProfileInfoSettingView from "@/pages/my/setting/components/ProfileInfoSettingView.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
-import { IS_NEW_MEMBER } from "@/types/AuthWords";
+import { IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";
 
-const route = useRoute();
-
-const memberIdParam = Number(route.params.memberId);
+const memberIdParam = Number(localStorage.getItem(LOGIN_ID));
 
 const localMember = ref<Member | null>(null);
 const profileImageFilename = ref<string | null>(null);
