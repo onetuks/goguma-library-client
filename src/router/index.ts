@@ -22,6 +22,7 @@ import MyStudyPage from "@/pages/study/MyStudyPage.vue";
 import OthersStudyPage from "@/pages/study/OthersStudyPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
 import ReviewEditPage from "@/pages/review/registration/ReviewEditPage.vue";
+import WithdrawPage from "@/pages/login/WithdrawPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -37,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login/oauth2/callback/:provider",
     name: "로그인 핸들러",
     component: LoginHandlerView,
+  },
+  {
+    path: "/withdraw",
+    name: "회원탈퇴",
+    component: WithdrawPage,
   },
 
   // 마이페이지

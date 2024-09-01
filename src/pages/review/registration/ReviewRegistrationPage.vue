@@ -6,7 +6,7 @@ import ReviewRegistrationBookCoverImageView from "@/pages/review/registration/co
 import { useRoute } from "vue-router";
 import ReviewBookInfoBar from "@/pages/review/registration/components/ReviewBookCategoryBar.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
-import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import router from "@/router";
 
 const REVIEW_REGISTRATION_SUCCESS_MESSAGE = "서평이 등록되었습니다";
@@ -15,7 +15,7 @@ const route = useRoute();
 
 const book = ref<Book>(initBook());
 const reviewRequest = ref<ReviewRequest>(initReviewRequest());
-const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
 const textArea = ref<HTMLTextAreaElement | null>(null);
 
@@ -92,7 +92,7 @@ const moveToMyReviewPage = (): void => {
     router.push("/reviews/my");
   }
 
-  confirmModalInfo.value = initModalInfo();
+  confirmModalInfo.value = initConfirmModalInfo();
 };
 
 fetchBook();

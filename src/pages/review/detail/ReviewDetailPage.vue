@@ -9,7 +9,7 @@ import { formatDate } from "@/util/DateUtil";
 import { LOGIN_ID } from "@/types/AuthWords";
 import router from "@/router";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
-import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 
 const REVIEW_EDIT_MESSAGE = "서평을 수정합니다";
 
@@ -18,7 +18,7 @@ const route = useRoute();
 const book = ref<Book>();
 const review = ref<Review>();
 
-const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
 const isMyReview = (): boolean => {
   return review.value?.memberId == Number(localStorage.getItem(LOGIN_ID));
