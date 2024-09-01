@@ -10,7 +10,6 @@ import MyProfilePage from "@/pages/my/mypage/MyProfilePage.vue";
 import BookRegistrationPage from "@/pages/book/registration/BookRegistrationPage.vue";
 import PointPage from "@/pages/my/point/PointPage.vue";
 import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
-import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
 import ReviewPickListPage from "@/pages/review/list/ReviewPickListPage.vue";
 import MyReviewListPage from "@/pages/review/list/MyReviewListPage.vue";
 import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
@@ -19,7 +18,12 @@ import FollowerListPage from "@/pages/my/follow/FollowerListPage.vue";
 import FollowingListPage from "@/pages/my/follow/FollowingListPage.vue";
 import BookPickListPage from "@/pages/book/list/BookPickListPage.vue";
 import BookSearchPage from "@/pages/book/search/BookSearchPage.vue";
-import MyStudyPage from "@/pages/my/study/MyStudyPage.vue";
+import MyStudyPage from "@/pages/study/MyStudyPage.vue";
+import OthersStudyPage from "@/pages/study/OthersStudyPage.vue";
+import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
+import ReviewEditPage from "@/pages/review/registration/ReviewEditPage.vue";
+import WithdrawPage from "@/pages/login/WithdrawPage.vue";
+import AlarmPage from "@/pages/my/alarm/AlarmPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -36,22 +40,32 @@ const routes: Array<RouteRecordRaw> = [
     name: "로그인 핸들러",
     component: LoginHandlerView,
   },
+  {
+    path: "/withdraw",
+    name: "회원탈퇴",
+    component: WithdrawPage,
+  },
 
   // 마이페이지
   {
-    path: "/members/:memberId/settings",
+    path: "/members/my/settings",
     name: localStorage.getItem("isNewMember") ? "회원가입" : "프로필수정",
     component: ProfileSettingPage,
+  },
+  {
+    path: "/members/my/points",
+    name: "포인트 적립 내역",
+    component: PointPage,
+  },
+  {
+    path: "/members/my/alarms",
+    name: "알림 내역",
+    component: AlarmPage,
   },
   {
     path: "/members/:memberId/profiles",
     name: "마이페이지",
     component: MyProfilePage,
-  },
-  {
-    path: "/members/:memberId/points",
-    name: "포인트 적립 내역",
-    component: PointPage,
   },
   {
     path: "/members/:memberId/follows",
@@ -63,10 +77,18 @@ const routes: Array<RouteRecordRaw> = [
     name: "팔로잉",
     component: FollowingListPage,
   },
+
+  // 서재
   {
-    path: "/members/:memberId/study",
+    path: "/study/my",
     name: "나의 서재",
     component: MyStudyPage,
+  },
+  {
+    path: "/study",
+    name: "님의 서재",
+    component: OthersStudyPage,
+    props: (route) => ({ memberId: route.query["member-id"] }),
   },
 
   // 도서
@@ -97,6 +119,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "서평 작성",
     component: ReviewRegistrationPage,
     props: (route) => ({ bookId: route.query["book-id"] }),
+  },
+  {
+    path: "/reviews/:reviewId/edit",
+    name: "서평 수정",
+    component: ReviewEditPage,
   },
   {
     path: "/reviews/my",

@@ -2,6 +2,7 @@
 import UserStatCounter from "@/pages/my/mypage/components/ProfileStaticsView.vue";
 import { Member } from "@/api/MemberApis";
 import router from "@/router";
+import FollowButton from "@/components/button/FollowButton.vue";
 
 const props = defineProps<{
   member: Member;
@@ -12,7 +13,7 @@ const moveToMyReviewPage = () => {
 };
 
 const moveToFollowerPage = () => {
-  router.push(`/members/${props.member.memberId}/followers`);
+  router.push(`/members/${props.member.memberId}/follows`);
 };
 
 const moveToFollowingPage = () => {
@@ -51,12 +52,15 @@ const moveToInstagram = () => {
           @click="moveToFollowingPage"
         />
       </div>
-      <img
-        src="@/assets/icon/profile/instagram-icon.png"
-        alt="Instagram"
-        @click="moveToInstagram"
-        class="instagram"
-      />
+      <div class="button-container">
+        <img
+          src="@/assets/icon/profile/instagram-icon.png"
+          alt="Instagram"
+          @click="moveToInstagram"
+          class="instagram"
+        />
+        <FollowButton :member-id="member.memberId" />
+      </div>
     </div>
   </div>
 </template>
@@ -106,8 +110,26 @@ const moveToInstagram = () => {
   text-align: center;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 .instagram {
   width: 34px;
   height: 34px;
+  border-radius: 40%;
+  transition: background-color 0.3s ease;
+}
+
+.instagram:hover {
+  background-color: var(--surface-fourth);
+}
+
+.instagram:active {
+  background-color: var(--surface-sixth);
 }
 </style>

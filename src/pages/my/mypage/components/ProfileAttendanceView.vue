@@ -12,7 +12,7 @@ import { AttendanceApis, AttendanceResponse } from "@/api/AttendanceApis";
 import CalendarTitleView from "@/components/calendar/CalendarTitleView.vue";
 import CalendarView, { Day } from "@/components/calendar/CalendarView.vue";
 import CalendarInfoView from "@/components/calendar/CalendarInfoView.vue";
-import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 const TODAY = new Date();
@@ -28,7 +28,7 @@ onBeforeMount(() => {
 
 const days = ref<Day[]>([]);
 const attendanceCounts = ref<number>(0);
-const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
 const generateCalendar = (): void => {
   const startDay: Date = startOfWeek(
@@ -47,7 +47,7 @@ const generateCalendar = (): void => {
 };
 
 const closeModal = (): void => {
-  confirmModalInfo.value = initModalInfo();
+  confirmModalInfo.value = initConfirmModalInfo();
 };
 
 const updateAttendances = (): void => {

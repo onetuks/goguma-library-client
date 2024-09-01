@@ -1,7 +1,7 @@
 import { ClientProvider } from "@/types/ClientProvider";
 import { ACCESS_TOKEN, IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";
 import { RoleType } from "@/types/RoleType";
-import { postWithAuthCode } from "@/api/ServerRequest";
+import { postWithAuthCode, remove } from "@/api/ServerRequest";
 
 export interface LoginResponse {
   appToken: string;
@@ -26,7 +26,7 @@ export const AuthApis = {
     clientProvider: ClientProvider,
     code: string
   ): Promise<LoginResponse> => {
-    // 로그인 요청
+    // 로그인
     return await postWithAuthCode(
       `${AuthApis.URI_PREFIX}/login/${clientProvider}`,
       code
@@ -37,5 +37,30 @@ export const AuthApis = {
       localStorage.setItem(LOGIN_ID, String(response.loginId));
       return response;
     });
+  },
+  logout: async (): Promise<LogoutResponse> => {
+    // 로그아웃
+    return await remove(`${AuthApis.URI_PREFIX}/logout`)
+      .then((response) => {
+        localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(IS_NEW_MEMBER);
+        localStorage.removeItem(LOGIN_ID);
+        return response as LogoutResponse;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
+  withdraw: async (): Promise<void> => {
+    // 회원탈퇴
+    await remove(`${AuthApis.URI_PREFIX}/withdraw`)
+      .then((response) => {
+        localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(IS_NEW_MEMBER);
+        localStorage.removeItem(LOGIN_ID);
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
 };

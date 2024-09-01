@@ -175,21 +175,22 @@ export const patchFormData = async (
     .catch((error) => handleApiError(error));
 };
 
-export const remove = (uri: string): void => {
-  axios
+export const remove = async (uri: string): Promise<object | void> => {
+  await axios
     .delete(BASE_SERVER_URL + uri, {
       headers: {
         Authorization: localStorage.getItem(ACCESS_TOKEN),
       },
     })
-    .then(() =>
+    .then((response) => {
       console.log(
         "[DELETE] URL - (" +
           BASE_SERVER_URL +
           uri +
           ") - Response : Deletion Success"
-      )
-    )
+      );
+      return response.data;
+    })
     .catch((error) => handleApiError(error));
 };
 

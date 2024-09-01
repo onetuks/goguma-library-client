@@ -31,9 +31,11 @@ const fetchReviews = async (): Promise<void> => {
   const memberId = Number(localStorage.getItem(LOGIN_ID));
   await ReviewApis.getReviewsOfMember(
     memberId,
+    sortType.value,
     reviews.value.number,
     reviews.value.size
   ).then((response) => {
+    reviewBookMap.value.clear();
     reviews.value = response as Page<Review>;
     reviews.value.content.forEach(async (review) => {
       const book = await fetchBook(review.bookId);
@@ -55,7 +57,7 @@ fetchReviews();
         :book="book"
         :key="index"
       />
-      <WarningPage v-if="emptyReviews()" />
+      <WarningPage v-if="emptyReviews()" :is-visible-button="true" />
     </div>
     <PaginationView :page-info="reviews" />
   </div>

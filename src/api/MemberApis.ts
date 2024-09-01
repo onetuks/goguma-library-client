@@ -1,4 +1,4 @@
-import { CategoryMap, CategoryType } from "@/types/Category";
+import { CategoryType } from "@/types/Category";
 import { get, patchFormData } from "@/api/ServerRequest";
 
 export interface Member {
@@ -73,12 +73,4 @@ export const MemberApis = {
       (data) => data as MemberResponse[]
     );
   },
-};
-
-export const initReviewCategoryCounts = (): Map<CategoryType, number> => {
-  const reviewCategoryCounts = new Map<CategoryType, number>();
-  CategoryMap.forEach((categoryName, categoryType) => {
-    reviewCategoryCounts.set(categoryType, 0);
-  });
-  return reviewCategoryCounts;
 };

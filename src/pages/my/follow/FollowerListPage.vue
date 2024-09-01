@@ -6,6 +6,7 @@ import { ref } from "vue";
 import { Member } from "@/api/MemberApis";
 import FollowMemberCard from "@/pages/my/follow/FollowMemberCard.vue";
 import PaginationView from "@/components/bar/PaginationView.vue";
+import WarningPage from "@/pages/error/WarningPage.vue";
 
 const route = useRoute();
 
@@ -25,10 +26,15 @@ fetchFollowers();
 
 <template>
   <div class="follow-list-page-container">
+    <WarningPage
+      :is-visible-button="true"
+      v-if="followers.totalElements === 0"
+    />
     <FollowMemberCard
       :member="member"
       v-for="(member, index) in followers.content"
       :key="index"
+      v-else
     />
     <PaginationView :page-info="followers" />
   </div>

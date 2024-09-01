@@ -37,18 +37,7 @@ export interface ReviewResponse {
   updatedAt: Date;
 }
 
-export interface Review {
-  reviewId: number;
-  memberId: number;
-  bookId: number;
-  reviewTitle: string;
-  reviewContent: string;
-  pickCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface ReviewResponses {
+export interface ReviewPageResponses {
   responses: Page<ReviewResponse>;
 }
 
@@ -69,9 +58,11 @@ export const ReviewApis = {
     request: ReviewRequest
   ): Promise<ReviewResponse> => {
     // 서평 수정
-    return await patch(`${ReviewApis.URI_PREFIX}/${reviewId}`, request).then(
-      (data) => data as ReviewResponse
-    );
+    return await patch(`${ReviewApis.URI_PREFIX}/${reviewId}`, request)
+      .then((data) => data as ReviewResponse)
+      .catch((error) => {
+        throw error;
+      });
   },
   deleteReview: async (reviewId: number): Promise<void> => {
     // 서평 삭제
@@ -120,7 +111,7 @@ export const ReviewApis = {
       )}`
     )
       .then((response) => {
-        const typedResponse = response as ReviewResponses;
+        const typedResponse = response as ReviewPageResponses;
         const responses = typedResponse.responses as Page<ReviewResponse>;
         responses.content.forEach((item) => {
           item.createdAt = arrayToDate(item.createdAt);
@@ -148,7 +139,7 @@ export const ReviewApis = {
       )}`
     )
       .then((response) => {
-        const typedResponse = response as ReviewResponses;
+        const typedResponse = response as ReviewPageResponses;
         return typedResponse.responses as Page<ReviewResponse>;
       })
       .catch((error) => {

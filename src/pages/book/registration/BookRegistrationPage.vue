@@ -8,7 +8,7 @@ import BookRegistrationPublisherView from "@/pages/book/registration/components/
 import BookRegistrationNoticeView from "@/pages/book/registration/components/BookRegistrationNoticeView.vue";
 import router from "@/router";
 import { ApiError } from "@/api/ServerRequest";
-import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import {
   ImageFileUploadProps,
@@ -27,7 +27,7 @@ const hasIsbn = ref<boolean>(true);
 
 const coverImageData = ref<ImageFileUploadProps>(initImageFileUploadProps());
 
-const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
 const updateBookPostRequest = (newRequest: BookPostRequest): void => {
   bookPostRequest.value = { ...newRequest };
@@ -130,7 +130,7 @@ const closeModal = () => {
     router.push(`/books/${registeredBookId.value}/info`);
   }
 
-  confirmModalInfo.value = initModalInfo();
+  confirmModalInfo.value = initConfirmModalInfo();
 };
 </script>
 

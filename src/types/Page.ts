@@ -1,5 +1,3 @@
-import { SortType } from "@/types/SortType";
-
 export const PAGE_LIMIT = 5;
 
 export interface Page<T> {

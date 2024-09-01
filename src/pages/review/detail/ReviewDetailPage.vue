@@ -6,11 +6,55 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import ReviewDetailMemberInfoView from "@/pages/review/detail/components/ReviewDetailMemberInfoView.vue";
 import { formatDate } from "@/util/DateUtil";
+import { LOGIN_ID } from "@/types/AuthWords";
+import router from "@/router";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
+
+const REVIEW_EDIT_MESSAGE = "서평을 수정합니다";
 
 const route = useRoute();
 
 const book = ref<Book>();
 const review = ref<Review>();
+
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
+
+const isMyReview = (): boolean => {
+  return review.value?.memberId == Number(localStorage.getItem(LOGIN_ID));
+};
+
+const showEditReviewModal = (): void => {
+  confirmModalInfo.value = {
+    message: REVIEW_EDIT_MESSAGE,
+    buttonText: "확인",
+    visible: true,
+  };
+};
+
+const showRemoveReviewModal = (): void => {
+  confirmModalInfo.value = {
+    message: "1포인트가 차감됩니다\n서평을 삭제하시겠어요?",
+    buttonText: "확인",
+    visible: true,
+  };
+};
+
+const closeModal = (): void => {
+  if (confirmModalInfo.value.message === REVIEW_EDIT_MESSAGE) {
+    router.push(`/reviews/${review.value?.reviewId}/edit`);
+  } else {
+    removeReview();
+  }
+};
+
+const removeReview = async (): Promise<void> => {
+  if (review.value) {
+    await ReviewApis.deleteReview(review.value?.reviewId)
+      .then(() => router.push("/reviews/my"))
+      .catch((error) => console.error("ReviewDetailPage.removeReview", error));
+  }
+};
 
 const fetchReview = async (): Promise<Review> => {
   const reviewId = Number(route.params.reviewId);
@@ -48,7 +92,21 @@ fetchData();
         {{ formatDate(review.updatedAt) }}
       </div>
       <div class="review-detail-content">{{ review.reviewContent }}</div>
+
+      <div class="review-detail-edit-container" v-if="isMyReview()">
+        <button class="review-detail-edit-item" @click="showEditReviewModal">
+          수정하기
+        </button>
+        <button class="review-detail-edit-item" @click="showRemoveReviewModal">
+          삭제하기
+        </button>
+      </div>
     </div>
+
+    <ConfirmModal
+      :confirm-modal-info="confirmModalInfo"
+      @modal:Close="closeModal"
+    />
   </div>
 </template>
 
@@ -107,5 +165,34 @@ fetchData();
 
 .review-detail-content {
   margin-bottom: 80px;
+}
+
+.review-detail-edit-container {
+  display: flex;
+  flex-direction: row;
+  text-align: right;
+  color: var(--text-primary);
+  justify-content: right;
+}
+
+.review-detail-edit-item {
+  font-size: 11px;
+  border: none;
+  border-bottom: 1px solid var(--text-primary);
+  margin-left: 4px;
+  transition: font-size 0.3s ease, color 0.3s ease, border-bottom 0.3s ease;
+  background-color: transparent;
+}
+
+.review-detail-edit-item:hover {
+  font-size: 12px;
+  color: var(--text-fourth);
+  border-bottom: 1px solid var(--text-fourth);
+}
+
+.review-detail-edit-item:active {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  border-bottom: 1px solid var(--text-tertiary);
 }
 </style>

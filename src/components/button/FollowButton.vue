@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Follow, FollowApis } from "@/api/FollowApis";
-import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ApiError } from "@/api/ServerRequest";
 
@@ -10,10 +10,10 @@ const props = defineProps<{
 }>();
 
 const follow = ref<Follow | null>();
-const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
 const closeModal = (): void => {
-  confirmModalInfo.value = initModalInfo();
+  confirmModalInfo.value = initConfirmModalInfo();
 };
 
 const isFollowed = (): boolean => {

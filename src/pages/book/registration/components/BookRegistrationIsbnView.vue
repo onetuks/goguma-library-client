@@ -2,7 +2,7 @@
 import { ref, watch } from "vue";
 import { BookApis, BookPostRequest } from "@/api/BookApis";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
-import { ConfirmModalInfo, initModalInfo } from "@/types/Modal";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 
 const ISBN_LENGTH = 13;
 const NON_DIGIT_REGEX = /[^0-9]/;
@@ -19,7 +19,7 @@ const emits = defineEmits<{
 
 const localBookPostRequest = ref<BookPostRequest>({ ...props.bookPostRequest });
 
-const confirmModalInfo = ref<ConfirmModalInfo>(initModalInfo());
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
 watch(localBookPostRequest, (newBookPostRequest) => {
   emits("update:BookPostRequest", { ...newBookPostRequest });
@@ -102,7 +102,7 @@ const handleIsbnSearchError = (message: string): void => {
 };
 
 const closeModal = (): void => {
-  confirmModalInfo.value = initModalInfo();
+  confirmModalInfo.value = initConfirmModalInfo();
 };
 </script>
 
