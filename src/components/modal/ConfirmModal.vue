@@ -55,6 +55,7 @@ const confirm = () => {
   font-family: var(--font-family-bold), sans-serif;
   font-size: var(--font-size-14);
   color: var(--text-fourth);
+  white-space: pre-line;
 }
 
 .checkout-modal-button {
