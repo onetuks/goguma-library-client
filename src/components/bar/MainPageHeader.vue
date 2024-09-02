@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import router from "@/router";
 
+defineProps<{
+  pageTitle: string;
+}>();
+
 const moveToAlarmPage = (): void => {
   router.push("/members/my/alarms");
 };
@@ -8,9 +12,9 @@ const moveToAlarmPage = (): void => {
 
 <template>
   <div class="main-page-header-container">
-    <div class="main-page-header-title">메인화면</div>
+    <div class="main-page-header-title">{{ pageTitle }}</div>
     <img
-      src="../../../../assets/icon/alarm/alarm-icon.png"
+      src="../../assets/icon/alarm/alarm-icon.png"
       alt="alarm-icon"
       class="main-page-header-alarm"
       @click="moveToAlarmPage"

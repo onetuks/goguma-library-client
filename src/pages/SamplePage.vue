@@ -3,7 +3,7 @@ import PickButton from "@/components/button/ReviewPickButton.vue";
 import SubscribeButton from "@/components/button/FollowButton.vue";
 import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
 import CalendarIcon from "@/components/calendar/CalendarIcon.vue";
-import BookFeedCard from "@/components/card/BookFeedCard.vue";
+import BookFeedCard from "@/pages/review/feed/components/FeedCard.vue";
 import BookPickCard from "@/components/card/BookPickCard.vue";
 import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";

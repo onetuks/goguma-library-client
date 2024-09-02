@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import ReviewRecommendTitleView from "@/pages/main/components/view/ReviewRecommendTitleView.vue";
+import ReviewRecommendTitleView from "@/pages/home/components/view/ReviewRecommendTitleView.vue";
 import { ref } from "vue";
 import { emptyPage, Page } from "@/types/Page";
 import { Review, ReviewApis } from "@/api/ReviewApis";
-import RecommendedReviewCard from "@/pages/main/components/common/RecommendedReviewCard.vue";
+import RecommendedReviewCard from "@/pages/home/components/common/RecommendedReviewCard.vue";
 
 const reviews = ref<Page<Review>>(emptyPage());
 

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Review } from "@/api/ReviewApis";
 import { Page } from "@/types/Page";
-import { prop } from "vue-class-component";
 
 const props = defineProps<{
   reviews: Page<Review>;

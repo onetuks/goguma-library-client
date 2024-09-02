@@ -14,13 +14,13 @@ export interface Page<T> {
   pageable: Pageable;
 }
 
-interface PageSort {
+export interface PageSort {
   empty: boolean;
   unsorted: boolean;
   sorted: boolean;
 }
 
-interface Pageable {
+export interface Pageable {
   pageNumber: number;
   pageSize: number;
   sort: PageSort;

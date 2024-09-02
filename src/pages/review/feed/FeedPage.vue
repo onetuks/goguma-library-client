@@ -1,114 +1,105 @@
 <script setup lang="ts">
-import FeedCard from "@/components/card/BookFeedCard.vue";
-import SortRecentBestButton from "@/components/select/SortRecentBestButton.vue";
-import { ref, onMounted } from "vue";
-
-const currentTab = ref("latest");
-
-const feeds = ref([
-  {
-    username: "치킨인더콘",
-    title: "제목이 들어가는 영역",
-    content: "본문 미리보기가 들어갑니다",
-    date: "YYYY.MM.DD",
-    likes: 1,
-  },
-  {
-    username: "치킨인더콘",
-    title: "제목이 들어가는 영역",
-    content: "본문 미리보기가 들어갑니다",
-    date: "YYYY.MM.DD",
-    likes: 1,
-  },
-  {
-    username: "치킨인더콘",
-    title: "제목이 들어가는 영역",
-    content: "본문 미리보기가 들어갑니다",
-    date: "YYYY.MM.DD",
-    likes: 1,
-  },
-]);
-
-const currentPage = ref(1);
-const pageSize = 3; // 한 번에 가져올 피드 개수
-
-// 실제 API 호출로 교체할 수 있는 더미 데이터 추가 함수
-function loadMoreFeeds() {
-  for (let i = 0; i < pageSize; i++) {
-    feeds.value.push({
-      username: "추가된 유저",
-      title: `추가된 제목 ${feeds.value.length + 1}`,
-      content: "추가된 본문 미리보기",
-      date: "YYYY.MM.DD",
-      likes: feeds.value.length + 1,
-    });
-  }
-}
-
-function handleScroll() {
-  const bottomOffset = 10; // 페이지 하단으로부터의 오프셋 (px)
-
-  if (
-    window.innerHeight + window.scrollY >=
-    document.documentElement.scrollHeight - bottomOffset
-  ) {
-    currentPage.value++;
-    loadMoreFeeds();
-  }
-}
+import { Review, ReviewApis } from "@/api/ReviewApis";
+import FeedCard from "@/pages/review/feed/components/FeedCard.vue";
+import SortRecentBestButton from "@/pages/review/feed/components/SortRecentBestButton.vue";
+import { onMounted, ref } from "vue";
+import { emptyPage } from "@/types/Page";
+import { SortType } from "@/types/SortType";
+import MainPageHeader from "@/components/bar/MainPageHeader.vue";
+import { Slice } from "@/types/Slice";
+import WarningPage from "@/pages/error/WarningPage.vue";
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
+  fetchReviews();
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && isLoadableMore()) {
+      fetchReviews();
+    }
+  });
+
+  if (loadMoreTrigger.value) {
+    observer.observe(loadMoreTrigger.value);
+  }
 });
 
-function setTab(tab: string) {
-  currentTab.value = tab;
-  // 탭 변경에 따라 다른 피드 데이터를 가져오는 로직을 추가할 수 있습니다.
-}
+const isFetching = ref<boolean>(false);
+const loadMoreTrigger = ref<HTMLElement | null>(null);
+const reviewPage = ref<Slice<Review>>(emptyPage());
+const reviews = ref<Review[]>([]);
+const sortType = ref<SortType>("LATEST");
+
+const isLoadableMore = (): boolean => {
+  return reviewPage.value.number < reviewPage.value.totalPages;
+};
+
+const changeSortType = (newSortType: SortType): void => {
+  sortType.value = newSortType;
+  fetchReviews();
+};
+
+const fetchReviews = async (): Promise<void> => {
+  if (isFetching.value) {
+    return;
+  }
+  isFetching.value = true;
+
+  await ReviewApis.getReviews(sortType.value)
+    .then((response) => {
+      reviewPage.value = response as Slice<Review>;
+      reviewPage.value.content.forEach((review) => reviews.value.push(review));
+    })
+    .catch((error) => console.error("FeedPage.fetchReviews", error))
+    .finally(() => {
+      if (isLoadableMore()) {
+        isFetching.value = false;
+      }
+    });
+};
+
+fetchReviews();
 </script>
 
 <template>
   <div class="feed-page">
-    <header>
-      <SortRecentBestButton :currentTab="currentTab" @setTab="setTab" />
-    </header>
-
+    <MainPageHeader page-title="피드" />
+    <SortRecentBestButton
+      :sortType="sortType"
+      @update:SortType="changeSortType"
+    />
     <div class="feed-cards">
+      <WarningPage
+        :is-visible-button="false"
+        v-if="reviewPage.totalElements < 1"
+      />
       <FeedCard
-        v-for="(feed, index) in feeds"
+        v-else
+        v-for="(review, index) in reviewPage.content"
         :key="index"
-        :username="feed.username"
-        :title="feed.title"
-        :content="feed.content"
-        :date="feed.date"
-        :initialLikes="feed.likes"
+        :review="review"
       />
     </div>
+    <div ref="loadMoreTrigger" class="loading-indicator" />
   </div>
 </template>
 
 <style scoped>
 .feed-page {
-  color: var(--text-secondary);
-  max-width: 390px;
-  margin: 0 auto;
-  padding-bottom: 60px;
-  overflow-y: hidden;
-  height: auto;
-}
-
-header {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
 }
 
 .feed-cards {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
   gap: 20px;
+  align-items: center;
+  padding: 20px;
+}
+
+.loading-indicator {
   padding: 20px;
 }
 </style>
