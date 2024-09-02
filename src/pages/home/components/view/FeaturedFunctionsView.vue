@@ -1,0 +1,52 @@
+<script setup lang="ts">
+import router from "@/router";
+import { LOGIN_ID } from "@/types/AuthWords";
+
+const moveToMyProfilePage = (): void => {
+  router.push(`/members/${localStorage.getItem(LOGIN_ID)}/profiles`);
+};
+
+const moveToServiceIntroduction = (): void => {
+  window.open(
+    "https://tender-bayberry-b98.notion.site/6cd40b6b417a49fcb726573283b5cfc0?pvs=4"
+  );
+};
+
+const moveToBookStoreMap = (): void => {
+  window.open("https://www.bookshopmap.com/");
+};
+</script>
+
+<template>
+  <div class="function-container">
+    <img
+      src="../../../../assets/banner/attendance-banner.png"
+      alt="attendance-banner"
+      class="banner-image"
+      @click="moveToMyProfilePage"
+    />
+    <img
+      src="../../../../assets/banner/introduction-banner.png"
+      alt="introduction-banner"
+      class="banner-image"
+      @click="moveToServiceIntroduction"
+    />
+    <img
+      src="../../../../assets/banner/map-banner.png"
+      alt="map-banner"
+      class="banner-image"
+      @click="moveToBookStoreMap"
+    />
+  </div>
+</template>
+
+<style scoped>
+.function-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 25px 15px;
+  background-color: var(--background-primary);
+}
+</style>

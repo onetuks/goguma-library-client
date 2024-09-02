@@ -107,17 +107,21 @@ export const BookApis = {
         throw error;
       });
   },
-  getBooksWithInterestedCategories: async (): Promise<BookResponse[]> => {
+  getBooksWithInterestedCategories: async (): Promise<Page<BookResponse>> => {
     // 관심 카테고리 포함 도서 다건 조회
-    return await get("/books/recommend/interested-categories").then(
-      (data) => data as BookResponse[]
-    );
+    return await get("/books/recommend/interested-categories")
+      .then((response) => (response as BookResponses).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
-  getWeeklyBooks: async (): Promise<BookResponse[]> => {
+  getWeeklyFeaturedBooks: async (): Promise<Page<BookResponse>> => {
     // 금주도서 조회
-    return await get("/books/recommend/weekly-featured").then(
-      (data) => data as BookResponse[]
-    );
+    return await get("/books/recommend/weekly-featured")
+      .then((response) => (response as BookResponses).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
 };
 

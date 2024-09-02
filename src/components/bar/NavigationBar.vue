@@ -11,7 +11,7 @@ interface Button {
 
 const buttons: Button[] = [
   {
-    label: "Home",
+    label: "home",
     inactiveIcon: require("@/assets/icon/home/home_icon_inactive.png"),
     activeIcon: require("@/assets/icon/home/home_icon_active.png"),
     width: 25,

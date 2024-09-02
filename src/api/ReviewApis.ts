@@ -5,6 +5,7 @@ import {
   Page,
 } from "@/types/Page";
 import { SortType } from "@/types/SortType";
+import { Slice } from "@/types/Slice";
 
 export interface Review {
   reviewId: number;
@@ -41,6 +42,10 @@ export interface ReviewPageResponses {
   responses: Page<ReviewResponse>;
 }
 
+interface ReviewSliceResponses {
+  responses: Slice<ReviewResponse>;
+}
+
 export const ReviewApis = {
   URI_PREFIX: "/reviews",
   postNewReview: async (
@@ -66,7 +71,9 @@ export const ReviewApis = {
   },
   deleteReview: async (reviewId: number): Promise<void> => {
     // 서평 삭제
-    remove(`${ReviewApis.URI_PREFIX}/${reviewId}`);
+    await remove(`${ReviewApis.URI_PREFIX}/${reviewId}`).catch((error) => {
+      throw error;
+    });
   },
   getReview: async (reviewId: number): Promise<ReviewResponse> => {
     // 서평 단건 조회
@@ -85,12 +92,22 @@ export const ReviewApis = {
     sort: SortType,
     page?: number,
     size?: number
-  ): Promise<ReviewResponse[]> => {
+  ): Promise<Slice<ReviewResponse>> => {
     // 서평 단건 조회 (서평 피드)
     return await get(
-      `${ReviewApis.URI_PREFIX}?sort=${sort}${buildPageQuery(page, size)}`
+      `${ReviewApis.URI_PREFIX}?sort=${sort}${buildPageQueryWithOutQuestionMark(
+        page,
+        size
+      )}`
     )
-      .then((data) => data as ReviewResponse[])
+      .then((response) => {
+        const responses = (response as ReviewSliceResponses).responses;
+        responses.content.forEach((item) => {
+          item.createdAt = arrayToDate(item.createdAt);
+          item.updatedAt = arrayToDate(item.updatedAt);
+        });
+        return responses;
+      })
       .catch((error) => {
         throw error;
       });
@@ -149,11 +166,15 @@ export const ReviewApis = {
   getRecommendedReviews: async (
     page?: number,
     size?: number
-  ): Promise<ReviewResponse[]> => {
+  ): Promise<Page<ReviewResponse>> => {
     // 추천 서평 다건 조회
     return await get(
       `${ReviewApis.URI_PREFIX}/recommend${buildPageQuery(page, size)}`
-    ).then((data) => data as ReviewResponse[]);
+    )
+      .then((response) => (response as ReviewPageResponses).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
 };
 

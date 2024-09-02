@@ -1,68 +1,65 @@
 <script setup lang="ts">
-import { Book } from "@/types/Book";
+import { Book } from "@/api/BookApis";
 
-// 더미 데이터로 사용할 이미지 경로를 설정
-const book = {
-  title: "제목이 들어가는 영역",
-  coverImageUrl: require("@/assets/test/picture_test.png"), // 더미 이미지 경로
-};
-
-defineProps<{
+const props = defineProps<{
   book: Book;
 }>();
 </script>
 
 <template>
-  <div class="recommended-book">
-    <div class="book-cover">
-      <div class="title-overlay">
-        <h2 class="title">{{ book.title }}</h2>
-      </div>
+  <div
+    class="book-recommend-card-container"
+    :style="{ backgroundImage: `url(${props.book.coverImageUrl})` }"
+  >
+    <div class="book-recommend-card-title">
+      {{ book.title }}
     </div>
   </div>
 </template>
 
 <style scoped>
-.recommended-book {
+.book-recommend-card-container {
   width: 215px;
   height: 318px;
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.book-cover {
-  width: 100%;
-  height: 100%;
-  background-image: url("@/assets/test/picture_test.png"); /* 더미 이미지 설정 */
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   background-size: cover;
   background-position: center;
-  position: relative;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
-.title-overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 45px; /* 제목이 들어가는 영역의 높이 */
+.book-recommend-card-container:hover {
+  opacity: 0.9;
+  width: 220px;
+  height: 320px;
+}
+
+.book-recommend-card-container:hover {
+  opacity: 1.5;
+  width: 225px;
+  height: 325px;
+}
+
+.book-recommend-card-title {
+  width: 215px;
+  color: var(--text-fourth);
+  font-size: 20px;
+  font-family: var(--font-family-bold), sans-serif;
+  padding: 11px 9px;
   background: linear-gradient(
-    180deg,
-    rgba(234, 228, 216, 0.4) 0%,
-    #fefdf6 50%,
-    var(--background-primary) 100%
+    to top,
+    var(--background-primary),
+    rgba(255, 255, 255, 0.7)
   );
-  backdrop-filter: blur(2px); /* Background blur 효과 */
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  padding-left: 10px; /* 좌측 여백 추가 */
-}
-
-.title {
-  font-family: var(--font-family-kopub), sans-serif;
-  font-size: 21px; /* 헤드라인 소 크기 */
-  color: var(--text-fourth);
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Drop shadow */
-  margin: 0;
-  text-align: left; /* 좌측 정렬 */
+  word-break: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+  box-sizing: border-box;
 }
 </style>
