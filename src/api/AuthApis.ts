@@ -54,7 +54,7 @@ export const AuthApis = {
   withdraw: async (): Promise<void> => {
     // 회원탈퇴
     await remove(`${AuthApis.URI_PREFIX}/withdraw`)
-      .then((response) => {
+      .then(() => {
         localStorage.removeItem(ACCESS_TOKEN);
         localStorage.removeItem(IS_NEW_MEMBER);
         localStorage.removeItem(LOGIN_ID);
