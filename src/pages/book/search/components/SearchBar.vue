@@ -53,5 +53,15 @@ const searchWithKeyword = (): void => {
   width: 42px;
   height: 36px;
   cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.search-icon:hover {
+  background-color: var(--surface-fourth);
+}
+
+.search-icon:active {
+  background-color: var(--surface-sixth);
 }
 </style>

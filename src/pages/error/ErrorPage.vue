@@ -2,7 +2,7 @@
 import router from "@/router";
 
 const goHome = () => {
-  router.push("/home");
+  router.push("/main");
 };
 </script>
 

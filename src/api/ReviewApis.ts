@@ -149,11 +149,15 @@ export const ReviewApis = {
   getRecommendedReviews: async (
     page?: number,
     size?: number
-  ): Promise<ReviewResponse[]> => {
+  ): Promise<Page<ReviewResponse>> => {
     // 추천 서평 다건 조회
     return await get(
       `${ReviewApis.URI_PREFIX}/recommend${buildPageQuery(page, size)}`
-    ).then((data) => data as ReviewResponse[]);
+    )
+      .then((response) => (response as ReviewPageResponses).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
 };
 

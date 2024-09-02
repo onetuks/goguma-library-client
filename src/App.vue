@@ -1,5 +1,5 @@
 <template>
-  <PageHeader :header-title="getPageTitle()" />
+  <PageHeader v-if="isNotMainPages()" :header-title="getPageTitle()" />
   <nav>
     <router-link to="/" />
   </nav>
@@ -39,5 +39,16 @@ const route = useRoute();
 
 const getPageTitle = (): string => {
   return route.name as string;
+};
+
+const isNotMainPages = (): boolean => {
+  const pageName = route.name;
+  if (pageName) {
+    return (
+      pageName.toString().includes("피드") ||
+      pageName.toString().includes("메인")
+    );
+  }
+  return true;
 };
 </script>

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomePage from "@/pages/home/HomePage.vue";
 import SamplePage from "@/pages/SamplePage.vue";
 import LoginHandlerView from "@/pages/login/handler/LoginHandlerView.vue";
 import LoginPage from "@/pages/login/LoginPage.vue";
@@ -24,14 +23,16 @@ import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrati
 import ReviewEditPage from "@/pages/review/registration/ReviewEditPage.vue";
 import WithdrawPage from "@/pages/login/WithdrawPage.vue";
 import AlarmPage from "@/pages/my/alarm/AlarmPage.vue";
+import MainPage from "@/pages/main/MainPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
-  { path: "/", name: "고구마서재", component: SamplePage },
-  { path: "/home", name: "메인화면", component: HomePage },
+  { path: "/", name: "고구마서재", component: MainPage },
+  { path: "/main", name: "메인화면", component: MainPage },
+
+  // 예외 페이지
   { path: "/error", name: "", component: ErrorPage },
   { path: "/warning", name: "", component: WarningPage },
-  { path: "/sample", name: "컴포넌트 샘플 페이지", component: SamplePage },
 
   // 로그인
   { path: "/login", name: "로그인", component: LoginPage },
