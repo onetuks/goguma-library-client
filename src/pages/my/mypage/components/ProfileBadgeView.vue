@@ -1,42 +1,7 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue";
+import { ref } from "vue";
 import BadgeDetailModal from "@/pages/my/mypage/components/BadgeDetailModal.vue";
-
-export interface Badge {
-  badgeId: number;
-  name: string;
-  detail: string;
-  badgeImageUrl: string;
-}
-
-onBeforeMount(() => {
-  badges.value = [
-    {
-      badgeId: 1,
-      name: "뱃지1",
-      detail: "테스트용1",
-      badgeImageUrl: "dfsd",
-    },
-    {
-      badgeId: 2,
-      name: "뱃지2",
-      detail: "테스트용1",
-      badgeImageUrl: "dfsd",
-    },
-    {
-      badgeId: 3,
-      name: "뱃지3",
-      detail: "테스트용1",
-      badgeImageUrl: "dfsd",
-    },
-    {
-      badgeId: 4,
-      name: "뱃지4",
-      detail: "테스트용1",
-      badgeImageUrl: "dfsd",
-    },
-  ];
-});
+import { Badge } from "@/api/BadgeApis";
 
 defineProps<{
   memberId: number;
@@ -72,7 +37,7 @@ const closeBadgeDetail = () => {
     >
       <img
         :src="badge.badgeImageUrl"
-        :alt="badge.name"
+        :alt="badge.badgeName"
         class="badge-image"
         @error="handleError"
       />

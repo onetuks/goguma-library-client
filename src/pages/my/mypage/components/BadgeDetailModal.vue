@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Badge } from "@/pages/my/mypage/components/ProfileBadgeView.vue";
+import { Badge } from "@/api/BadgeApis";
 
 const props = defineProps<{
   badge: Badge;
@@ -21,11 +21,10 @@ const handleError = (event: Event) => {
       <img
         class="badge-detail-image"
         :src="props.badge.badgeImageUrl"
-        :alt="badge.name"
+        :alt="badge.badgeName"
         @error="handleError"
       />
-      <div class="badge-detail-name">{{ props.badge.name }}</div>
-      <div class="badge-detail-detail">{{ props.badge.detail }}</div>
+      <div class="badge-detail-name">{{ props.badge.badgeName }}</div>
     </div>
   </div>
 </template>
@@ -72,12 +71,5 @@ const handleError = (event: Event) => {
   color: var(--text-fourth);
   font-size: 20px;
   font-family: var(--font-family-bold), sans-serif;
-}
-
-.badge-detail-detail {
-  margin-top: 15px;
-  color: var(--text-fourth);
-  font-size: 14px;
-  font-family: var(--font-family-regular), sans-serif;
 }
 </style>
