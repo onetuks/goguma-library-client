@@ -24,6 +24,7 @@ import WithdrawPage from "@/pages/login/WithdrawPage.vue";
 import AlarmPage from "@/pages/my/alarm/AlarmPage.vue";
 import HomePage from "@/pages/home/HomePage.vue";
 import FeedPage from "@/pages/review/feed/FeedPage.vue";
+import AdminBookRegistrationPage from "@/pages/admin/registration/AdminBookRegistrationPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -146,6 +147,13 @@ const routes: Array<RouteRecordRaw> = [
     path: "/reviews/:reviewId",
     name: "서평",
     component: ReviewDetailPage,
+  },
+
+  //어드민
+  {
+    path: "/admin/registration",
+    name: "도서등록/수정",
+    component: AdminBookRegistrationPage,
   },
 ];
 

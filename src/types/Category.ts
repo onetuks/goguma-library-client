@@ -14,7 +14,6 @@ export type CategoryType =
 
 export const CategoryMap: Map<CategoryType, string> = new Map([
   ["ALL", "전체"],
-  ["ETC", "기타"],
   ["POETRY", "시집"],
   ["ESSAY", "에세이"],
   ["TRAVEL", "기행문"],
@@ -25,4 +24,5 @@ export const CategoryMap: Map<CategoryType, string> = new Map([
   ["NOVEL", "소설"],
   ["ART_BOOK", "미술"],
   ["NON_LITERATURE", "비문학"],
+  ["ETC", "기타"],
 ]);
