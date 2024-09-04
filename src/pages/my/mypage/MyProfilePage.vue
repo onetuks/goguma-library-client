@@ -12,6 +12,7 @@ import {
 import router from "@/router";
 import { AuthApis } from "@/api/AuthApis";
 import ConfirmCancelModal from "@/components/modal/ConfirmCancelModal.vue";
+import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 
 const route = useRoute();
 
@@ -56,6 +57,7 @@ fetchMemberProfile();
 
 <template>
   <div v-if="member" class="my-profile-page-wrapper">
+    <MainPageHeader page-title="마이페이지" />
     <ProfileView :member="member" />
     <div class="divider" />
     <ProfileAttendanceView :member-id="memberIdParam" />

@@ -4,12 +4,14 @@ import StudyReviewListView from "@/pages/study/components/StudyReviewListView.vu
 import MyStudyBookPickListView from "@/pages/study/components/MyStudyBookPickListView.vue";
 import MyStudyReviewPickListView from "@/pages/study/components/MyStudyReviewPickListView.vue";
 import { LOGIN_ID } from "@/types/AuthWords";
+import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 
 const memberId = Number(localStorage.getItem(LOGIN_ID));
 </script>
 
 <template>
   <div class="my-study-page-container">
+    <MainPageHeader page-title="나의 서재" />
     <StudyChartView :member-id="memberId" />
     <StudyReviewListView :member-id="memberId" />
     <MyStudyBookPickListView />

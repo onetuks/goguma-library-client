@@ -1,5 +1,10 @@
 import { ClientProvider } from "@/types/ClientProvider";
-import { ACCESS_TOKEN, IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";
+import {
+  ACCESS_TOKEN,
+  IS_NEW_MEMBER,
+  LOGIN_ID,
+  ROLES,
+} from "@/types/AuthWords";
 import { RoleType } from "@/types/RoleType";
 import { postWithAuthCode, remove } from "@/api/ServerRequest";
 
@@ -35,6 +40,7 @@ export const AuthApis = {
       localStorage.setItem(ACCESS_TOKEN, response.appToken);
       localStorage.setItem(IS_NEW_MEMBER, String(response.isNewMember));
       localStorage.setItem(LOGIN_ID, String(response.loginId));
+      localStorage.setItem(ROLES, JSON.stringify(response.roles));
       return response;
     });
   },

@@ -1,42 +1,49 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import router from "@/router";
+import { LOGIN_ID } from "@/types/AuthWords";
 
-interface Button {
+interface NavigationButton {
   label: string;
   inactiveIcon: string;
   activeIcon: string;
   width: number;
   height: number;
+  clickHandler: () => void;
 }
 
-const buttons: Button[] = [
+const NAVIGATION_BUTTONS: NavigationButton[] = [
   {
     label: "home",
     inactiveIcon: require("@/assets/icon/home/home_icon_inactive.png"),
     activeIcon: require("@/assets/icon/home/home_icon_active.png"),
     width: 25,
     height: 23,
+    clickHandler: () => router.push("/"),
   },
   {
-    label: "Menu",
+    label: "feed",
     inactiveIcon: require("@/assets/icon/menu/menu_icon_inactive.png"),
     activeIcon: require("@/assets/icon/menu/menu_icon_active.png"),
     width: 25,
     height: 15,
+    clickHandler: () => router.push("/feeds"),
   },
   {
-    label: "Add",
+    label: "book",
     inactiveIcon: require("@/assets/icon/add/add_icon.png"),
     activeIcon: require("@/assets/icon/add/add_icon.png"),
     width: 26,
     height: 26,
+    clickHandler: () => router.push("/books/search"),
   },
   {
-    label: "Books",
+    label: "My study",
     inactiveIcon: require("@/assets/icon/book/book_icon_inactive.png"),
     activeIcon: require("@/assets/icon/book/books_icon_active.png"),
     width: 25,
     height: 21.4,
+    clickHandler: () => router.push("/study/my"),
   },
   {
     label: "My Page",
@@ -44,14 +51,22 @@ const buttons: Button[] = [
     activeIcon: require("@/assets/icon/my_page/my_page_icon_active.png"),
     width: 25,
     height: 25,
+    clickHandler: () =>
+      router.push(`/members/${localStorage.getItem(LOGIN_ID)}/profiles`),
   },
 ];
 
 const selectedIndex = ref<number>(0);
 
-const selectButton = (index: number): number => (selectedIndex.value = index);
+const selectButton = (index: number): void => {
+  selectedIndex.value = index;
+  NAVIGATION_BUTTONS[selectedIndex.value].clickHandler();
+};
 
-const getNavigationButtonIcon = (button: Button, index: number): string => {
+const getNavigationButtonIcon = (
+  button: NavigationButton,
+  index: number
+): string => {
   return selectedIndex.value === index
     ? button.activeIcon
     : button.inactiveIcon;
@@ -62,7 +77,7 @@ const getNavigationButtonIcon = (button: Button, index: number): string => {
   <div class="nav-bar">
     <div class="nav-item-container">
       <div
-        v-for="(button, index) in buttons"
+        v-for="(button, index) in NAVIGATION_BUTTONS"
         :key="index"
         class="nav-item-wrapper"
       >
@@ -79,7 +94,10 @@ const getNavigationButtonIcon = (button: Button, index: number): string => {
             }"
           />
         </button>
-        <div v-if="index < buttons.length - 1" class="separator"></div>
+        <div
+          v-if="index < NAVIGATION_BUTTONS.length - 1"
+          class="separator"
+        ></div>
       </div>
     </div>
   </div>
@@ -127,10 +145,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-button.selected img {
-  /* 선택된 버튼의 이미지를 강조할 수 있는 스타일을 여기에 추가할 수 있습니다 */
 }
 
 .separator {

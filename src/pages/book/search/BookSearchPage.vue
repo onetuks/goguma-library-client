@@ -8,6 +8,7 @@ import BookRegistrationButton from "@/pages/book/search/components/BookRegistrat
 import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
 import PaginationView from "@/components/bar/PaginationView.vue";
+import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 
 const books = ref<Page<Book>>(emptyPage());
 
@@ -33,6 +34,7 @@ searchBooks(null);
 
 <template>
   <div class="search-page">
+    <MainPageHeader page-title="도서 검색" />
     <SearchBar @search:Books="searchBooks" />
     <div v-if="loading" class="loading-wrapper">
       <div class="loading-spinner" />

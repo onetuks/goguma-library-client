@@ -3,14 +3,29 @@
   <nav>
     <router-link to="/" />
   </nav>
-  <router-view />
+
+  <transition name="fade" mode="out-in">
+    <router-view :key="route.fullPath" />
+  </transition>
+
   <NavigationBar class="nav-bar" />
 </template>
 
 <style>
-@import "@/styles/colors.css"; /* 색상 변수 정의 CSS 파일 */
+@import "@/styles/colors.css";
 @import "@/styles/font.css";
 @import "https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css";
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter {
+  opacity: 0.6;
+}
+.fade-leave-to {
+  opacity: 0;
+}
 
 body,
 html,
@@ -42,11 +57,14 @@ const getPageTitle = (): string => {
 };
 
 const isBasicPages = (): boolean => {
-  const pageName = route.name;
+  const pageName = String(route.name);
   if (pageName) {
-    console.log(pageName, pageName.toString().includes("메인화면"));
     return (
-      pageName.toString() === "피드" || pageName.toString() === "고구마서재"
+      pageName.includes("피드") ||
+      pageName.includes("고구마서재") ||
+      pageName.includes("나의 서재") ||
+      pageName.includes("도서 검색") ||
+      pageName.includes("마이페이지")
     );
   }
   return false;
