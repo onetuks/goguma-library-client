@@ -8,6 +8,11 @@
     <router-view :key="route.fullPath" />
   </transition>
 
+  <ConfirmModal
+    :confirm-modal-info="confirmModalInfo"
+    @modal:Close="moveToLoginPage"
+  />
+
   <NavigationBar class="nav-bar" />
 </template>
 
@@ -46,11 +51,33 @@ html,
 </style>
 
 <script setup lang="ts">
+import router from "@/router";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import { ConfirmModalInfo, initConfirmModalInfo } from "./types/Modal";
+import { ACCESS_TOKEN } from "@/types/AuthWords";
 import NavigationBar from "@/components/bar/NavigationBar.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
-import { useRoute } from "vue-router";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+
+onMounted(() => {
+  const isNotLoggedIn: boolean = localStorage.getItem(ACCESS_TOKEN) == null;
+  if (isNotLoggedIn) {
+    confirmModalInfo.value = {
+      message: "로그인이 필요해요",
+      buttonText: "확인",
+      visible: true,
+    };
+  }
+});
 
 const route = useRoute();
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
+
+const moveToLoginPage = (): void => {
+  router.push("/login");
+  confirmModalInfo.value = initConfirmModalInfo();
+};
 
 const getPageTitle = (): string => {
   return route.name as string;
