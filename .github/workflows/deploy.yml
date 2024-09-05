@@ -50,7 +50,7 @@ jobs:
 
       - name: Upload docker-compose.yaml to S3
         run: |
-          aws s3 cp ./dist s3://${{ secrets.EB_S3_BUCKET }} --delete
+          aws s3 sync ./dist s3://${{ secrets.CF_S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront cache
         run: |

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import HomePageTitle from "@/pages/home/views/common/HomePageTitle.vue";
-import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 import { ref } from "vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Page } from "@/types/Page";
 import router from "@/router";
-import HomeSelectedBookDetailView from "@/pages/home/views/view/HomeHomeSelectedBookDetailView.vue";
+import HomePageTitle from "@/pages/home/views/HomePageTitle.vue";
+import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
+import HomeSelectedBookDetailView from "@/pages/home/views/HomeSelectedBookDetailView.vue";
 
 const books = ref<Book[]>();
 const selectedBook = ref<Book>();

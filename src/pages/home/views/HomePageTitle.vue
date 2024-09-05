@@ -9,13 +9,13 @@ defineProps<{
   <div class="main-page-title-container">
     <div class="main-section-title-container">
       <img
-        src="@/assets/icon/clover/white-clover-icon.png"
+        src="../../../assets/icon/clover/white-clover-icon.png"
         alt="white-clover-icon"
         class="white-clover-icon"
       />
       <div class="main-section-title">{{ title }}</div>
       <img
-        src="@/assets/icon/clover/white-clover-icon.png"
+        src="../../../assets/icon/clover/white-clover-icon.png"
         alt="white-clover-icon"
         class="white-clover-icon"
       />

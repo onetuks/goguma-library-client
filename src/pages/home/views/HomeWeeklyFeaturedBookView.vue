@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { Book, BookApis } from "@/api/BookApis";
-import HomePageTitle from "@/pages/home/views/common/HomePageTitle.vue";
-import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
-import { Page } from "@/types/Page";
-import WeeklyFeaturedHomeSelectedBookDetailView from "@/pages/home/views/view/HomeHomeSelectedBookDetailView.vue";
 import router from "@/router";
+import { ref } from "vue";
+import { Page } from "@/types/Page";
+import { Book, BookApis } from "@/api/BookApis";
+import HomePageTitle from "@/pages/home/views/HomePageTitle.vue";
+import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 
 const books = ref<Book[]>();
 const selectedBook = ref<Book>();
@@ -50,10 +49,7 @@ fetchWeeklyFeaturedBooks();
         @click="moveToBookInfoPage(book)"
       />
     </div>
-    <WeeklyFeaturedHomeSelectedBookDetailView
-      :book="selectedBook"
-      v-if="selectedBook"
-    />
+    <HomeWeeklyFeaturedBookView :book="selectedBook" v-if="selectedBook" />
   </div>
 </template>
 

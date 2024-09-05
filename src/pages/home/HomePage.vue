@@ -2,10 +2,10 @@
 import router from "@/router";
 import SearchBar from "@/components/bar/SearchBar.vue";
 import MainPageHeader from "@/components/bar/MainPageHeader.vue";
-import HomeWeeklyFeaturedBookView from "@/pages/home/views/view/HomeWeeklyFeaturedBookView.vue";
-import HomeEtcFunctionView from "@/pages/home/views/view/HomeEtcFunctionView.vue";
-import HomeReviewRecommendView from "@/pages/home/views/view/HomeReviewRecommendView.vue";
-import HomeBookRecommendView from "@/pages/home/views/view/HomeBookRecommendView.vue";
+import HomeWeeklyFeaturedBookView from "@/pages/home/views/HomeWeeklyFeaturedBookView.vue";
+import HomeEtcFunctionView from "@/pages/home/views/HomeEtcFunctionView.vue";
+import HomeReviewRecommendView from "@/pages/home/views/HomeReviewRecommendView.vue";
+import HomeBookRecommendView from "@/pages/home/views/HomeBookRecommendView.vue";
 
 const moveToBookSearchPage = (): void => {
   router.push("/books/search");

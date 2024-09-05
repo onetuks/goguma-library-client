@@ -20,19 +20,19 @@ const moveToBookStoreMap = (): void => {
 <template>
   <div class="function-container">
     <img
-      src="../../../../assets/banner/attendance-banner.png"
+      src="../../../assets/banner/attendance-banner.png"
       alt="attendance-banner"
       class="banner-image"
       @click="moveToMyProfilePage"
     />
     <img
-      src="../../../../assets/banner/introduction-banner.png"
+      src="../../../assets/banner/introduction-banner.png"
       alt="introduction-banner"
       class="banner-image"
       @click="moveToServiceIntroduction"
     />
     <img
-      src="../../../../assets/banner/map-banner.png"
+      src="../../../assets/banner/map-banner.png"
       alt="map-banner"
       class="banner-image"
       @click="moveToBookStoreMap"
