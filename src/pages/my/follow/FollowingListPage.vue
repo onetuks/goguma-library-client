@@ -5,7 +5,7 @@ import { useRoute } from "vue-router";
 import { ref } from "vue";
 import { Member } from "@/api/MemberApis";
 import FollowMemberCard from "@/pages/my/follow/FollowMemberCard.vue";
-import PaginationView from "@/components/bar/PaginationView.vue";
+import PaginationBar from "@/components/bar/PaginationBar.vue";
 
 const route = useRoute();
 
@@ -30,7 +30,7 @@ fetchFollowings();
       v-for="(member, index) in followings.content"
       :key="index"
     />
-    <PaginationView :page-info="followings" />
+    <PaginationBar :page-info="followings" />
   </div>
 </template>
 

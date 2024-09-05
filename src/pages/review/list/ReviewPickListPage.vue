@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SortSelect from "@/components/select/SortSelect.vue";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
-import PaginationView from "@/components/bar/PaginationView.vue";
+import PaginationBar from "@/components/bar/PaginationBar.vue";
 import { ref } from "vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Review, ReviewApis } from "@/api/ReviewApis";
@@ -77,7 +77,7 @@ fetchReviewPicks();
       />
       <WarningPage v-if="emptyReviewPicks()" :is-visible-button="true" />
     </div>
-    <PaginationView :page-info="reviews" />
+    <PaginationBar :page-info="reviews" />
   </div>
 </template>
 

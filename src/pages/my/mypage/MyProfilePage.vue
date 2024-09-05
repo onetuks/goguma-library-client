@@ -2,9 +2,9 @@
 import { useRoute } from "vue-router";
 import { ref } from "vue";
 import { Member, MemberApis, MemberResponse } from "@/api/MemberApis";
-import ProfileView from "@/pages/my/mypage/components/ProfileView.vue";
-import ProfileAttendanceView from "@/pages/my/mypage/components/ProfileAttendanceView.vue";
-import ProfileBadgeView from "@/pages/my/mypage/components/ProfileBadgeView.vue";
+import ProfileView from "@/components/view/ProfileView.vue";
+import ProfileAttendanceView from "@/pages/my/mypage/views/MyProfileAttendanceView.vue";
+import BadgeView from "@/components/view/BadgeView.vue";
 import {
   ConfirmCancelModalInfo,
   initConfirmCancelModalInfo,
@@ -61,7 +61,8 @@ fetchMemberProfile();
     <ProfileView :member="member" />
     <div class="divider" />
     <ProfileAttendanceView :member-id="memberIdParam" />
-    <ProfileBadgeView :member-id="memberIdParam" />
+    <BadgeView :member-id="memberIdParam" />
+
     <div class="logout-container">
       <button class="logout-button" @click="showLogoutModal">로그아웃</button>
       <button class="logout-button" @click="moveToWithdrawPage">

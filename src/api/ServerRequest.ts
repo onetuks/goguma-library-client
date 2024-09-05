@@ -1,7 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { ACCESS_TOKEN } from "@/types/AuthWords";
 
-export const BASE_SERVER_URL = "http://localhost:8080/api";
+export const BASE_SERVER_URL =
+  "http://goguma-chimpanzees.ap-northeast-2.elasticbeanstalk.com:8080/api";
 
 export class ApiError extends Error {
   code: string;

@@ -4,7 +4,7 @@ import { Book, BookApis } from "@/api/BookApis";
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import ReviewDetailMemberInfoView from "@/pages/review/detail/components/ReviewDetailMemberInfoView.vue";
+import ReviewDetailMemberInfoView from "@/pages/review/detail/views/ReviewDetailMemberInfoView.vue";
 import { formatDate } from "@/util/DateUtil";
 import { LOGIN_ID } from "@/types/AuthWords";
 import router from "@/router";

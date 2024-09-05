@@ -5,7 +5,7 @@ defineProps<{
   pageTitle: string;
 }>();
 
-const moveToAlarmPage = (): void => {
+const moveToAlarmListPage = (): void => {
   router.push("/members/my/alarms");
 };
 </script>
@@ -17,7 +17,7 @@ const moveToAlarmPage = (): void => {
       src="../../assets/icon/alarm/alarm-icon.png"
       alt="alarm-icon"
       class="main-page-header-alarm"
-      @click="moveToAlarmPage"
+      @click="moveToAlarmListPage"
     />
   </div>
 </template>

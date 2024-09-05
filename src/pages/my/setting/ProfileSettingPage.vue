@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ProfileImageSettingView from "@/pages/my/setting/components/ProfileImageSettingView.vue";
+import ProfileImageSettingView from "@/pages/my/setting/views/ProfileImageSettingView.vue";
 import { ref } from "vue";
 import {
   Member,
@@ -8,7 +8,7 @@ import {
   MemberResponse,
 } from "@/api/MemberApis";
 import router from "@/router";
-import ProfileInfoSettingView from "@/pages/my/setting/components/ProfileInfoSettingView.vue";
+import ProfileInfoSettingView from "@/pages/my/setting/views/ProfileInfoSettingView.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import { IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";

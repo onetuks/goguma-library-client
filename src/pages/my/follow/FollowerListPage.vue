@@ -5,7 +5,7 @@ import { useRoute } from "vue-router";
 import { ref } from "vue";
 import { Member } from "@/api/MemberApis";
 import FollowMemberCard from "@/pages/my/follow/FollowMemberCard.vue";
-import PaginationView from "@/components/bar/PaginationView.vue";
+import PaginationBar from "@/components/bar/PaginationBar.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
 
 const route = useRoute();
@@ -36,7 +36,7 @@ fetchFollowers();
       :key="index"
       v-else
     />
-    <PaginationView :page-info="followers" />
+    <PaginationBar :page-info="followers" />
   </div>
 </template>
 

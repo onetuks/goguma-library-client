@@ -1,43 +1,35 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import BookPickCard from "@/components/card/BookPickCard.vue";
 import { emptyPage, Page } from "@/types/Page";
-import PaginationView from "@/components/bar/PaginationView.vue";
-import { BookPick, BookPickApis, BookPickResponse } from "@/api/BookPickApis";
-import { Book, BookApis } from "@/api/BookApis";
+import { Book } from "@/api/BookApis";
+import { BookPickApis } from "@/api/BookPickApis";
+import BookPickCard from "@/pages/book/list/views/BookPickCard.vue";
+import PaginationBar from "@/components/bar/PaginationBar.vue";
 
-const bookPicks = ref<Page<BookPick>>(emptyPage());
-const books = ref<Book[]>([]);
+const books = ref<Page<Book>>(emptyPage());
 
-const fetchBooks = async (bookIds: number[]): Promise<void> => {
-  bookIds.map(async (bookId) => {
-    await BookApis.getBook(bookId)
-      .then((response) => books.value.push(response as Book))
-      .catch((error) => console.error("BookPickListPage.fetchBooks", error));
-  });
-};
-
-const fetchBookPicks = async (): Promise<void> => {
+const fetchMyPickedBooks = async (): Promise<void> => {
   const pageSize = 6;
-  await BookPickApis.getMyBookPicks(bookPicks.value.number, pageSize)
-    .then((response) => {
-      bookPicks.value = response as Page<BookPickResponse>;
-      fetchBooks(bookPicks.value.content.map((bookPick) => bookPick.bookId));
-    })
+  await BookPickApis.getMyBookPicks(books.value.number, pageSize)
+    .then((response) => (books.value = response as Page<Book>))
     .catch((error) => {
-      console.error("BookPickListPage.fetchBookPicks", error);
+      console.error("BookPickListPage.fetchMyPickedBooks", error);
     });
 };
 
-fetchBookPicks();
+fetchMyPickedBooks();
 </script>
 
 <template>
   <div class="book-pick-page">
     <div class="book-grid">
-      <BookPickCard v-for="(book, index) in books" :key="index" :book="book" />
+      <BookPickCard
+        v-for="(book, index) in books.content"
+        :key="index"
+        :book="book"
+      />
     </div>
-    <PaginationView :page-info="bookPicks" />
+    <PaginationBar :page-info="books" />
   </div>
 </template>
 

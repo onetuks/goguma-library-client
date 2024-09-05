@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import BookRegistrationIsbnView from "@/pages/book/registration/components/BookRegistrationIsbnView.vue";
-import BookRegistrationTitleView from "@/pages/book/registration/components/BookRegistrationTitleView.vue";
+import BookRegistrationIsbnView from "@/pages/book/registration/views/BookRegistrationIsbnView.vue";
+import BookRegistrationTitleView from "@/pages/book/registration/views/BookRegistrationTitleView.vue";
 import { BookApis, BookPostRequest, initBookPostRequest } from "@/api/BookApis";
-import BookRegistrationAuthorNameView from "@/pages/book/registration/components/BookRegistrationAuthorNameView.vue";
-import BookRegistrationPublisherView from "@/pages/book/registration/components/BookRegistrationPublisherView.vue";
-import BookRegistrationNoticeView from "@/pages/book/registration/components/BookRegistrationNoticeView.vue";
+import BookRegistrationAuthorNameView from "@/pages/book/registration/views/BookRegistrationAuthorNameView.vue";
+import BookRegistrationPublisherView from "@/pages/book/registration/views/BookRegistrationPublisherView.vue";
+import BookRegistrationNoticeView from "@/pages/book/registration/views/BookRegistrationNoticeView.vue";
 import router from "@/router";
 import { ApiError } from "@/api/ServerRequest";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
@@ -16,7 +16,7 @@ import {
 } from "@/types/ImageFile";
 import BookCoverUploadCard from "@/components/card/BookCoverUploadCard.vue";
 import { CategoryType } from "@/types/Category";
-import BookRegistrationIsIndieView from "@/pages/book/registration/components/BookRegistrationIsIndieView.vue";
+import BookRegistrationIsIndieView from "@/pages/book/registration/views/BookRegistrationIsIndieView.vue";
 
 const BOOK_REGISTRATION_SUCCESS_MESSAGE = "도서가 등록되었습니다";
 
