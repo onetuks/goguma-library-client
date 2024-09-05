@@ -62,7 +62,8 @@ import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 onMounted(() => {
   const isNotLoggedIn: boolean = localStorage.getItem(ACCESS_TOKEN) == null;
-  if (isNotLoggedIn) {
+  const isNotLoginPage: boolean = router.currentRoute.value.path !== "/login";
+  if (isNotLoggedIn && isNotLoginPage) {
     confirmModalInfo.value = {
       message: "로그인이 필요해요",
       buttonText: "확인",
