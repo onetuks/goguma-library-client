@@ -4,9 +4,11 @@
     <router-link to="/" />
   </nav>
 
-  <transition name="fade" mode="out-in">
-    <router-view :key="route.fullPath" />
-  </transition>
+  <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component" :key="route.fullPath" />
+    </transition>
+  </router-view>
 
   <ConfirmModal
     :confirm-modal-info="confirmModalInfo"
