@@ -1,8 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { ACCESS_TOKEN } from "@/types/AuthWords";
 
-export const BASE_SERVER_URL =
-  "http://goguma-chimpanzees.ap-northeast-2.elasticbeanstalk.com:8080/api";
+export const BASE_SERVER_URL = process.env.VUE_APP_API_BASE_URL + "/api";
 
 export class ApiError extends Error {
   code: string;

@@ -32,12 +32,7 @@ jobs:
 
       - name: Setup Environment Variables
         run: |
-          echo "VUE_APP_KAKAO_CLIENT_ID=${{ secrets.VUE_APP_KAKAO_CLIENT_ID }}" >> .env
-          echo "VUE_APP_KAKAO_CLIENT_SECRET=${{ secrets.VUE_APP_KAKAO_CLIENT_SECRET }}" >> .env
-          echo "VUE_APP_GOOGLE_CLIENT_ID=${{ secrets.VUE_APP_GOOGLE_CLIENT_ID }}" >> .env
-          echo "VUE_APP_GOOGLE_CLIENT_SECRET=${{ secrets.VUE_APP_GOOGLE_CLIENT_SECRET }}" >> .env
-          echo "VUE_APP_NAVER_CLIENT_ID=${{ secrets.VUE_APP_NAVER_CLIENT_ID }}" >> .env
-          echo "VUE_APP_NAVER_CLIENT_SECRET=${{ secrets.VUE_APP_NAVER_CLIENT_SECRET }}" >> .env
+          echo "${{ secrets.env }}" > .env
 
       - name: Install dependencies
         run: |
