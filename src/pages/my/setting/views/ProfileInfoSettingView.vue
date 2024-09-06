@@ -107,7 +107,7 @@ const toggleCategorySelection = (category: CategoryType) => {
             :disabled="!isSelectable(categoryType)"
             @click="toggleCategorySelection(categoryType)"
           />
-          <span class="custom-checkbox"></span>
+          <span class="custom-checkbox" />
           <span class="custom-checkbox-label">{{ categoryName }}</span>
         </label>
       </div>
@@ -127,12 +127,11 @@ const toggleCategorySelection = (category: CategoryType) => {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-weight: bold;
 }
 
 .form-title {
   width: auto;
-  font-family: var(--font-family-regular), sans-serif;
+  font-family: var(--font-family-bold), sans-serif;
   font-size: 16px;
   display: flex;
   align-items: start;
@@ -175,6 +174,7 @@ const toggleCategorySelection = (category: CategoryType) => {
   display: flex;
   align-items: center;
   cursor: pointer;
+  justify-content: center;
 }
 
 .checkbox-label input {
@@ -182,28 +182,21 @@ const toggleCategorySelection = (category: CategoryType) => {
 }
 
 .custom-checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--border-primary);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 8px;
+  background-image: url("@/assets/icon/checkbox/unchecked-icon.png");
+  width: 15px;
+  height: 15px;
 }
 
 .custom-checkbox-label {
+  margin-left: 5px;
   font-family: var(--font-family-regular), sans-serif;
   font-size: 14px;
   font-weight: normal;
 }
 
-.checkbox-label input:checked + .custom-checkbox::after {
-  background-color: var(--gray-300);
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
+.checkbox-label input:checked + .custom-checkbox {
+  background-image: url("@/assets/icon/checkbox/checked-icon.png");
+  width: 15px;
+  height: 15px;
 }
 </style>
