@@ -37,10 +37,17 @@ export const AuthApis = {
       code
     ).then((data) => {
       const response = data as LoginResponse;
+
+      const roleValue: string = JSON.stringify(response.roles)
+        .replaceAll('"', "")
+        .replaceAll("[", "")
+        .replaceAll("]", "");
+
       localStorage.setItem(ACCESS_TOKEN, response.appToken);
       localStorage.setItem(IS_NEW_MEMBER, String(response.isNewMember));
       localStorage.setItem(LOGIN_ID, String(response.loginId));
-      localStorage.setItem(ROLES, JSON.stringify(response.roles));
+      localStorage.setItem(ROLES, roleValue);
+
       return response;
     });
   },
