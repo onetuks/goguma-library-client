@@ -1,19 +1,25 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import BadgeDetailModal from "@/components/modal/BadgeDetailModal.vue";
-import { Badge } from "@/api/BadgeApis";
+import { Badge, BADGES, convertToBadge } from "@/types/Badge";
+import { Member } from "@/api/MemberApis";
 
-defineProps<{
-  memberId: number;
+const props = defineProps<{
+  member: Member;
 }>();
 
-const badges = ref<Badge[]>([]);
+watch(
+  () => props.member.badges,
+  (newBadgeKeys) => convertToBadge(newBadgeKeys)
+);
+
+const badges = ref<Badge[]>(convertToBadge(props.member.badges));
 const isBadgeDetailModalVisible = ref<boolean>(false);
 const selectedBadge = ref<Badge | null>(null);
 
 const handleError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  target.src = require("@/assets/icon/profile/default-badge.png");
+  target.src = require("@/assets/icon/badge/default-badge.png");
 };
 
 const viewBadgeDetail = (badge: Badge) => {

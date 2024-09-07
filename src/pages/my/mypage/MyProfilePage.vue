@@ -61,7 +61,7 @@ fetchMemberProfile();
     <ProfileView :member="member" />
     <div class="divider" />
     <ProfileAttendanceView :member-id="memberIdParam" />
-    <BadgeView :member-id="memberIdParam" />
+    <BadgeView :member="member" />
 
     <div class="logout-container">
       <button class="logout-button" @click="showLogoutModal">로그아웃</button>

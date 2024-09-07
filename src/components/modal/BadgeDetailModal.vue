@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Badge } from "@/api/BadgeApis";
+import { Badge } from "@/types/Badge";
 
 const props = defineProps<{
   badge: Badge;
@@ -11,7 +11,7 @@ const emits = defineEmits<{
 
 const handleError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  target.src = require("@/assets/icon/profile/default-badge.png");
+  target.src = require("@/assets/icon/badge/default-badge.png");
 };
 </script>
 
@@ -25,6 +25,9 @@ const handleError = (event: Event) => {
         @error="handleError"
       />
       <div class="badge-detail-name">{{ props.badge.badgeName }}</div>
+      <div class="badge-detail-description">
+        {{ props.badge.badgeDescription }}
+      </div>
     </div>
   </div>
 </template>
@@ -71,5 +74,11 @@ const handleError = (event: Event) => {
   color: var(--text-fourth);
   font-size: 20px;
   font-family: var(--font-family-bold), sans-serif;
+}
+
+.badge-detail-description {
+  color: var(--text-fourth);
+  font-size: 14px;
+  font-family: var(--font-family-regular), sans-serif;
 }
 </style>
