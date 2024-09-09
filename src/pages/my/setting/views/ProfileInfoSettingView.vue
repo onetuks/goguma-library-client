@@ -11,11 +11,21 @@ const emits = defineEmits<{
   (event: "update:Member", value: Member): void;
 }>();
 
-const localMember = ref<Member>(props.member);
+const localMember = ref<Member>({
+  ...props.member,
+  instagramUrl: props.member.instagramUrl || "www.instagram.com/", // 기본값 설정
+});
 
 watch(localMember, (newMember) => {
   emits("update:Member", newMember);
 });
+
+const ensureInstagramPrefix = () => {
+  const prefix = "www.instagram.com/";
+  if (!localMember.value.instagramUrl.startsWith(prefix)) {
+    localMember.value.instagramUrl = prefix;
+  }
+};
 
 const isSelectable = (category: CategoryType): boolean => {
   const isUnderLimit = localMember.value.interestedCategories.length < 3;
@@ -85,6 +95,7 @@ const toggleCategorySelection = (category: CategoryType) => {
       <input
         type="url"
         v-model="localMember.instagramUrl"
+        @input="ensureInstagramPrefix"
         placeholder="www.instagram.com/계정입력"
         class="input-field"
       />
