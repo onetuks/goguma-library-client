@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import LogoView from "@/pages/login/LogoView.vue";
 
-const REDIRECT_URI = `${process.env.VUE_APP_CLIENT_URL}/login/oauth2/callback`;
+const REDIRECT_URI = `${window.location.origin}/login/oauth2/callback`;
 const KAKAO_CLIENT_ID = process.env.VUE_APP_KAKAO_CLIENT_ID;
 const GOOGLE_CLIENT_ID = process.env.VUE_APP_GOOGLE_CLIENT_ID;
 const NAVER_CLIENT_ID = process.env.VUE_APP_NAVER_CLIENT_ID;

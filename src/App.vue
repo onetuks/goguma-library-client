@@ -27,9 +27,11 @@
 .fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .fade-enter {
   opacity: 0.6;
 }
+
 .fade-leave-to {
   opacity: 0;
 }
@@ -54,7 +56,7 @@ html,
 
 <script setup lang="ts">
 import router from "@/router";
-import { onMounted, ref } from "vue";
+import { onBeforeUpdate, ref } from "vue";
 import { useRoute } from "vue-router";
 import { ConfirmModalInfo, initConfirmModalInfo } from "./types/Modal";
 import { ACCESS_TOKEN } from "@/types/AuthWords";
@@ -62,12 +64,18 @@ import NavigationBar from "@/components/bar/NavigationBar.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
-onMounted(() => {
-  const isNotLoggedIn: boolean = localStorage.getItem(ACCESS_TOKEN) == null;
-  const isNotLoginPage: boolean =
-    !router.currentRoute.value.path.includes("/login") &&
-    !router.currentRoute.value.path.includes("/login/oauth2/callback");
-  if (isNotLoggedIn && isNotLoginPage) {
+onBeforeUpdate(() => {
+  const isLoggedIn: boolean = localStorage.getItem(ACCESS_TOKEN) != null;
+  const isLoginPage: boolean =
+    router.currentRoute.value.path.includes("/login") ||
+    router.currentRoute.value.path.includes("/login/oauth2/callback");
+
+  if (isLoginPage) {
+    confirmModalInfo.value = initConfirmModalInfo();
+    return;
+  }
+
+  if (!isLoggedIn && !confirmModalInfo.value.visible) {
     confirmModalInfo.value = {
       message: "로그인이 필요해요",
       buttonText: "확인",

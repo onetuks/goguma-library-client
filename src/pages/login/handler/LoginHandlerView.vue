@@ -16,7 +16,8 @@ onMounted(() => {
         ? router.push(`/members/my/settings`)
         : router.push("/");
     })
-    .catch(() => {
+    .catch((error) => {
+      console.error("login error", error);
       localStorage.clear();
       router.push("/login");
     });
