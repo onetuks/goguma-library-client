@@ -37,7 +37,11 @@ const closeModal = () => {
 const fetchMemberProfile = async (): Promise<void> => {
   MemberApis.getMemberProfile(memberIdParam).then(
     (response: MemberResponse) => {
-      localMember.value = { ...response } as Member;
+      const fetchedMember = { ...response } as Member;
+      localMember.value = fetchedMember;
+      profileImageFilename.value = fetchedMember.profileImageUrl;
+      profileBackgroundImageFilename.value =
+        fetchedMember.profileBackgroundImageUrl;
     }
   );
 };

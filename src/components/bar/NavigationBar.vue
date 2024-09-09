@@ -61,7 +61,6 @@ const selectedIndex = ref<number>(0);
 watch(
   () => router.currentRoute.value.path,
   (newPath) => {
-    console.log(newPath);
     NAVIGATION_BUTTONS.forEach((button, index) => {
       if (newPath === "/") {
         selectedIndex.value = 0;
