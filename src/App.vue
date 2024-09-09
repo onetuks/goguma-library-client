@@ -4,9 +4,16 @@
     <router-link to="/" />
   </nav>
 
-  <transition name="fade" mode="out-in">
-    <router-view :key="route.fullPath" />
-  </transition>
+  <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component" :key="route.fullPath" />
+    </transition>
+  </router-view>
+
+  <ConfirmModal
+    :confirm-modal-info="confirmModalInfo"
+    @modal:Close="moveToLoginPage"
+  />
 
   <NavigationBar class="nav-bar" />
 </template>
@@ -20,9 +27,11 @@
 .fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .fade-enter {
   opacity: 0.6;
 }
+
 .fade-leave-to {
   opacity: 0;
 }
@@ -46,11 +55,42 @@ html,
 </style>
 
 <script setup lang="ts">
+import router from "@/router";
+import { onBeforeUpdate, ref } from "vue";
+import { useRoute } from "vue-router";
+import { ConfirmModalInfo, initConfirmModalInfo } from "./types/Modal";
+import { ACCESS_TOKEN } from "@/types/AuthWords";
 import NavigationBar from "@/components/bar/NavigationBar.vue";
 import PageHeader from "@/components/bar/PageHeader.vue";
-import { useRoute } from "vue-router";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+
+onBeforeUpdate(() => {
+  const isLoggedIn: boolean = localStorage.getItem(ACCESS_TOKEN) != null;
+  const isLoginPage: boolean =
+    router.currentRoute.value.path.includes("/login") ||
+    router.currentRoute.value.path.includes("/login/oauth2/callback");
+
+  if (isLoginPage) {
+    confirmModalInfo.value = initConfirmModalInfo();
+    return;
+  }
+
+  if (!isLoggedIn && !confirmModalInfo.value.visible) {
+    confirmModalInfo.value = {
+      message: "로그인이 필요해요",
+      buttonText: "확인",
+      visible: true,
+    };
+  }
+});
 
 const route = useRoute();
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
+
+const moveToLoginPage = (): void => {
+  confirmModalInfo.value = initConfirmModalInfo();
+  router.push("/login");
+};
 
 const getPageTitle = (): string => {
   return route.name as string;

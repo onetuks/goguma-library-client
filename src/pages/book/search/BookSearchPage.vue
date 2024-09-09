@@ -3,11 +3,11 @@ import { ref } from "vue";
 import { sleep } from "@/util/SleeperUtil";
 import { Book, BookApis } from "@/api/BookApis";
 import { emptyPage, Page } from "@/types/Page";
-import SearchBar from "@/pages/book/search/components/SearchBar.vue";
-import BookRegistrationButton from "@/pages/book/search/components/BookRegistrationButton.vue";
-import BookSearchResultCard from "@/components/card/BookSearchResultCard.vue";
+import SearchBar from "@/components/bar/SearchBar.vue";
+import BookRegistrationButton from "@/pages/book/search/views/BookRegistrationButton.vue";
+import BookSearchResultCard from "@/pages/book/search/views/BookSearchResultCard.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
-import PaginationView from "@/components/bar/PaginationView.vue";
+import PaginationBar from "@/components/bar/PaginationBar.vue";
 import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 
 const books = ref<Page<Book>>(emptyPage());
@@ -49,7 +49,7 @@ searchBooks(null);
       </div>
       <WarningPage v-else :is-visible-button="false" />
       <BookRegistrationButton />
-      <PaginationView :page-info="books" />
+      <PaginationBar :page-info="books" />
     </div>
   </div>
 </template>

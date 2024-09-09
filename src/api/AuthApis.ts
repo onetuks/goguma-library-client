@@ -37,10 +37,17 @@ export const AuthApis = {
       code
     ).then((data) => {
       const response = data as LoginResponse;
+
+      const roleValue: string = JSON.stringify(response.roles)
+        .replaceAll('"', "")
+        .replaceAll("[", "")
+        .replaceAll("]", "");
+
       localStorage.setItem(ACCESS_TOKEN, response.appToken);
       localStorage.setItem(IS_NEW_MEMBER, String(response.isNewMember));
       localStorage.setItem(LOGIN_ID, String(response.loginId));
-      localStorage.setItem(ROLES, JSON.stringify(response.roles));
+      localStorage.setItem(ROLES, roleValue);
+
       return response;
     });
   },
@@ -48,12 +55,12 @@ export const AuthApis = {
     // 로그아웃
     return await remove(`${AuthApis.URI_PREFIX}/logout`)
       .then((response) => {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(IS_NEW_MEMBER);
-        localStorage.removeItem(LOGIN_ID);
+        localStorage.clear();
+        console.log("로그아웃 성공", localStorage.getItem(ACCESS_TOKEN));
         return response as LogoutResponse;
       })
       .catch((error) => {
+        localStorage.clear();
         throw error;
       });
   },
@@ -61,11 +68,11 @@ export const AuthApis = {
     // 회원탈퇴
     await remove(`${AuthApis.URI_PREFIX}/withdraw`)
       .then(() => {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(IS_NEW_MEMBER);
-        localStorage.removeItem(LOGIN_ID);
+        localStorage.clear();
+        console.log("회원탈퇴 성공", localStorage.getItem(ACCESS_TOKEN));
       })
       .catch((error) => {
+        localStorage.clear();
         throw error;
       });
   },

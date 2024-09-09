@@ -11,24 +11,24 @@ import BookInfoPage from "@/pages/book/info/BookInfoPage.vue";
 import ReviewPickListPage from "@/pages/review/list/ReviewPickListPage.vue";
 import MyReviewListPage from "@/pages/review/list/MyReviewListPage.vue";
 import ReviewDetailPage from "@/pages/review/detail/ReviewDetailPage.vue";
-import BookReviewListPage from "@/pages/review/list/BookReviewListPage.vue";
+import ReviewOfBookListPage from "@/pages/review/list/ReviewOfBookListPage.vue";
 import FollowerListPage from "@/pages/my/follow/FollowerListPage.vue";
 import FollowingListPage from "@/pages/my/follow/FollowingListPage.vue";
 import BookPickListPage from "@/pages/book/list/BookPickListPage.vue";
 import BookSearchPage from "@/pages/book/search/BookSearchPage.vue";
-import MyStudyPage from "@/pages/study/MyStudyPage.vue";
-import OthersStudyPage from "@/pages/study/OthersStudyPage.vue";
+import MyStudyPage from "@/pages/study/my/MyStudyPage.vue";
+import OthersStudyPage from "@/pages/study/other/OthersStudyPage.vue";
 import ReviewRegistrationPage from "@/pages/review/registration/ReviewRegistrationPage.vue";
 import ReviewEditPage from "@/pages/review/registration/ReviewEditPage.vue";
 import WithdrawPage from "@/pages/login/WithdrawPage.vue";
-import AlarmPage from "@/pages/my/alarm/AlarmPage.vue";
+import AlarmListPage from "@/pages/my/alarm/AlarmListPage.vue";
 import HomePage from "@/pages/home/HomePage.vue";
-import FeedPage from "@/pages/review/feed/FeedPage.vue";
+import ReviewFeedPage from "@/pages/review/feed/ReviewFeedPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
   { path: "/", name: "고구마서재", component: HomePage },
-  { path: "/feeds", name: "피드", component: FeedPage },
+  { path: "/feeds", name: "피드", component: ReviewFeedPage },
 
   // 예외 페이지
   { path: "/error", name: "", component: ErrorPage },
@@ -50,7 +50,10 @@ const routes: Array<RouteRecordRaw> = [
   // 마이페이지
   {
     path: "/members/my/settings",
-    name: localStorage.getItem("isNewMember") ? "회원가입" : "프로필수정",
+    name:
+      localStorage.getItem("isNewMember") === "true"
+        ? "회원가입"
+        : "프로필수정",
     component: ProfileSettingPage,
   },
   {
@@ -61,7 +64,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/members/my/alarms",
     name: "알림 내역",
-    component: AlarmPage,
+    component: AlarmListPage,
   },
   {
     path: "/members/:memberId/profiles",
@@ -139,7 +142,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/reviews",
     name: "도서 서평",
-    component: BookReviewListPage,
+    component: ReviewOfBookListPage,
     props: (route) => ({ bookId: route.query["book-id"] }),
   },
   {

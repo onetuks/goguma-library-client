@@ -67,11 +67,11 @@ const confirm = () => {
 }
 
 .checkout-modal-button:hover {
-  background-color: var(--surface-fourth);
+  background-color: var(--ivory-500);
 }
 
 .checkout-modal-button:active {
-  background-color: var(--button-fourth);
+  background-color: var(--ivory-400);
 }
 
 .modal-fade-enter-active,

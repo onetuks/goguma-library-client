@@ -20,7 +20,10 @@ const cancelWithdraw = (): void => {
 
 const withdrawMember = async (): Promise<void> => {
   await AuthApis.withdraw()
-    .then(() => console.log("withdraw is done"))
+    .then(() => {
+      console.log("withdraw is done");
+      router.push("/");
+    })
     .catch((error) => console.error("WithdrawPAge.withdrawMember", error));
 };
 </script>

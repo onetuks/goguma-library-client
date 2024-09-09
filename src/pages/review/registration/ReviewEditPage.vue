@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { Book, BookApis, initBook } from "@/api/BookApis";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import router from "@/router";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import {
   initReviewRequest,
   Review,
   ReviewApis,
   ReviewRequest,
 } from "@/api/ReviewApis";
-import ReviewRegistrationBookCoverImageView from "@/pages/review/registration/components/ReviewRegistrationBookCoverImageView.vue";
-import { useRoute } from "vue-router";
-import ReviewBookInfoBar from "@/pages/review/registration/components/ReviewBookCategoryBar.vue";
+import ReviewBookCoverView from "@/pages/review/registration/views/ReviewBookCoverView.vue";
+import ReviewBookInfoBar from "@/pages/review/registration/views/ReviewBookCategoryBar.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
-import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
-import router from "@/router";
 
 const REVIEW_EDIT_SUCCESS_MESSAGE = "서평을 수정했습니다";
 
@@ -118,7 +118,7 @@ fetchReview();
 
 <template>
   <div class="review-registration-container">
-    <ReviewRegistrationBookCoverImageView :book="book" />
+    <ReviewBookCoverView :book="book" />
     <ReviewBookInfoBar :book="book" />
 
     <div class="review-registration-form-wrapper">

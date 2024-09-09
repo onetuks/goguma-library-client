@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Book, BookApis, initBook } from "@/api/BookApis";
-import BookDetailView from "@/pages/book/info/components/BookDetailView.vue";
 import { useRoute } from "vue-router";
-import ReviewRegisterButton from "@/components/button/ReviewRegisterButton.vue";
-import BookDetailReviewView from "@/pages/book/info/components/BookDetailReviewView.vue";
+import { Book, BookApis, initBook } from "@/api/BookApis";
+import BookInfoView from "@/pages/book/info/views/BookInfoView.vue";
+import ReviewRegisterButton from "@/pages/book/info/views/ReviewRegisterButton.vue";
+import BookInfoReviewListView from "@/pages/book/info/views/BookInfoReviewListView.vue";
 import ErrorPage from "@/pages/error/ErrorPage.vue";
 
 const route = useRoute();
@@ -26,9 +26,9 @@ fetchBook();
 <template>
   <div class="book-info-container">
     <div v-if="book.bookId" class="book-info-wrapper">
-      <BookDetailView :book="book" />
+      <BookInfoView :book="book" />
       <div class="divider" />
-      <BookDetailReviewView :book="book" />
+      <BookInfoReviewListView :book="book" />
       <ReviewRegisterButton :book="book" />
     </div>
     <ErrorPage v-else />

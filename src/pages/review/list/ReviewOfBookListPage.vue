@@ -5,46 +5,59 @@ import WarningPage from "@/pages/error/WarningPage.vue";
 import PaginationBar from "@/components/bar/PaginationBar.vue";
 import { SortType } from "@/types/SortType";
 import { ref } from "vue";
-import { Book, BookApis } from "@/api/BookApis";
+import { Book, BookApis, initBook } from "@/api/BookApis";
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import { emptyPage, Page } from "@/types/Page";
-import { LOGIN_ID } from "@/types/AuthWords";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const sortType = ref<SortType>("LATEST");
+const book = ref<Book>(initBook());
 const reviews = ref<Page<Review>>(emptyPage());
-const reviewBookMap = ref<Map<Review, Book>>(new Map());
 
 const emptyReviews = (): boolean => {
+  console.log(sortType.value, book.value, reviews.value);
   return reviews.value.content.length === 0;
 };
 
 const selectSortType = (type: SortType): void => {
   sortType.value = type;
-  fetchReviews();
+  if (book.value?.bookId) {
+    fetchReviewsOfBook(book.value.bookId);
+  }
 };
 
-const fetchBook = async (bookId: number): Promise<Book> => {
-  return await BookApis.getBook(bookId).then((response) => response as Book);
-};
-
-const fetchReviews = async (): Promise<void> => {
-  const memberId = Number(localStorage.getItem(LOGIN_ID));
-  await ReviewApis.getReviewsOfMember(
-    memberId,
+const fetchReviewsOfBook = async (bookId: number): Promise<void> => {
+  await ReviewApis.getReviewsOfBook(
+    bookId,
     sortType.value,
     reviews.value.number,
     reviews.value.size
-  ).then((response) => {
-    reviewBookMap.value.clear();
-    reviews.value = response as Page<Review>;
-    reviews.value.content.forEach(async (review) => {
-      const book = await fetchBook(review.bookId);
-      reviewBookMap.value.set(review, book);
+  )
+    .then((response) => {
+      reviews.value = response as Page<Review>;
+    })
+    .catch((error) => {
+      console.error("ReviewOfBookListPage fetchReviewsOfBook", error);
     });
-  });
 };
 
-fetchReviews();
+const fetchBook = async (): Promise<void> => {
+  const bookId = Number(route.query["book-id"]);
+  await BookApis.getBook(bookId)
+    .then((response) => {
+      book.value = { ...response } as Book;
+      if (book.value?.bookId) {
+        fetchReviewsOfBook(book.value.bookId);
+      }
+    })
+    .catch((error) => {
+      console.error("ReviewOfBookListPage fetchBook", error);
+    });
+};
+
+fetchBook();
 </script>
 
 <template>
@@ -52,7 +65,7 @@ fetchReviews();
     <SortSelect @select:SortType="selectSortType" />
     <div class="review-list-container">
       <ReviewPreviewCard
-        v-for="([review, book], index) in reviewBookMap"
+        v-for="(review, index) in reviews.content"
         :review="review"
         :book="book"
         :key="index"

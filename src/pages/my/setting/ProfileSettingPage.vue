@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ProfileImageSettingView from "@/pages/my/setting/components/ProfileImageSettingView.vue";
+import ProfileImageSettingView from "@/pages/my/setting/views/ProfileImageSettingView.vue";
 import { ref } from "vue";
 import {
   Member,
@@ -8,7 +8,7 @@ import {
   MemberResponse,
 } from "@/api/MemberApis";
 import router from "@/router";
-import ProfileInfoSettingView from "@/pages/my/setting/components/ProfileInfoSettingView.vue";
+import ProfileInfoSettingView from "@/pages/my/setting/views/ProfileInfoSettingView.vue";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import { IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";
@@ -22,6 +22,8 @@ const profileBackgroundImageFilename = ref<string | null>(null);
 const profileBackgroundImageFile = ref<File | null>(null);
 
 const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
+
+const isNewMember = localStorage.getItem(IS_NEW_MEMBER) === "true";
 
 const closeModal = () => {
   confirmModalInfo.value = {
@@ -122,7 +124,9 @@ fetchMemberProfile();
       :member="localMember"
       @update:Member="updateMember"
     />
-    <button @click="submitForm" class="submit-button">가입하기</button>
+    <button @click="submitForm" class="submit-button">
+      {{ isNewMember ? "가입하기" : "수정하기" }}
+    </button>
     <ConfirmModal
       :confirm-modal-info="confirmModalInfo"
       @modal:Close="closeModal"

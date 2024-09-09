@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import router from "@/router";
-import SearchBar from "@/pages/book/search/components/SearchBar.vue";
+import SearchBar from "@/components/bar/SearchBar.vue";
 import MainPageHeader from "@/components/bar/MainPageHeader.vue";
-import WeeklyFeaturedBooksView from "@/pages/home/components/view/WeeklyFeaturedBooksView.vue";
-import FeaturedFunctionsView from "@/pages/home/components/view/FeaturedFunctionsView.vue";
-import ReviewRecommendedView from "@/pages/home/components/view/ReviewRecommendedView.vue";
-import BookRecommendedView from "@/pages/home/components/view/BookRecommendedView.vue";
+import HomeWeeklyFeaturedBookView from "@/pages/home/views/HomeWeeklyFeaturedBookView.vue";
+import HomeEtcFunctionView from "@/pages/home/views/HomeEtcFunctionView.vue";
+import HomeReviewRecommendView from "@/pages/home/views/HomeReviewRecommendView.vue";
+import HomeBookRecommendView from "@/pages/home/views/HomeBookRecommendView.vue";
 
 const moveToBookSearchPage = (): void => {
   router.push("/books/search");
@@ -15,12 +15,12 @@ const moveToBookSearchPage = (): void => {
 <template>
   <div class="main-page-container">
     <MainPageHeader page-title="메인화면" />
-    <SearchBar @search:Books="moveToBookSearchPage" />
+    <SearchBar @click="moveToBookSearchPage" />
     <div class="main-page-body">
-      <WeeklyFeaturedBooksView />
-      <FeaturedFunctionsView />
-      <ReviewRecommendedView />
-      <BookRecommendedView />
+      <HomeWeeklyFeaturedBookView />
+      <HomeEtcFunctionView />
+      <HomeReviewRecommendView />
+      <HomeBookRecommendView />
     </div>
   </div>
 </template>
