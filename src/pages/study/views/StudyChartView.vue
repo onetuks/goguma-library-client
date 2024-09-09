@@ -127,17 +127,19 @@ const buildChartData = (
   };
 };
 
-const parseReviewCategoryCounts = (
-  reviewCategoryCounts: Map<CategoryType, number>
-): CategoryChartData[] => {
+const parseReviewCategoryCounts = (reviewCategoryCounts: {
+  [key: string]: number;
+}): CategoryChartData[] => {
+  const reviewCategoryCountsMap = new Map(Object.entries(reviewCategoryCounts));
+
   const data: CategoryChartData[] = [];
-  Array.from(reviewCategoryCounts).forEach(([category, count], index) => {
-    const categoryName = CategoryMap.get(category);
+  reviewCategoryCountsMap.forEach((count, category) => {
+    const categoryName = CategoryMap.get(category as CategoryType);
     if (category !== "ALL" && categoryName && count > 0) {
       data.push({
         categoryName: categoryName,
         reviewedCount: count,
-        color: CHART_COLOR_PALETTE[index + 1],
+        color: CHART_COLOR_PALETTE[data.length + 1],
       });
     }
   });
