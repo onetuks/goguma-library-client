@@ -60,6 +60,7 @@ export const AuthApis = {
         return response as LogoutResponse;
       })
       .catch((error) => {
+        localStorage.clear();
         throw error;
       });
   },
@@ -71,6 +72,7 @@ export const AuthApis = {
         console.log("회원탈퇴 성공", localStorage.getItem(ACCESS_TOKEN));
       })
       .catch((error) => {
+        localStorage.clear();
         throw error;
       });
   },

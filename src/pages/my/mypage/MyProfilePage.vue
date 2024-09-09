@@ -41,7 +41,11 @@ const showLogoutModal = (): void => {
 };
 
 const confirmModal = async (): Promise<void> => {
-  await AuthApis.logout().then((response) => console.log(response));
+  await AuthApis.logout().then((response) => {
+    console.log(response);
+    confirmCancelModalInfo.value = initConfirmCancelModalInfo();
+    router.push("/");
+  });
 };
 
 const closeModal = (): void => {
