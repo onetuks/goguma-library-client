@@ -50,7 +50,10 @@ const routes: Array<RouteRecordRaw> = [
   // 마이페이지
   {
     path: "/members/my/settings",
-    name: localStorage.getItem("isNewMember") ? "회원가입" : "프로필수정",
+    name:
+      localStorage.getItem("isNewMember") === "true"
+        ? "회원가입"
+        : "프로필수정",
     component: ProfileSettingPage,
   },
   {
