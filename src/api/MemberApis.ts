@@ -1,6 +1,6 @@
 import { CategoryType } from "@/types/Category";
 import { get, patchFormData } from "@/api/ServerRequest";
-import { Badge, BadgeKey } from "@/types/Badge";
+import { BadgeKey } from "@/types/Badge";
 
 export interface Member {
   memberId: number;
@@ -42,7 +42,7 @@ export interface MemberResponse {
   interestedCategories: CategoryType[];
   isAlarmAccepted: boolean;
   points: number;
-  badges: Badge[];
+  badges: BadgeKey[];
   profileImageUrl: string;
   profileBackgroundImageUrl: string;
   memberStatics: MemberStatics;

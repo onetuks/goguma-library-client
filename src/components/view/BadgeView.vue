@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import BadgeDetailModal from "@/components/modal/BadgeDetailModal.vue";
-import { Badge, BADGES, convertToBadge } from "@/types/Badge";
+import { Badge, convertToBadge } from "@/types/Badge";
 import { Member } from "@/api/MemberApis";
 
 const props = defineProps<{
