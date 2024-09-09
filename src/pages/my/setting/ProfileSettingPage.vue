@@ -23,6 +23,8 @@ const profileBackgroundImageFile = ref<File | null>(null);
 
 const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
+const isNewMember = localStorage.getItem(IS_NEW_MEMBER) === "true";
+
 const closeModal = () => {
   confirmModalInfo.value = {
     visible: false,
@@ -122,7 +124,9 @@ fetchMemberProfile();
       :member="localMember"
       @update:Member="updateMember"
     />
-    <button @click="submitForm" class="submit-button">가입하기</button>
+    <button @click="submitForm" class="submit-button">
+      {{ isNewMember ? "가입하기" : "수정하기" }}
+    </button>
     <ConfirmModal
       :confirm-modal-info="confirmModalInfo"
       @modal:Close="closeModal"
