@@ -54,7 +54,7 @@ const cancel = (): void => emits("modal:Close");
   flex-direction: column;
   justify-content: space-between;
   padding: 30px 20px;
-  width: 330px;
+  width: 80%;
   height: 150px;
   background-color: var(--border-primary);
 }

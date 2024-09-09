@@ -41,24 +41,16 @@ const setIsNotIndie = (): void => {
 <template>
   <div class="form-container">
     <div class="form-label">독립출판물 체크<span class="required">*</span></div>
-    <div class="form-check">
+    <div class="form-check" @click="setIsIndie">
       <label class="checkbox-label">
-        <input
-          type="radio"
-          :checked="localBookPostRequest.isIndie"
-          @click="setIsIndie"
-        />
+        <input type="radio" :checked="localBookPostRequest.isIndie" />
         <span class="custom-checkbox"></span>
         <span class="custom-checkbox-label">독립출판물이 맞아요</span>
       </label>
     </div>
-    <div class="form-check">
+    <div class="form-check" @click="setIsNotIndie">
       <label class="checkbox-label">
-        <input
-          type="radio"
-          :checked="!localBookPostRequest.isIndie"
-          @click="setIsNotIndie"
-        />
+        <input type="radio" :checked="!localBookPostRequest.isIndie" />
         <span class="custom-checkbox"></span>
         <span class="custom-checkbox-label">독립출판물이 아니에요</span>
       </label>

@@ -110,12 +110,11 @@ const closeModal = (): void => {
   <div class="isbn-container">
     <div class="isbn-title-container">
       <label class="isbn-title">ISBN<span class="required">*</span></label>
-      <div class="isbn-checkbox">
+      <div class="isbn-checkbox" @click="toggleHasIsbn">
         <img
           :src="getCheckBoxImage()"
           alt="checkbox"
           class="isbn-checkbox-image"
-          @click="toggleHasIsbn"
         />
         <label class="isbn-checkbox-label">ISBN이 없거나 모르는 도서에요</label>
       </div>

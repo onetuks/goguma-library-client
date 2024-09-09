@@ -139,5 +139,14 @@ const getTargetDay = (attendance: AttendanceResponse): Day | undefined => {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.attendance-button:hover {
+  background-color: var(--surface-fourth);
+}
+
+.attendance-button:active {
+  background-color: var(--surface-sixth);
 }
 </style>
