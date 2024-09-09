@@ -36,7 +36,6 @@ export const AuthApis = {
       `${AuthApis.URI_PREFIX}/login/${clientProvider}`,
       code
     ).then((data) => {
-      console.log("login", data);
       const response = data as LoginResponse;
 
       const roleValue: string = JSON.stringify(response.roles)

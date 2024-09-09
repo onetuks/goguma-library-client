@@ -64,7 +64,9 @@ import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 onMounted(() => {
   const isNotLoggedIn: boolean = localStorage.getItem(ACCESS_TOKEN) == null;
-  const isNotLoginPage: boolean = router.currentRoute.value.path !== "/login";
+  const isNotLoginPage: boolean =
+    !router.currentRoute.value.path.includes("/login") &&
+    !router.currentRoute.value.path.includes("/login/oauth2/callback");
   if (isNotLoggedIn && isNotLoginPage) {
     confirmModalInfo.value = {
       message: "로그인이 필요해요",
@@ -78,8 +80,8 @@ const route = useRoute();
 const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
 const moveToLoginPage = (): void => {
-  router.push("/login");
   confirmModalInfo.value = initConfirmModalInfo();
+  router.push("/login");
 };
 
 const getPageTitle = (): string => {
