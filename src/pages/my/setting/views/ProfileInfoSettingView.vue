@@ -16,7 +16,7 @@ const localMember = ref<Member>({
   instagramUrl: props.member.instagramUrl || "www.instagram.com/", // 기본값 설정
 });
 
-watch(localMember, (newMember) => {
+watch(localMember.value, (newMember) => {
   emits("update:Member", newMember);
 });
 
@@ -88,6 +88,7 @@ const toggleCategorySelection = (category: CategoryType) => {
         v-model="localMember.introduction"
         placeholder="한줄소개를 입력해 주세요 (최대 30자)"
         class="input-field"
+        maxlength="30"
       />
     </div>
     <div class="form-item">

@@ -33,7 +33,9 @@ const moveToInstagram = () => {
 <template>
   <div class="info-section">
     <div class="nickname">{{ member.nickname }}</div>
-    <div class="introduction">{{ member.introduction }}</div>
+    <div class="introduction">
+      {{ member.introduction || "만나서 반가운 뉴비 고구마" }}
+    </div>
     <div class="bottom-section">
       <div class="stats-section">
         <ProfileStaticsView
