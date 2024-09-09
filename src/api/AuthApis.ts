@@ -55,9 +55,8 @@ export const AuthApis = {
     // 로그아웃
     return await remove(`${AuthApis.URI_PREFIX}/logout`)
       .then((response) => {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(IS_NEW_MEMBER);
-        localStorage.removeItem(LOGIN_ID);
+        localStorage.clear();
+        console.log("로그아웃 성공", localStorage.getItem(ACCESS_TOKEN));
         return response as LogoutResponse;
       })
       .catch((error) => {
@@ -68,9 +67,8 @@ export const AuthApis = {
     // 회원탈퇴
     await remove(`${AuthApis.URI_PREFIX}/withdraw`)
       .then(() => {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(IS_NEW_MEMBER);
-        localStorage.removeItem(LOGIN_ID);
+        localStorage.clear();
+        console.log("회원탈퇴 성공", localStorage.getItem(ACCESS_TOKEN));
       })
       .catch((error) => {
         throw error;
