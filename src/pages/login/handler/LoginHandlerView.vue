@@ -16,7 +16,10 @@ onMounted(() => {
         ? router.push(`/members/my/settings`)
         : router.push("/");
     })
-    .catch(() => router.push("/login"));
+    .catch(() => {
+      localStorage.clear();
+      router.push("/login");
+    });
 });
 
 const router = useRouter();
