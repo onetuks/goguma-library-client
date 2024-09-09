@@ -4,7 +4,7 @@ import { Book, BookApis } from "@/api/BookApis";
 import { Review } from "@/api/ReviewApis";
 import { ref } from "vue";
 import ReviewDetailMemberInfoView from "@/pages/review/detail/views/ReviewDetailMemberInfoView.vue";
-import { formatDate } from "@/util/DateUtil";
+import { formatDateWithDot } from "@/util/DateUtil";
 
 const props = defineProps<{
   review: Review;
@@ -36,7 +36,7 @@ fetchBook();
       <div class="review-detail-title">{{ book.title }}</div>
       <div class="review-detail-content">{{ review.reviewTitle }}</div>
       <div class="review-detail-update-date">
-        {{ formatDate(review.updatedAt) }}
+        {{ formatDateWithDot(review.updatedAt) }}
       </div>
     </div>
   </div>

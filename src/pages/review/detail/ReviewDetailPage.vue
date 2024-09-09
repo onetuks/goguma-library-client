@@ -5,7 +5,7 @@ import { Review, ReviewApis } from "@/api/ReviewApis";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import ReviewDetailMemberInfoView from "@/pages/review/detail/views/ReviewDetailMemberInfoView.vue";
-import { formatDate } from "@/util/DateUtil";
+import { formatDateWithDot } from "@/util/DateUtil";
 import { LOGIN_ID } from "@/types/AuthWords";
 import router from "@/router";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
@@ -89,7 +89,7 @@ fetchData();
       </div>
       <div class="review-detail-title">{{ review.reviewTitle }}</div>
       <div class="review-detail-update-date">
-        {{ formatDate(review.updatedAt) }}
+        {{ formatDateWithDot(review.updatedAt) }}
       </div>
       <div class="review-detail-content">{{ review.reviewContent }}</div>
 
