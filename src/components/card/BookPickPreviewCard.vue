@@ -74,6 +74,8 @@ const handleError = (event: Event) => {
 }
 
 .book-pick-preview-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding: 0 10px;
   font-size: 14px;
 }
