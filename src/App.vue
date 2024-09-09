@@ -104,7 +104,8 @@ const isBasicPages = (): boolean => {
       pageName.includes("고구마서재") ||
       pageName.includes("나의 서재") ||
       pageName.includes("도서 검색") ||
-      pageName.includes("마이페이지")
+      pageName.includes("마이페이지") ||
+      pageName.includes("프로필 설정")
     );
   }
   return false;
