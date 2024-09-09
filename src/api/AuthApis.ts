@@ -43,6 +43,11 @@ export const AuthApis = {
         .replaceAll("[", "")
         .replaceAll("]", "");
 
+      window.localStorage.setItem(ACCESS_TOKEN, response.appToken);
+      window.localStorage.setItem(IS_NEW_MEMBER, String(response.isNewMember));
+      window.localStorage.setItem(LOGIN_ID, String(response.loginId));
+      window.localStorage.setItem(ROLES, roleValue);
+
       localStorage.setItem(ACCESS_TOKEN, response.appToken);
       localStorage.setItem(IS_NEW_MEMBER, String(response.isNewMember));
       localStorage.setItem(LOGIN_ID, String(response.loginId));
@@ -55,25 +60,29 @@ export const AuthApis = {
     // 로그아웃
     return await remove(`${AuthApis.URI_PREFIX}/logout`)
       .then((response) => {
-        localStorage.clear();
         console.log("로그아웃 성공", localStorage.getItem(ACCESS_TOKEN));
         return response as LogoutResponse;
       })
       .catch((error) => {
-        localStorage.clear();
         throw error;
+      })
+      .finally(() => {
+        window.localStorage.clear();
+        localStorage.clear();
       });
   },
   withdraw: async (): Promise<void> => {
     // 회원탈퇴
     await remove(`${AuthApis.URI_PREFIX}/withdraw`)
       .then(() => {
-        localStorage.clear();
         console.log("회원탈퇴 성공", localStorage.getItem(ACCESS_TOKEN));
       })
       .catch((error) => {
-        localStorage.clear();
         throw error;
+      })
+      .finally(() => {
+        window.localStorage.clear();
+        localStorage.clear();
       });
   },
 };
