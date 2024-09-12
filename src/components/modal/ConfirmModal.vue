@@ -46,7 +46,7 @@ const confirm = () => {
   flex-direction: column;
   justify-content: space-between;
   padding: 30px 20px;
-  width: 330px;
+  width: 80%;
   height: 150px;
   background-color: var(--border-primary);
 }
@@ -67,11 +67,11 @@ const confirm = () => {
 }
 
 .checkout-modal-button:hover {
-  background-color: var(--ivory-500);
+  background-color: var(--ivory-400);
 }
 
 .checkout-modal-button:active {
-  background-color: var(--ivory-400);
+  background-color: var(--ivory-200);
 }
 
 .modal-fade-enter-active,

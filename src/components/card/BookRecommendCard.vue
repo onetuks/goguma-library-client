@@ -27,20 +27,30 @@ const props = defineProps<{
   justify-content: flex-end;
   background-size: cover;
   background-position: center;
-  opacity: 0.8;
+  opacity: 0.9;
   transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
 .book-recommend-card-container:hover {
-  opacity: 0.9;
+  opacity: 0.95;
   width: 220px;
   height: 320px;
 }
 
-.book-recommend-card-container:hover {
+.book-recommend-card-container:active {
   opacity: 1.5;
   width: 225px;
   height: 325px;
+}
+
+.book-recommend-card-container:hover .book-recommend-card-title {
+  width: 220px;
+  transition: width 0.3s ease;
+}
+
+.book-recommend-card-container:active .book-recommend-card-title {
+  width: 225px;
+  transition: width 0.3s ease;
 }
 
 .book-recommend-card-title {

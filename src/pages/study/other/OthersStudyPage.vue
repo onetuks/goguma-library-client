@@ -33,7 +33,7 @@ fetchMember();
     <ProfileView :member="member" />
     <StudyChartView :member-id="member.memberId" />
     <StudyReviewListView :member-id="member.memberId" />
-    <BadgeView :member-id="member.memberId" />
+    <BadgeView :member="member" />
   </div>
 </template>
 

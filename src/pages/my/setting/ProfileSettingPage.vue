@@ -12,6 +12,7 @@ import ProfileInfoSettingView from "@/pages/my/setting/views/ProfileInfoSettingV
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import { IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";
+import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 
 const memberIdParam = Number(localStorage.getItem(LOGIN_ID));
 
@@ -36,7 +37,11 @@ const closeModal = () => {
 const fetchMemberProfile = async (): Promise<void> => {
   MemberApis.getMemberProfile(memberIdParam).then(
     (response: MemberResponse) => {
-      localMember.value = { ...response } as Member;
+      const fetchedMember = { ...response } as Member;
+      localMember.value = fetchedMember;
+      profileImageFilename.value = fetchedMember.profileImageUrl;
+      profileBackgroundImageFilename.value =
+        fetchedMember.profileBackgroundImageUrl;
     }
   );
 };
@@ -69,6 +74,8 @@ const notEnoughInfo = () => {
   return (
     !localMember.value ||
     !localMember.value?.nickname ||
+    localMember.value?.nickname.length > 10 ||
+    localMember.value?.nickname.length < 2 ||
     !localMember.value?.interestedCategories ||
     localMember.value?.interestedCategories.length < 1 ||
     localMember.value?.interestedCategories.length > 3
@@ -111,6 +118,7 @@ fetchMemberProfile();
 
 <template>
   <div v-if="localMember" class="profile-setting-page-wrapper">
+    <MainPageHeader :page-title="isNewMember ? '회원가입' : '프로필 수정'" />
     <ProfileImageSettingView
       :member="localMember"
       @update:ProfileImageFile="updateProfileImage"

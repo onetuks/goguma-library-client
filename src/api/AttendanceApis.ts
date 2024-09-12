@@ -1,4 +1,5 @@
 import { arrayToDate, get, post } from "@/api/ServerRequest";
+import { formatDateWithMinus } from "@/util/DateUtil";
 
 export interface AttendanceResponse {
   attendanceId: number;
@@ -13,8 +14,7 @@ export interface AttendanceResponses {
 export const AttendanceApis = {
   postNewAttendance: async (date: Date): Promise<AttendanceResponse> => {
     // 출석 등록
-    const isoToday = date.toISOString().split("T")[0];
-    return await post(`/attendances?date=${isoToday}`)
+    return await post(`/attendances?date=${formatDateWithMinus(date)}`)
       .then((data) => {
         const response = data as AttendanceResponse;
         response.attendedAt = arrayToDate(response.attendedAt);

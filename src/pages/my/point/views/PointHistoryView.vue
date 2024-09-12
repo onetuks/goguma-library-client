@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PointHistory } from "@/api/PointApis";
-import { formatDate } from "@/util/DateUtil";
+import { formatDateWithDot } from "@/util/DateUtil";
 
 const props = defineProps<{
   pointHistory: PointHistory[];
@@ -28,7 +28,7 @@ const isEmpty = (pointHistory: PointHistory[]): boolean => {
       </thead>
       <tbody>
         <tr v-for="(entry, index) in props.pointHistory" :key="index">
-          <td>{{ formatDate(entry.createdAt) }}</td>
+          <td>{{ formatDateWithDot(entry.createdAt) }}</td>
           <td>{{ entry.activity }}</td>
           <td>{{ formatPoints(entry.points) }}</td>
         </tr>

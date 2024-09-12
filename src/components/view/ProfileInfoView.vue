@@ -3,10 +3,19 @@ import router from "@/router";
 import { Member } from "@/api/MemberApis";
 import ProfileStaticsView from "@/components/view/ProfileStaticsView.vue";
 import FollowButton from "@/components/button/FollowButton.vue";
+import { ref } from "vue";
+import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 const props = defineProps<{
   member: Member;
 }>();
+
+const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
+
+const closeModal = (): void => {
+  confirmModalInfo.value = initConfirmModalInfo();
+};
 
 const moveToMyReviewPage = () => {
   router.push("/reviews/my");
@@ -21,19 +30,29 @@ const moveToFollowingPage = () => {
 };
 
 const moveToInstagram = () => {
-  window.open(
-    `https://www.instagram.com/${props.member.instagramUrl.replace(
-      "www.instagram.com/",
-      ""
-    )}`
-  );
+  if (props.member.instagramUrl) {
+    window.open(
+      `https://www.instagram.com/${props.member.instagramUrl.replace(
+        "www.instagram.com/",
+        ""
+      )}`
+    );
+  } else {
+    confirmModalInfo.value = {
+      visible: true,
+      message: "인스타그램 주소가 없습니다.",
+      buttonText: "확인",
+    };
+  }
 };
 </script>
 
 <template>
   <div class="info-section">
     <div class="nickname">{{ member.nickname }}</div>
-    <div class="introduction">{{ member.introduction }}</div>
+    <div class="introduction">
+      {{ member.introduction || "만나서 반가운 뉴비 고구마" }}
+    </div>
     <div class="bottom-section">
       <div class="stats-section">
         <ProfileStaticsView
@@ -62,6 +81,10 @@ const moveToInstagram = () => {
         <FollowButton :member-id="member.memberId" />
       </div>
     </div>
+    <ConfirmModal
+      :confirm-modal-info="confirmModalInfo"
+      @modal:Close="closeModal"
+    />
   </div>
 </template>
 

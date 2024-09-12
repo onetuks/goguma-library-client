@@ -35,6 +35,8 @@ const updateBookPostRequest = (newRequest: BookPostRequest): void => {
   if (bookPostRequest.value.coverImageFilename) {
     coverImageData.value = initImageFileUploadProps();
   }
+
+  console.log(bookPostRequest.value);
 };
 
 const updateHasIsbn = (): void => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import router from "@/router";
 import { LOGIN_ID } from "@/types/AuthWords";
 
@@ -38,7 +38,7 @@ const NAVIGATION_BUTTONS: NavigationButton[] = [
     clickHandler: () => router.push("/books/search"),
   },
   {
-    label: "My study",
+    label: "study",
     inactiveIcon: require("@/assets/icon/book/book_icon_inactive.png"),
     activeIcon: require("@/assets/icon/book/books_icon_active.png"),
     width: 25,
@@ -46,7 +46,7 @@ const NAVIGATION_BUTTONS: NavigationButton[] = [
     clickHandler: () => router.push("/study/my"),
   },
   {
-    label: "My Page",
+    label: "profile",
     inactiveIcon: require("@/assets/icon/my_page/my_page_icon_inactive.png"),
     activeIcon: require("@/assets/icon/my_page/my_page_icon_active.png"),
     width: 25,
@@ -57,6 +57,21 @@ const NAVIGATION_BUTTONS: NavigationButton[] = [
 ];
 
 const selectedIndex = ref<number>(0);
+
+watch(
+  () => router.currentRoute.value.path,
+  (newPath) => {
+    NAVIGATION_BUTTONS.forEach((button, index) => {
+      if (newPath === "/") {
+        selectedIndex.value = 0;
+        return;
+      }
+      if (newPath.includes(button.label)) {
+        selectedIndex.value = index;
+      }
+    });
+  }
+);
 
 const selectButton = (index: number): void => {
   selectedIndex.value = index;

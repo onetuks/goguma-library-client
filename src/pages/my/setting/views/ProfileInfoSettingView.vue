@@ -11,11 +11,21 @@ const emits = defineEmits<{
   (event: "update:Member", value: Member): void;
 }>();
 
-const localMember = ref<Member>(props.member);
+const localMember = ref<Member>({
+  ...props.member,
+  instagramUrl: props.member.instagramUrl || "www.instagram.com/", // 기본값 설정
+});
 
-watch(localMember, (newMember) => {
+watch(localMember.value, (newMember) => {
   emits("update:Member", newMember);
 });
+
+const ensureInstagramPrefix = () => {
+  const prefix = "www.instagram.com/";
+  if (!localMember.value.instagramUrl.startsWith(prefix)) {
+    localMember.value.instagramUrl = prefix;
+  }
+};
 
 const isSelectable = (category: CategoryType): boolean => {
   const isUnderLimit = localMember.value.interestedCategories.length < 3;
@@ -69,6 +79,7 @@ const toggleCategorySelection = (category: CategoryType) => {
         v-model="localMember.nickname"
         placeholder="닉네임은 최소2자 최대10자로 입력해 주세요"
         class="input-field"
+        maxlength="10"
       />
     </div>
     <div class="form-item">
@@ -78,6 +89,7 @@ const toggleCategorySelection = (category: CategoryType) => {
         v-model="localMember.introduction"
         placeholder="한줄소개를 입력해 주세요 (최대 30자)"
         class="input-field"
+        maxlength="30"
       />
     </div>
     <div class="form-item">
@@ -85,6 +97,7 @@ const toggleCategorySelection = (category: CategoryType) => {
       <input
         type="url"
         v-model="localMember.instagramUrl"
+        @input="ensureInstagramPrefix"
         placeholder="www.instagram.com/계정입력"
         class="input-field"
       />

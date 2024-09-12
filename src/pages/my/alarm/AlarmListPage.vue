@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { Alarm, AlarmApis } from "@/api/AlarmApis";
 import { emptyPage, Page } from "@/types/Page";
 import WarningPage from "@/pages/error/WarningPage.vue";
-import { formatDate } from "@/util/DateUtil";
+import { formatDateWithDot } from "@/util/DateUtil";
 
 const alarms = ref<Page<Alarm>>(emptyPage());
 
@@ -26,7 +26,7 @@ fetchAlarms();
       class="alarm-item"
     >
       <div class="alarm-message">{{ alarm.message }}</div>
-      <div class="alarm-date">{{ formatDate(alarm.createdAt) }}</div>
+      <div class="alarm-date">{{ formatDateWithDot(alarm.createdAt) }}</div>
     </div>
   </div>
 </template>

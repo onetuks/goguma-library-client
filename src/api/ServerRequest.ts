@@ -1,5 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { ACCESS_TOKEN } from "@/types/AuthWords";
+import { AuthApis } from "@/api/AuthApis";
+import router from "@/router";
+import { EtagUtil } from "@/api/EtagUtil";
 
 export const BASE_SERVER_URL = process.env.VUE_APP_API_BASE_URL + "/api";
 
@@ -17,23 +20,33 @@ export class ApiError extends Error {
 }
 
 export const get = async (uri: string): Promise<object> => {
+  const etag: string | null = EtagUtil.get(uri);
   return await axios
     .get(BASE_SERVER_URL + uri, {
       headers: {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem(ACCESS_TOKEN),
+        ...(etag ? { "If-None-Match": etag } : {}),
       },
     })
     .then((response) => {
       const data = response.data || null;
-      console.log(
-        "[GET] URL - (",
-        BASE_SERVER_URL + uri + ") - Response : ",
-        data
-      );
+      console.log(`[GET] URL - ${BASE_SERVER_URL + uri}`, data);
+
+      if (response.headers[EtagUtil.RESPONSE_HEADER_NAME]) {
+        EtagUtil.set(uri, response.headers[EtagUtil.RESPONSE_HEADER_NAME]);
+        EtagUtil.setCachedData(uri, data);
+      }
+
       return data;
     })
-    .catch((error) => handleApiError(error));
+    .catch((error) => {
+      if (error.response.status === 304) {
+        console.log(`[GET] URL - ${BASE_SERVER_URL + uri} - 304 Not Modified`);
+        return EtagUtil.getCachedData(uri);
+      }
+      handleApiError(error);
+    });
 };
 
 export const post = async (
@@ -49,11 +62,7 @@ export const post = async (
     })
     .then((response) => {
       const data = response.data;
-      console.log(
-        "[POST] URL - (",
-        BASE_SERVER_URL + uri + ") - Response : ",
-        data
-      );
+      console.log(`[POST] URL - ${BASE_SERVER_URL + uri}`, data);
       return data;
     })
     .catch((error) => handleApiError(error));
@@ -79,7 +88,33 @@ export const postWithAuthCode = async (
       console.log("로그인에 성공했습니다.");
       return response.data;
     })
-    .catch((error) => console.error("로그인 실패 - ", error));
+    .catch((error) => {
+      console.error("로그인 실패 - ", error);
+      handleApiError(error);
+    });
+};
+
+export const postWithRefreshToken = async (uri: string): Promise<object> => {
+  return await axios
+    .post(
+      BASE_SERVER_URL + uri,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem(ACCESS_TOKEN),
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("토큰 갱신에 성공했습니다.");
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("토큰 갱신 실패 - ", error);
+      throw error;
+    });
 };
 
 export const postFormData = async (
@@ -107,11 +142,7 @@ export const postFormData = async (
     })
     .then((response) => {
       const data = response.data;
-      console.log(
-        "[PATCH] URL - (",
-        BASE_SERVER_URL + uri + ") - Response : ",
-        data
-      );
+      console.log(`[POST] URL - ${BASE_SERVER_URL + uri}`, data);
       return data;
     })
     .catch((error) => handleApiError(error));
@@ -130,11 +161,7 @@ export const patch = async (
     })
     .then((response) => {
       const data = response.data;
-      console.log(
-        "[PATCH] URL - (",
-        BASE_SERVER_URL + uri + ") - Response : ",
-        data
-      );
+      console.log(`[PATCH] URL - ${BASE_SERVER_URL + uri}`, data);
       return data;
     })
     .catch((error) => handleApiError(error));
@@ -165,11 +192,7 @@ export const patchFormData = async (
     })
     .then((response) => {
       const data = response.data;
-      console.log(
-        "[PATCH] URL - (",
-        BASE_SERVER_URL + uri + ") - Response : ",
-        data
-      );
+      console.log(`[PATCH] URL - ${BASE_SERVER_URL + uri}`, data);
       return data;
     })
     .catch((error) => handleApiError(error));
@@ -184,10 +207,8 @@ export const remove = async (uri: string): Promise<object | void> => {
     })
     .then((response) => {
       console.log(
-        "[DELETE] URL - (" +
-          BASE_SERVER_URL +
-          uri +
-          ") - Response : Deletion Success"
+        `[DELETE] URL - (${BASE_SERVER_URL + uri}) - Response : `,
+        response.data
       );
       return response.data;
     })
@@ -199,8 +220,14 @@ export const arrayToDate = (date: Date): Date => {
   return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
 };
 
-const handleApiError = (error: AxiosError): void => {
+const handleApiError = async (error: AxiosError): Promise<void> => {
   if (error.response) {
+    if (error.response.status === 403) {
+      await AuthApis.refresh().catch(() => {
+        router.push("/login");
+        alert("세션이 만료되었습니다\n다시 로그인해주세요");
+      });
+    }
     throw error.response.data as ApiError;
   }
   throw new ApiError("500", "서버와의 통신에 실패했습니다.", error.message);
