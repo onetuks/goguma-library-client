@@ -6,7 +6,11 @@ import {
   ROLES,
 } from "@/types/AuthWords";
 import { RoleType } from "@/types/RoleType";
-import { postWithAuthCode, remove } from "@/api/ServerRequest";
+import {
+  postWithAuthCode,
+  postWithRefreshToken,
+  remove,
+} from "@/api/ServerRequest";
 
 export interface LoginResponse {
   appToken: string;
@@ -55,6 +59,34 @@ export const AuthApis = {
 
       return response;
     });
+  },
+  refresh: async (): Promise<RefreshResponse | void> => {
+    return await postWithRefreshToken(`${AuthApis.URI_PREFIX}/refresh`)
+      .then((data) => {
+        const response = data as RefreshResponse;
+
+        const roleValue: string = JSON.stringify(response.roles)
+          .replaceAll('"', "")
+          .replaceAll("[", "")
+          .replaceAll("]", "");
+
+        window.localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+        window.localStorage.setItem(IS_NEW_MEMBER, "false");
+        window.localStorage.setItem(LOGIN_ID, String(response.loginId));
+        window.localStorage.setItem(ROLES, roleValue);
+
+        localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+        localStorage.setItem(IS_NEW_MEMBER, "false");
+        localStorage.setItem(LOGIN_ID, String(response.loginId));
+        localStorage.setItem(ROLES, roleValue);
+
+        return response;
+      })
+      .catch((error) => {
+        window.localStorage.clear();
+        localStorage.clear();
+        throw error;
+      });
   },
   logout: async (): Promise<LogoutResponse> => {
     // 로그아웃

@@ -1,5 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { ACCESS_TOKEN } from "@/types/AuthWords";
+import { AuthApis } from "@/api/AuthApis";
+import router from "@/router";
 
 export const BASE_SERVER_URL = process.env.VUE_APP_API_BASE_URL + "/api";
 
@@ -79,7 +81,33 @@ export const postWithAuthCode = async (
       console.log("로그인에 성공했습니다.");
       return response.data;
     })
-    .catch((error) => console.error("로그인 실패 - ", error));
+    .catch((error) => {
+      console.error("로그인 실패 - ", error);
+      handleApiError(error);
+    });
+};
+
+export const postWithRefreshToken = async (uri: string): Promise<object> => {
+  return await axios
+    .post(
+      BASE_SERVER_URL + uri,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem(ACCESS_TOKEN),
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("토큰 갱신에 성공했습니다.");
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("토큰 갱신 실패 - ", error);
+      throw error;
+    });
 };
 
 export const postFormData = async (
@@ -108,7 +136,7 @@ export const postFormData = async (
     .then((response) => {
       const data = response.data;
       console.log(
-        "[PATCH] URL - (",
+        "[POST] URL - (",
         BASE_SERVER_URL + uri + ") - Response : ",
         data
       );
@@ -199,8 +227,14 @@ export const arrayToDate = (date: Date): Date => {
   return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
 };
 
-const handleApiError = (error: AxiosError): void => {
+const handleApiError = async (error: AxiosError): Promise<void> => {
   if (error.response) {
+    if (error.response.status === 403) {
+      await AuthApis.refresh().catch(() => {
+        alert("세션이 만료되었습니다\n다시 로그인해주세요");
+        router.push("/login");
+      });
+    }
     throw error.response.data as ApiError;
   }
   throw new ApiError("500", "서버와의 통신에 실패했습니다.", error.message);
