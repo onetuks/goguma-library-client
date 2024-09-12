@@ -74,21 +74,54 @@ const notEnoughInfo = () => {
   return (
     !localMember.value ||
     !localMember.value?.nickname ||
+    !localMember.value?.interestedCategories
+  );
+};
+
+const outOfLengthNickname = (): boolean => {
+  return (
+    !localMember.value?.nickname ||
     localMember.value?.nickname.length > 10 ||
-    localMember.value?.nickname.length < 2 ||
+    localMember.value?.nickname.length < 2
+  );
+};
+
+const outOfLengthInterestedCategories = (): boolean => {
+  return (
     !localMember.value?.interestedCategories ||
     localMember.value?.interestedCategories.length < 1 ||
     localMember.value?.interestedCategories.length > 3
   );
 };
 
-const submitForm = async () => {
+const validateSubmitForm = (): boolean => {
   if (notEnoughInfo()) {
     confirmModalInfo.value = {
       visible: true,
       message: "정보를 모두 입력해주세요",
       buttonText: "확인",
     };
+    return true;
+  } else if (outOfLengthNickname()) {
+    confirmModalInfo.value = {
+      visible: true,
+      message: "닉네임은 2자 이상 10자 이하로 입력해주세요",
+      buttonText: "확인",
+    };
+    return true;
+  } else if (outOfLengthInterestedCategories()) {
+    confirmModalInfo.value = {
+      visible: true,
+      message: "관심 카테고리는 1개 이상 3개 이하로 선택해주세요",
+      buttonText: "확인",
+    };
+    return true;
+  }
+  return false;
+};
+
+const submitForm = async () => {
+  if (validateSubmitForm()) {
     return;
   }
 
@@ -107,10 +140,23 @@ const submitForm = async () => {
     memberPatchRequest,
     profileImageFile.value,
     profileBackgroundImageFile.value
-  ).then(() => {
-    localStorage.setItem(IS_NEW_MEMBER, "false");
-    router.push("/");
-  });
+  )
+    .then(() => {
+      localStorage.setItem(IS_NEW_MEMBER, "false");
+      router.push("/");
+    })
+    .catch((error) => {
+      if (
+        error.code === "G010" &&
+        error.message.includes("이미 존재하는 값으로 설정할 수 없습니다")
+      ) {
+        confirmModalInfo.value = {
+          visible: true,
+          message: "이미 존재하는 닉네임입니다",
+          buttonText: "확인",
+        };
+      }
+    });
 };
 
 fetchMemberProfile();
