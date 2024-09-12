@@ -28,8 +28,10 @@ watch(localBookPostRequest, (newBookPostRequest) => {
 watch(
   () => localBookPostRequest.value.isbn,
   (newIsbn) => {
+    console.log(localBookPostRequest.value);
     emits("update:BookPostRequest", {
       ...localBookPostRequest.value,
+      isIndie: props.bookPostRequest.isIndie,
       isbn: newIsbn,
     });
   }
