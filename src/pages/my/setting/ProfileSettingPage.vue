@@ -74,6 +74,8 @@ const notEnoughInfo = () => {
   return (
     !localMember.value ||
     !localMember.value?.nickname ||
+    localMember.value?.nickname.length > 10 ||
+    localMember.value?.nickname.length < 2 ||
     !localMember.value?.interestedCategories ||
     localMember.value?.interestedCategories.length < 1 ||
     localMember.value?.interestedCategories.length > 3

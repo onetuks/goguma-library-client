@@ -79,6 +79,7 @@ const toggleCategorySelection = (category: CategoryType) => {
         v-model="localMember.nickname"
         placeholder="닉네임은 최소2자 최대10자로 입력해 주세요"
         class="input-field"
+        maxlength="10"
       />
     </div>
     <div class="form-item">
