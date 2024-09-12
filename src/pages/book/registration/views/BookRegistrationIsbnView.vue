@@ -52,7 +52,7 @@ const regulateIsbn = (isbn: string): string => {
 };
 
 const searchBookWithIsbn = async (): Promise<void> => {
-  if (!localBookPostRequest.value.isbn) {
+  if (!localBookPostRequest.value.isbn || !props.hasIsbn) {
     return;
   }
 
@@ -129,13 +129,13 @@ const closeModal = (): void => {
         placeholder="ISBN 번호를 적어주세요"
         class="isbn-input"
       />
-      <button
+      <div
         class="isbn-input-button"
-        :disabled="!hasIsbn"
+        :class="{ forbidden: !hasIsbn }"
         @click="searchBookWithIsbn"
       >
         조회
-      </button>
+      </div>
     </div>
     <div class="form-info-container">
       <div class="form-info-title">*ISBN이란?</div>
@@ -222,12 +222,40 @@ const closeModal = (): void => {
 }
 
 .isbn-input-button {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
   background-color: transparent;
   width: 30%;
   padding: 7px 30px;
   border: 1px solid var(--button-primary);
   border-radius: 10px;
   font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.isbn-input-button:hover {
+  background-color: var(--surface-fourth);
+}
+
+.isbn-input-button:active {
+  background-color: var(--surface-sixth);
+}
+
+.forbidden {
+  background-color: var(--gray-900);
+  color: var(--gray-800);
+}
+
+.forbidden:hover {
+  background-color: var(--gray-900);
+  color: var(--gray-800);
+}
+
+.forbidden:active {
+  background-color: var(--gray-900);
+  color: var(--gray-800);
 }
 
 .form-info-container {

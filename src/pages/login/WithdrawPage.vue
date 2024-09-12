@@ -45,22 +45,21 @@ const withdrawMember = async (): Promise<void> => {
       </div>
     </div>
     <div class="withdraw-button-container">
-      <button class="withdraw-button" @click="cancelWithdraw">
-        탈퇴 그만두기
-      </button>
-      <button
+      <div class="withdraw-button" @click="cancelWithdraw">탈퇴 그만두기</div>
+      <div
         class="withdraw-button"
-        style="border-color: var(--button-primary)"
+        style="border-color: var(--button-primary); color: var(--text-fifth)"
         @click="withdrawMember"
       >
         탈퇴하기
-      </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .withdraw-page-container {
+  margin-top: 50px;
   width: 100%;
   padding: 25px 15px;
   box-sizing: border-box;

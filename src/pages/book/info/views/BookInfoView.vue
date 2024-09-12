@@ -40,12 +40,12 @@ const toggleIntroductionSpread = () => {
     >
       {{ props.book.introduction }}
     </div>
-    <button
+    <div
       class="book-detail-introduction-button"
       @click="toggleIntroductionSpread"
     >
       {{ isIntroductionExpanded ? "접기" : "더보기" }}
-    </button>
+    </div>
   </div>
 </template>
 
@@ -142,6 +142,9 @@ const toggleIntroductionSpread = () => {
 }
 
 .book-detail-introduction-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 130px;
   height: 30px;
   background-color: white;

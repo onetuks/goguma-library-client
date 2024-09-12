@@ -23,7 +23,7 @@ eventBus.on("update:Nickname", (newNickname) => {
 </script>
 
 <template>
-  <header>
+  <header class="header-view-container">
     <div class="header-container">
       <img
         src="@/assets/icon/direction/left_icon.png"
@@ -40,9 +40,13 @@ eventBus.on("update:Nickname", (newNickname) => {
 </template>
 
 <style scoped>
-header {
+.header-view-container {
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 50px;
   width: 100%;
+  z-index: 10;
 }
 
 .header-container {

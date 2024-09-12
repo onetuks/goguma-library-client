@@ -105,12 +105,12 @@ fetchData();
       <div class="review-detail-content">{{ review.reviewContent }}</div>
 
       <div class="review-detail-edit-container" v-if="isMyReview()">
-        <button class="review-detail-edit-item" @click="showEditReviewModal">
+        <div class="review-detail-edit-item" @click="showEditReviewModal">
           수정하기
-        </button>
-        <button class="review-detail-edit-item" @click="showRemoveReviewModal">
+        </div>
+        <div class="review-detail-edit-item" @click="showRemoveReviewModal">
           삭제하기
-        </button>
+        </div>
       </div>
     </div>
 
@@ -189,9 +189,11 @@ fetchData();
 }
 
 .review-detail-edit-item {
+  padding: 3px 5px;
   font-size: 11px;
+  color: var(--text-fifth);
   border: none;
-  border-bottom: 1px solid var(--text-primary);
+  border-bottom: 1px solid var(--text-fifth);
   margin-left: 4px;
   transition: font-size 0.3s ease, color 0.3s ease, border-bottom 0.3s ease;
   background-color: transparent;

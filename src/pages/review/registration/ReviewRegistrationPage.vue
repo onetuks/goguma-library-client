@@ -127,9 +127,9 @@ fetchBook();
       </div>
     </div>
 
-    <button class="review-registration-button" @click="registerReview">
+    <div class="review-registration-button" @click="registerReview">
       등록하기
-    </button>
+    </div>
 
     <ConfirmModal
       :confirm-modal-info="confirmModalInfo"
@@ -183,6 +183,9 @@ fetchBook();
   margin: 17px 30px;
   padding: 16px 0;
   display: flex;
+  text-decoration: none;
+  appearance: none;
+  -webkit-appearance: none;
   justify-content: center;
   align-items: center;
   font-size: 16px;

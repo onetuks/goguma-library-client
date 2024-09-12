@@ -145,7 +145,7 @@ fetchReview();
       </div>
     </div>
 
-    <button class="review-edit-button" @click="editReview">수정하기</button>
+    <div class="review-edit-button" @click="editReview">수정하기</div>
 
     <ConfirmModal
       :confirm-modal-info="confirmModalInfo"

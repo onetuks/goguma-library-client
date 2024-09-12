@@ -166,9 +166,9 @@ const closeModal = () => {
       @update:CoverImageData="updateCoverImageData"
     />
     <BookRegistrationNoticeView />
-    <button class="book-registration-button" @click="registerBook">
+    <div class="book-registration-button" @click="registerBook">
       도서 등록하기
-    </button>
+    </div>
     <ConfirmModal
       :confirm-modal-info="confirmModalInfo"
       @modal:Close="closeModal"

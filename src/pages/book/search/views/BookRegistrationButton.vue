@@ -12,12 +12,9 @@ const moveToBookRegistrationPage = () => {
       찾으시는 책이 없으신가요?<br />
       책을 직접 등록하신 후 서평을 작성해보세요!
     </p>
-    <button
-      class="book-registration-button"
-      @click="moveToBookRegistrationPage"
-    >
+    <div class="book-registration-button" @click="moveToBookRegistrationPage">
       도서등록하기
-    </button>
+    </div>
   </div>
 </template>
 
