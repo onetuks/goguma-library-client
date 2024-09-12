@@ -7,15 +7,15 @@ import HomeReviewRecommendCard from "@/pages/home/views/HomeReviewRecommendCard.
 
 const reviews = ref<Page<Review>>(emptyPage());
 
-const fetchRecommendedReviews = async (): Promise<void> => {
-  await ReviewApis.getRecommendedReviews(reviews.value.number)
+const fetchRecommendedReviews = async (pageNumber: number): Promise<void> => {
+  await ReviewApis.getRecommendedReviews(pageNumber)
     .then((response) => (reviews.value = response as Page<Review>))
     .catch((error) =>
       console.error("HomeReviewRecommendView.fetchRecommendedReviews", error)
     );
 };
 
-fetchRecommendedReviews();
+fetchRecommendedReviews(reviews.value.number);
 </script>
 
 <template>
