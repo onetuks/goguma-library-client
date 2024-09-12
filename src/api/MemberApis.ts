@@ -48,6 +48,10 @@ export interface MemberResponse {
   memberStatics: MemberStatics;
 }
 
+interface MemberSetResponses {
+  responses: MemberResponse[];
+}
+
 export const MemberApis = {
   URI_PREFIX: "/members",
   patchMemberProfile: async (
@@ -72,8 +76,10 @@ export const MemberApis = {
   },
   getRecommendedMemberProfiles: async (): Promise<MemberResponse[]> => {
     // 추천 멤버 프로필 조회
-    return await get(`${MemberApis.URI_PREFIX}/recommend`).then(
-      (data) => data as MemberResponse[]
-    );
+    return await get(`${MemberApis.URI_PREFIX}/recommend`)
+      .then((data) => (data as MemberSetResponses).responses)
+      .catch((error) => {
+        throw error;
+      });
   },
 };

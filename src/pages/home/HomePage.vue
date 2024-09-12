@@ -6,6 +6,7 @@ import HomeWeeklyFeaturedBookView from "@/pages/home/views/HomeWeeklyFeaturedBoo
 import HomeEtcFunctionView from "@/pages/home/views/HomeEtcFunctionView.vue";
 import HomeReviewRecommendView from "@/pages/home/views/HomeReviewRecommendView.vue";
 import HomeBookRecommendView from "@/pages/home/views/HomeBookRecommendView.vue";
+import HomeMemberRecommendView from "@/pages/home/views/HomeMemberRecommendView.vue";
 
 const moveToBookSearchPage = (): void => {
   router.push("/books/search");
@@ -15,6 +16,7 @@ const moveToBookSearchPage = (): void => {
 <template>
   <div class="main-page-container">
     <MainPageHeader page-title="메인화면" />
+    <HomeMemberRecommendView />
     <SearchBar @click="moveToBookSearchPage" />
     <div class="main-page-body">
       <HomeWeeklyFeaturedBookView />
