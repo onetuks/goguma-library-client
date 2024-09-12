@@ -5,12 +5,17 @@ import { Review } from "@/api/ReviewApis";
 import { ref } from "vue";
 import ReviewDetailMemberInfoView from "@/pages/review/detail/views/ReviewDetailMemberInfoView.vue";
 import { formatDateWithDot } from "@/util/DateUtil";
+import router from "@/router";
 
 const props = defineProps<{
   review: Review;
 }>();
 
 const book = ref<Book>();
+
+const moveToReviewDetailPage = (): void => {
+  router.push(`/reviews/${props.review.reviewId}`);
+};
 
 const fetchBook = async (): Promise<void> => {
   await BookApis.getBook(props.review.bookId)
@@ -22,7 +27,11 @@ fetchBook();
 </script>
 
 <template>
-  <div class="review-detail-page-container" v-if="book && review">
+  <div
+    class="review-detail-page-container"
+    v-if="book && review"
+    @click="moveToReviewDetailPage"
+  >
     <img
       :src="book.coverImageUrl"
       :alt="book.title"
@@ -50,6 +59,17 @@ fetchBook();
   border-radius: 5px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.review-detail-page-container:hover {
+  width: 365px;
+  height: 536px;
+}
+
+.review-detail-page-container:active {
+  width: 370px;
+  height: 540px;
 }
 
 .review-detail-cover-image {

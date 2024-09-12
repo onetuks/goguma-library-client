@@ -35,6 +35,7 @@ fetchMember();
       :alt="member.nickname"
       class="review-detail-member-profile-image"
       @error="handleProfileImageError"
+      @click="moveToOtherMemberStudy"
     />
     <div class="review-detail-member-nickname" @click="moveToOtherMemberStudy">
       {{ member.nickname }}

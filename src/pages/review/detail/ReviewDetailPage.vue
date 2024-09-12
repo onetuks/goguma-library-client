@@ -118,25 +118,16 @@ fetchData();
 }
 
 .review-detail-cover-image {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: auto;
   object-fit: cover;
 }
 
-.review-detail-sub-info-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .review-detail-container {
-  position: relative;
+  position: absolute;
+  top: 60%;
   width: 100%;
   padding: 5px 15px;
-  top: 396px;
   border-radius: 10px;
   background: linear-gradient(
     to top,
@@ -150,6 +141,12 @@ fetchData();
   gap: 10px;
   text-align: left;
   box-sizing: border-box;
+}
+
+.review-detail-sub-info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .review-detail-title {
@@ -171,8 +168,10 @@ fetchData();
   display: flex;
   flex-direction: row;
   text-align: right;
+  text-decoration: none;
   color: var(--text-primary);
   justify-content: right;
+  margin-bottom: 100px;
 }
 
 .review-detail-edit-item {
