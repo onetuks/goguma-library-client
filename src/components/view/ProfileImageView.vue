@@ -164,7 +164,7 @@ getGradeType(props.member.points);
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  z-index: 3;
+  z-index: 2;
 }
 
 .profile-image-rest-wrapper {
@@ -210,7 +210,7 @@ getGradeType(props.member.points);
 }
 
 .profile-point-query:hover {
-  background-color: var(--surface-fourth);
+  background-color: var(--surface-secondary);
 }
 
 .profile-point-info-item {
