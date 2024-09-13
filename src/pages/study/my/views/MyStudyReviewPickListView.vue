@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import MyStudyTitleView from "@/pages/study/views/StudyTitleView.vue";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 import ShowMoreButton from "@/components/button/ShowMoreButton.vue";
@@ -52,11 +52,11 @@ fetchPickedReviewBookMap();
     <div class="review-preview-list-container">
       <WarningPage v-if="reviewBookMap.size === 0" :is-visible-button="false" />
       <ReviewPreviewCard
-        :review="review"
-        :book="book"
         v-for="([review, book], index) in reviewBookMap.entries()"
-        :key="index"
         v-else
+        :key="index"
+        :book="book"
+        :review="review"
       />
     </div>
     <ShowMoreButton

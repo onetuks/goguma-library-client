@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import SortSelect from "@/components/select/SortSelect.vue";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
@@ -53,9 +53,9 @@ fetchReviews();
     <div class="review-list-container">
       <ReviewPreviewCard
         v-for="([review, book], index) in reviewBookMap"
-        :review="review"
-        :book="book"
         :key="index"
+        :book="book"
+        :review="review"
       />
       <WarningPage v-if="emptyReviews()" :is-visible-button="true" />
     </div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import SortSelect from "@/components/select/SortSelect.vue";
 import ReviewPreviewCard from "@/components/card/ReviewPreviewCard.vue";
 import PaginationBar from "@/components/bar/PaginationBar.vue";
@@ -71,9 +71,9 @@ fetchReviewPicks();
     <div class="review-list-container">
       <ReviewPreviewCard
         v-for="([review, book], index) in reviewBookMap"
-        :review="review"
-        :book="book"
         :key="index"
+        :book="book"
+        :review="review"
       />
       <WarningPage v-if="emptyReviewPicks()" :is-visible-button="true" />
     </div>

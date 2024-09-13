@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { Alarm, AlarmApis } from "@/api/AlarmApis";
 import { emptyPage, Page } from "@/types/Page";
@@ -18,10 +18,10 @@ fetchAlarms();
 
 <template>
   <div class="alarm-page-container">
-    <WarningPage :is-visible-button="true" v-if="alarms.totalElements === 0" />
+    <WarningPage v-if="alarms.totalElements === 0" :is-visible-button="true" />
     <div
-      v-else
       v-for="(alarm, index) in alarms.content"
+      v-else
       :key="index"
       class="alarm-item"
     >

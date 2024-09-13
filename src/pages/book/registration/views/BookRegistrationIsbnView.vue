@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from "vue";
 import { BookApis, BookPostRequest } from "@/api/BookApis";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
@@ -123,15 +123,15 @@ const closeModal = (): void => {
     </div>
     <div class="isbn-input-container">
       <input
-        type="text"
         v-model="localBookPostRequest.isbn"
         :disabled="!hasIsbn"
-        placeholder="ISBN 번호를 적어주세요"
         class="isbn-input"
+        placeholder="ISBN 번호를 적어주세요"
+        type="text"
       />
       <div
-        class="isbn-input-button"
         :class="{ forbidden: !hasIsbn }"
+        class="isbn-input-button"
         @click="searchBookWithIsbn"
       >
         조회
@@ -147,9 +147,9 @@ const closeModal = (): void => {
           각 도서에 부여된 고유번호입니다
         </div>
         <img
-          src="@/assets/isbn/ISBN.png"
           alt="isbn"
           class="form-info-content-image"
+          src="@/assets/isbn/ISBN.png"
         />
       </div>
     </div>
@@ -232,7 +232,7 @@ const closeModal = (): void => {
   border: 1px solid var(--button-primary);
   border-radius: 10px;
   font-size: 14px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .isbn-input-button:hover {

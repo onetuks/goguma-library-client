@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Member, MemberApis } from "@/api/MemberApis";
 import { ref } from "vue";
 import router from "@/router";
@@ -13,8 +13,6 @@ const fetchRecommendedMembers = async (): Promise<void> => {
   await MemberApis.getRecommendedMemberProfiles()
     .then((responses) => {
       recommendedMembers.value = responses as Member[];
-      for (let i = 0; i < 10; i++)
-        recommendedMembers.value.push(recommendedMembers.value[0]);
     })
     .catch((error) => {
       console.error("HomeMemberRecommendView.fetchRecommendedMembers", error);
@@ -27,14 +25,14 @@ fetchRecommendedMembers();
 <template>
   <div class="home-member-recommend-container">
     <div
-      class="home-member-recommend-item"
       v-for="member in recommendedMembers"
       :key="member.memberId"
+      class="home-member-recommend-item"
       @click="moveToOtherStudyPage(member)"
     >
       <img
-        :src="member.profileImageUrl"
         :alt="member.nickname"
+        :src="member.profileImageUrl"
         class="home-member-recommend-image"
       />
     </div>
@@ -60,9 +58,9 @@ fetchRecommendedMembers();
   width: 50px;
   min-width: 50px;
   height: 50px;
-  border-radius: 50%;
   border: 2px solid var(--border-primary);
-  transition: border 0.3s ease;
+  transition: border 0.6s ease;
+  border-radius: 50%;
 }
 
 .home-member-recommend-item:hover {
@@ -74,6 +72,7 @@ fetchRecommendedMembers();
 }
 
 .home-member-recommend-image {
+  border-radius: 50%;
   width: 100%;
   height: 100%;
   object-fit: fill;

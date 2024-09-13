@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import BookRegistrationIsbnView from "@/pages/book/registration/views/BookRegistrationIsbnView.vue";
 import BookRegistrationTitleView from "@/pages/book/registration/views/BookRegistrationTitleView.vue";

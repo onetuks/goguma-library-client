@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book, BookApis, initBook } from "@/api/BookApis";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -125,10 +125,10 @@ fetchReview();
       <div class="review-registration-form-container">
         <div class="review-registration-form-title">서평 제목</div>
         <input
-          class="review-registration-form-input"
           v-model="reviewRequest.reviewTitle"
-          placeholder="제목 작성시 25자 이하로 작성해주세요"
+          class="review-registration-form-input"
           maxlength="25"
+          placeholder="제목 작성시 25자 이하로 작성해주세요"
         />
       </div>
 
@@ -136,11 +136,11 @@ fetchReview();
         <div class="review-registration-form-title">서평 내용</div>
         <textarea
           ref="textArea"
-          class="review-registration-form-input"
           v-model="reviewRequest.reviewContent"
+          class="review-registration-form-input"
+          maxlength="1000"
           placeholder="본문 작성시 1000자 이하로 작성해주세요"
           @input="autoResize"
-          maxlength="1000"
         />
       </div>
     </div>
@@ -205,7 +205,7 @@ fetchReview();
   border: 2px solid var(--button-secondary);
   border-radius: 15px;
   background-color: transparent;
-  transition: background-color 0.3s ease, margin 0.3s ease;
+  transition: background-color 0.6s ease, margin 0.6s ease;
 }
 
 .review-edit-button:hover {

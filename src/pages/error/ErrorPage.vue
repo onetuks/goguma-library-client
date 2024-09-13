@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 
 const goHome = () => {
@@ -9,9 +9,9 @@ const goHome = () => {
 <template>
   <div class="error-page-wrapper">
     <img
-      src="@/assets/icon/error/error-icon.png"
       alt="error-icon"
       class="error-image"
+      src="@/assets/icon/error/error-icon.png"
     />
     <p>불러오기에 실패했습니다</p>
     <div class="error-button" @click="goHome">홈으로</div>
@@ -43,7 +43,7 @@ const goHome = () => {
   border-radius: 10px;
   margin-top: 30px;
   font-family: var(--font-family-bold), sans-serif;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .error-button:hover {

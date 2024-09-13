@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { emptyPage, Page } from "@/types/Page";
 import { FollowApis } from "@/api/FollowApis";
 import { useRoute } from "vue-router";
@@ -27,14 +27,14 @@ fetchFollowers();
 <template>
   <div class="follow-list-page-container">
     <WarningPage
-      :is-visible-button="true"
       v-if="followers.totalElements === 0"
+      :is-visible-button="true"
     />
     <FollowMemberCard
-      :member="member"
       v-for="(member, index) in followers.content"
-      :key="index"
       v-else
+      :key="index"
+      :member="member"
     />
     <PaginationBar :page-info="followers" />
   </div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import ReviewPickButton from "@/components/button/ReviewPickButton.vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Review, ReviewApis } from "@/api/ReviewApis";
@@ -87,10 +87,10 @@ fetchData();
 </script>
 
 <template>
-  <div class="review-detail-page-container" v-if="book && review">
+  <div v-if="book && review" class="review-detail-page-container">
     <img
-      :src="book.coverImageUrl"
       :alt="book.title"
+      :src="book.coverImageUrl"
       class="review-detail-cover-image"
     />
     <div class="review-detail-container">
@@ -104,7 +104,7 @@ fetchData();
       </div>
       <div class="review-detail-content">{{ review.reviewContent }}</div>
 
-      <div class="review-detail-edit-container" v-if="isMyReview()">
+      <div v-if="isMyReview()" class="review-detail-edit-container">
         <div class="review-detail-edit-item" @click="showEditReviewModal">
           수정하기
         </div>
@@ -115,9 +115,9 @@ fetchData();
     </div>
 
     <ConfirmCancelModal
+      :confirm-cancel-modal-info="confirmCancelModalInfo"
       @modal:Close="closeModal"
       @modal:Confirm="confirmModal"
-      :confirm-cancel-modal-info="confirmCancelModalInfo"
     />
   </div>
 </template>
@@ -195,7 +195,7 @@ fetchData();
   border: none;
   border-bottom: 1px solid var(--text-fifth);
   margin-left: 4px;
-  transition: font-size 0.3s ease, color 0.3s ease, border-bottom 0.3s ease;
+  transition: font-size 0.6s ease, color 0.6s ease, border-bottom 0.6s ease;
   background-color: transparent;
 }
 

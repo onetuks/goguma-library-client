@@ -1,18 +1,17 @@
 <script lang="ts" setup>
-import ProfileImageSettingView from "@/pages/my/setting/views/ProfileImageSettingView.vue";
 import { ref } from "vue";
+import router from "@/router";
 import {
   Member,
   MemberApis,
   MemberPatchRequest,
   MemberResponse,
 } from "@/api/MemberApis";
-import router from "@/router";
-import ProfileInfoSettingView from "@/pages/my/setting/views/ProfileInfoSettingView.vue";
-import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import { IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";
-import MainPageHeader from "@/components/bar/MainPageHeader.vue";
+import ProfileImageSettingView from "@/pages/my/setting/views/ProfileImageSettingView.vue";
+import ProfileInfoSettingView from "@/pages/my/setting/views/ProfileInfoSettingView.vue";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 const memberIdParam = Number(localStorage.getItem(LOGIN_ID));
 
@@ -164,7 +163,6 @@ fetchMemberProfile();
 
 <template>
   <div v-if="localMember" class="profile-setting-page-wrapper">
-    <MainPageHeader :page-title="isNewMember ? '회원가입' : '프로필 수정'" />
     <ProfileImageSettingView
       :member="localMember"
       @update:ProfileImageFile="updateProfileImage"
@@ -178,7 +176,7 @@ fetchMemberProfile();
       :member="localMember"
       @update:Member="updateMember"
     />
-    <button @click="submitForm" class="submit-button">
+    <button class="submit-button" @click="submitForm">
       {{ isNewMember ? "가입하기" : "수정하기" }}
     </button>
     <ConfirmModal

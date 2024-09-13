@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { sleep } from "@/util/SleeperUtil";
 import { Book, BookApis } from "@/api/BookApis";
@@ -8,7 +8,6 @@ import BookRegistrationButton from "@/pages/book/search/views/BookRegistrationBu
 import BookSearchResultCard from "@/pages/book/search/views/BookSearchResultCard.vue";
 import WarningPage from "@/pages/error/WarningPage.vue";
 import PaginationBar from "@/components/bar/PaginationBar.vue";
-import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 
 const books = ref<Page<Book>>(emptyPage());
 
@@ -34,13 +33,12 @@ searchBooks(null);
 
 <template>
   <div class="search-page">
-    <MainPageHeader page-title="도서 검색" />
     <SearchBar @search:Books="searchBooks" />
     <div v-if="loading" class="loading-wrapper">
       <div class="loading-spinner" />
     </div>
     <div v-else class="search-results-wrapper">
-      <div class="search-results" v-if="books.totalElements > 0">
+      <div v-if="books.totalElements > 0" class="search-results">
         <BookSearchResultCard
           v-for="(book, index) in books.content"
           :key="index"

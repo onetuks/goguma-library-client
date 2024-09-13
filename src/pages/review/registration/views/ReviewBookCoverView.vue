@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book } from "@/api/BookApis";
 
 const props = defineProps<{
@@ -14,8 +14,8 @@ const handleBookCoverImageError = (event: Event) => {
 <template>
   <div ref="containerRef" class="review-book-cover-image-container">
     <img
-      :src="props.book.coverImageUrl"
       :alt="props.book.title"
+      :src="props.book.coverImageUrl"
       class="review-book-cover-image"
       @error="handleBookCoverImageError"
     />

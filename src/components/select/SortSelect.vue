@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { SortType, SortTypes } from "@/types/SortType";
 import SortSelectButton from "@/components/select/SortSelectButton.vue";
 import { ref } from "vue";
@@ -28,13 +28,13 @@ const selectSortOption = (type: SortType) => {
       <transition name="fade">
         <div v-if="isSortOptionVisible" class="sort-option-container">
           <div
-            class="sort-option"
             v-for="(type, index) in SortTypes.keys()"
             :key="index"
+            class="sort-option"
           >
             <SortSelectButton
-              :sort-type="type"
               :index="index"
+              :sort-type="type"
               @click="selectSortOption(type)"
             />
           </div>
@@ -76,7 +76,7 @@ const selectSortOption = (type: SortType) => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.6s ease;
 }
 
 .fade-enter-from,

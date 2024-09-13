@@ -89,10 +89,10 @@ const changeProfileBackgroundImage = (event: Event) => {
 <template>
   <div class="profile-image-card-wrapper">
     <div
-      class="profile-background-image-wrapper"
       :style="{
         backgroundImage: `url(${localMember.profileBackgroundImageUrl})`,
       }"
+      class="profile-background-image-wrapper"
     >
       <div class="init-button-wrapper">
         <div class="init-button" @click="initProfileImage">프로필 초기화</div>
@@ -110,21 +110,21 @@ const changeProfileBackgroundImage = (event: Event) => {
     <div class="profile-image-rest-wrapper">
       <div class="upload-button-wrapper">
         <input
-          type="file"
+          ref="profileImageInput"
           accept="image/*"
           class="hidden-file-input"
+          type="file"
           @change="changeProfileImage"
-          ref="profileImageInput"
         />
         <div class="upload-button" @click="profileImageInput?.click">
           프로필 사진 첨부
         </div>
         <input
-          type="file"
+          ref="profileBackgroundImageInput"
           accept="image/*"
           class="hidden-file-input"
+          type="file"
           @change="changeProfileBackgroundImage"
-          ref="profileBackgroundImageInput"
         />
         <div class="upload-button" @click="profileBackgroundImageInput?.click">
           배경 사진 첨부

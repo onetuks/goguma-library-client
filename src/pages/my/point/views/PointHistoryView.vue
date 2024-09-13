@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { PointHistory } from "@/api/PointApis";
 import { formatDateWithDot } from "@/util/DateUtil";
 
@@ -7,7 +7,7 @@ const props = defineProps<{
 }>();
 
 const formatPoints = (points: number): string => {
-  return `${points > 0 ? "+" : "-"}${points}P`;
+  return `${points > 0 ? "+" : ""}${points}P`;
 };
 
 const isEmpty = (pointHistory: PointHistory[]): boolean => {

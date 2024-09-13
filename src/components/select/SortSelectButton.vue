@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { SortType, SortTypes } from "@/types/SortType";
 import { onBeforeMount } from "vue";
 

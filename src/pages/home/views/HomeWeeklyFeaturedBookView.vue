@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 import { ref } from "vue";
 import { Page } from "@/types/Page";
@@ -38,19 +38,19 @@ fetchWeeklyFeaturedBooks();
 <template>
   <div class="weekly-featured-books-container">
     <HomePageTitle
-      title="금주추천"
       :info="'이번주 추천 도서로 서평을 작성하면\n30 포인트를 더 받을 수 있어요'"
+      title="금주추천"
     />
     <div class="weekly-featured-books-list-container">
       <BookRecommendCard
-        :book="book"
         v-for="(book, index) in books"
         :key="index"
-        @mouseover="selectBook(book)"
+        :book="book"
         @click="moveToBookInfoPage(book)"
+        @mouseover="selectBook(book)"
       />
     </div>
-    <HomeSelectedBookDetailView :book="selectedBook" v-if="selectedBook" />
+    <HomeSelectedBookDetailView v-if="selectedBook" :book="selectedBook" />
   </div>
 </template>
 
@@ -71,13 +71,13 @@ fetchWeeklyFeaturedBooks();
 .weekly-featured-books-list-container {
   width: 100%;
   overflow-x: auto;
-  white-space: nowrap;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
   padding: 0 15px;
+  scroll-padding-right: 15px;
   box-sizing: border-box;
 }
 </style>

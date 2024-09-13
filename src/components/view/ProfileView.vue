@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Member } from "@/api/MemberApis";
 import ProfileImageView from "@/components/view/ProfileImageView.vue";
 import ProfileInfoView from "@/components/view/ProfileInfoView.vue";

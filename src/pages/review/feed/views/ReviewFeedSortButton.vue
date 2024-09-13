@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { SortType } from "@/types/SortType";
 
 const props = defineProps<{
@@ -21,15 +21,15 @@ const changeSortType = (): void => {
 <template>
   <div class="sort-button">
     <button
-      class="sort-button__btn"
       :class="{ active: isLatestSortType() }"
+      class="sort-button__btn"
       @click="changeSortType"
     >
       최신 서평
     </button>
     <button
-      class="sort-button__btn"
       :class="{ active: !isLatestSortType() }"
+      class="sort-button__btn"
       @click="changeSortType"
     >
       베스트 서평

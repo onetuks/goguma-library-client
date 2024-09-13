@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { BookPostRequest } from "@/api/BookApis";
 import { ref, watch } from "vue";
 
@@ -43,14 +43,14 @@ const setIsNotIndie = (): void => {
     <div class="form-label">독립출판물 체크<span class="required">*</span></div>
     <div class="form-check" @click="setIsIndie">
       <label class="checkbox-label">
-        <input type="radio" :checked="localBookPostRequest.isIndie" />
+        <input :checked="localBookPostRequest.isIndie" type="radio" />
         <span class="custom-checkbox"></span>
         <span class="custom-checkbox-label">독립출판물이 맞아요</span>
       </label>
     </div>
     <div class="form-check" @click="setIsNotIndie">
       <label class="checkbox-label">
-        <input type="radio" :checked="!localBookPostRequest.isIndie" />
+        <input :checked="!localBookPostRequest.isIndie" type="radio" />
         <span class="custom-checkbox"></span>
         <span class="custom-checkbox-label">독립출판물이 아니에요</span>
       </label>

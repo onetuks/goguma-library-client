@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book } from "@/api/BookApis";
 
 defineProps<{
@@ -26,7 +26,7 @@ defineProps<{
   text-align: left;
   padding: 10px;
   align-items: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .book-card-container:hover {

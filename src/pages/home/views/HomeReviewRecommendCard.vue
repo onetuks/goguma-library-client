@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book, BookApis } from "@/api/BookApis";
 import { Review } from "@/api/ReviewApis";
 import { ref } from "vue";
@@ -22,11 +22,11 @@ fetchReviewedBook();
 
 <template>
   <div
-    class="recommended-review-card-container"
     :style="{ backgroundImage: `url(${reviewedBook?.coverImageUrl})` }"
+    class="recommended-review-card-container"
   >
     <div class="recommended-review-info-container">
-      <div class="recommended-review-book-info-container" v-if="reviewedBook">
+      <div v-if="reviewedBook" class="recommended-review-book-info-container">
         <div class="recommended-review-book-title">
           {{ reviewedBook.title }}
         </div>

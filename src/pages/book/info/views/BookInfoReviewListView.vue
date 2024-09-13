@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book } from "@/api/BookApis";
 import SortSelect from "@/components/select/SortSelect.vue";
 import { SortType } from "@/types/SortType";
@@ -57,11 +57,11 @@ fetchReviewsOfBook();
         등록된 서평이 없습니다
       </div>
       <ReviewPreviewCard
-        :review="review"
-        :book="book"
         v-for="review in reviews"
-        :key="review.reviewId"
         v-else
+        :key="review.reviewId"
+        :book="book"
+        :review="review"
       />
     </div>
     <ShowMoreButton @move:ToShowMorePage="moveToReviewListPage" />

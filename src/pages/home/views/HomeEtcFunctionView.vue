@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 import { LOGIN_ID } from "@/types/AuthWords";
 
@@ -20,21 +20,21 @@ const moveToBookStoreMap = (): void => {
 <template>
   <div class="function-container">
     <img
-      src="../../../assets/banner/attendance-banner.png"
       alt="attendance-banner"
       class="banner-image"
+      src="../../../assets/banner/attendance-banner.png"
       @click="moveToMyProfilePage"
     />
     <img
-      src="../../../assets/banner/introduction-banner.png"
       alt="introduction-banner"
       class="banner-image"
+      src="../../../assets/banner/introduction-banner.png"
       @click="moveToServiceIntroduction"
     />
     <img
-      src="../../../assets/banner/map-banner.png"
       alt="map-banner"
       class="banner-image"
+      src="../../../assets/banner/map-banner.png"
       @click="moveToBookStoreMap"
     />
   </div>

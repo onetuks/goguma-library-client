@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { Book, BookApis, initBook } from "@/api/BookApis";

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import ProfileView from "@/components/view/ProfileView.vue";
 import { useRoute } from "vue-router";
 import { ref } from "vue";
@@ -29,7 +29,7 @@ fetchMember();
 </script>
 
 <template>
-  <div class="others-study-page-container" v-if="member">
+  <div v-if="member" class="others-study-page-container">
     <ProfileView :member="member" />
     <StudyChartView :member-id="member.memberId" />
     <StudyReviewListView :member-id="member.memberId" />

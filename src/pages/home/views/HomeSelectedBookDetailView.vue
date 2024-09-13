@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book } from "@/api/BookApis";
 import { onMounted, ref, watch } from "vue";
 import { sleep } from "@/util/SleeperUtil";
@@ -24,7 +24,7 @@ const visible = ref<boolean>(false);
 </script>
 
 <template>
-  <div class="weekly-featured-books-detail" :class="{ visible: visible }">
+  <div :class="{ visible: visible }" class="weekly-featured-books-detail">
     <div class="weekly-featured-books-detail-title">
       {{ book.authorName }}
     </div>
@@ -45,7 +45,8 @@ const visible = ref<boolean>(false);
   justify-content: space-between;
   gap: 12px;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.6s ease;
+  box-sizing: border-box;
 }
 
 .visible {

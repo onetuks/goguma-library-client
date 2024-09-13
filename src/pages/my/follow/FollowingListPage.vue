@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { emptyPage, Page } from "@/types/Page";
 import { FollowApis } from "@/api/FollowApis";
 import { useRoute } from "vue-router";
@@ -26,9 +26,9 @@ fetchFollowings();
 <template>
   <div class="follow-list-page-container">
     <FollowMemberCard
-      :member="member"
       v-for="(member, index) in followings.content"
       :key="index"
+      :member="member"
     />
     <PaginationBar :page-info="followings" />
   </div>

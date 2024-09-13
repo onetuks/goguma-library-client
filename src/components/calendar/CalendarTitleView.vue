@@ -1,17 +1,17 @@
-<script setup lang="ts"></script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="calendar-container-title-container">
     <img
-      src="@/assets/icon/clover/clover-icon.png"
       alt="clover-icon"
       class="calendar-container-title-image"
+      src="@/assets/icon/clover/clover-icon.png"
     />
     <div class="calendar-container-title">출석체크</div>
     <img
-      src="@/assets/icon/clover/clover-icon.png"
       alt="clover-icon"
       class="calendar-container-title-image"
+      src="@/assets/icon/clover/clover-icon.png"
     />
   </div>
 </template>

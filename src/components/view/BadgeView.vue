@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from "vue";
 import BadgeDetailModal from "@/components/modal/BadgeDetailModal.vue";
 import { Badge, convertToBadge } from "@/types/Badge";
@@ -36,14 +36,14 @@ const closeBadgeDetail = () => {
 <template>
   <div class="badge-container">
     <div
-      class="badge"
       v-for="(badge, index) in badges"
       :key="index"
+      class="badge"
       @click="viewBadgeDetail(badge)"
     >
       <img
-        :src="badge.badgeImageUrl"
         :alt="badge.badgeName"
+        :src="badge.badgeImageUrl"
         class="badge-image"
         @error="handleError"
       />
@@ -81,7 +81,7 @@ const closeBadgeDetail = () => {
   justify-content: center;
   margin: 0 auto;
   box-sizing: border-box;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .badge:hover {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { CategoryMap, CategoryType } from "@/types/Category";
 import { ref, watch } from "vue";
 import { Book } from "@/api/BookApis";
@@ -37,17 +37,17 @@ const getCategoryNameText = (categoryNames: string[]) => {
   <div class="book-detail-categories-container">
     <div class="book-detail-category">독립출판물</div>
     <img
-      src="@/assets/icon/direction/right_icon.png"
       alt="right_icon"
       class="book-detail-categories-image"
+      src="@/assets/icon/direction/right_icon.png"
     />
     <div class="book-detail-category">
       {{ getCategoryNameText(categoryNames) }}
     </div>
     <img
-      src="@/assets/icon/direction/right_icon.png"
       alt="right_icon"
       class="book-detail-categories-image"
+      src="@/assets/icon/direction/right_icon.png"
     />
     <div class="book-detail-category">{{ props.book.title }}</div>
   </div>

@@ -1,7 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 import SearchBar from "@/components/bar/SearchBar.vue";
-import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 import HomeWeeklyFeaturedBookView from "@/pages/home/views/HomeWeeklyFeaturedBookView.vue";
 import HomeEtcFunctionView from "@/pages/home/views/HomeEtcFunctionView.vue";
 import HomeReviewRecommendView from "@/pages/home/views/HomeReviewRecommendView.vue";
@@ -15,7 +14,6 @@ const moveToBookSearchPage = (): void => {
 
 <template>
   <div class="main-page-container">
-    <MainPageHeader page-title="메인화면" />
     <HomeMemberRecommendView />
     <SearchBar @click="moveToBookSearchPage" />
     <div class="main-page-body">

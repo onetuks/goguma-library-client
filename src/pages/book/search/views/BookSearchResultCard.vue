@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book } from "@/api/BookApis";
 import router from "@/router";
 import { onMounted, ref } from "vue";
@@ -27,8 +27,8 @@ const handleError = (event: Event): void => {
 
 <template>
   <div
-    class="search-result-item"
     :class="{ visible: visible }"
+    class="search-result-item"
     @click="moveToBookInfoPage"
   >
     <img
@@ -53,7 +53,7 @@ const handleError = (event: Event): void => {
   gap: 10px;
   border-bottom: 5px solid var(--border-secondary);
   opacity: 0;
-  transition: background-color 0.3s ease, opacity 1s ease;
+  transition: background-color 0.6s ease, opacity 1s ease;
 }
 
 .visible {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 defineProps<{
   title: string;
   info: string;
@@ -9,15 +9,15 @@ defineProps<{
   <div class="main-page-title-container">
     <div class="main-section-title-container">
       <img
-        src="../../../assets/icon/clover/white-clover-icon.png"
         alt="white-clover-icon"
         class="white-clover-icon"
+        src="../../../assets/icon/clover/white-clover-icon.png"
       />
       <div class="main-section-title">{{ title }}</div>
       <img
-        src="../../../assets/icon/clover/white-clover-icon.png"
         alt="white-clover-icon"
         class="white-clover-icon"
+        src="../../../assets/icon/clover/white-clover-icon.png"
       />
     </div>
     <div class="main-section-info">{{ info }}</div>

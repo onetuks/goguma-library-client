@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Page } from "@/types/Page";
@@ -32,19 +32,19 @@ fetchRecommendedBooks();
 <template>
   <div class="book-recommend-container">
     <HomePageTitle
-      title="관심추천"
       :info="'회원님의 관심카테고리를 기반으로\n추천드리는 독립서적입니다'"
+      title="관심추천"
     />
     <div class="book-recommend-list-container">
       <BookRecommendCard
-        :book="book"
         v-for="(book, index) in books"
         :key="index"
-        @mouseover="selectBook(book)"
+        :book="book"
         @click="moveToBookInfoPage(book)"
+        @mouseover="selectBook(book)"
       />
     </div>
-    <HomeSelectedBookDetailView :book="selectedBook" v-if="selectedBook" />
+    <HomeSelectedBookDetailView v-if="selectedBook" :book="selectedBook" />
   </div>
 </template>
 

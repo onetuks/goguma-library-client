@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Badge } from "@/types/Badge";
 
 const props = defineProps<{
@@ -19,9 +19,9 @@ const handleError = (event: Event) => {
   <div class="badge-detail-modal-overlay" @click="emits('modal:Close')">
     <div class="badge-detail-modal-container">
       <img
-        class="badge-detail-image"
-        :src="props.badge.badgeImageUrl"
         :alt="badge.badgeName"
+        :src="props.badge.badgeImageUrl"
+        class="badge-detail-image"
         @error="handleError"
       />
       <div class="badge-detail-name">{{ props.badge.badgeName }}</div>

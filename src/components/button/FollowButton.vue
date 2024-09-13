@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { Follow, FollowApis } from "@/api/FollowApis";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
@@ -94,7 +94,7 @@ fetchFollow();
   border: 1px solid var(--border-primary);
   color: var(--text-fourth);
   background-color: transparent;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition: background-color 0.6s, color 0.6s, border-color 0.6s;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 

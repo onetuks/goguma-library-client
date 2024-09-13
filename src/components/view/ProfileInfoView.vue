@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 import { Member } from "@/api/MemberApis";
 import ProfileStaticsView from "@/components/view/ProfileStaticsView.vue";
@@ -56,27 +56,27 @@ const moveToInstagram = () => {
     <div class="bottom-section">
       <div class="stats-section">
         <ProfileStaticsView
-          label="서평"
           :count="member.memberStatics.reviewCounts"
+          label="서평"
           @click="moveToMyReviewPage"
         />
         <ProfileStaticsView
-          label="팔로워"
           :count="member.memberStatics.followerCounts"
+          label="팔로워"
           @click="moveToFollowerPage"
         />
         <ProfileStaticsView
-          label="팔로잉"
           :count="member.memberStatics.followingCounts"
+          label="팔로잉"
           @click="moveToFollowingPage"
         />
       </div>
       <div class="button-container">
         <img
-          src="../../assets/icon/profile/instagram-icon.png"
           alt="Instagram"
-          @click="moveToInstagram"
           class="instagram"
+          src="../../assets/icon/profile/instagram-icon.png"
+          @click="moveToInstagram"
         />
         <FollowButton :member-id="member.memberId" />
       </div>
@@ -145,7 +145,7 @@ const moveToInstagram = () => {
   width: 34px;
   height: 34px;
   border-radius: 40%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .instagram:hover {

@@ -1,17 +1,53 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { eventBus } from "@/util/EventBus";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import router from "@/router";
+import { IS_NEW_MEMBER } from "@/types/AuthWords";
 
-const props = withDefaults(
-  defineProps<{
-    headerTitle: string;
-  }>(),
-  {
-    headerTitle: "고구마 서재",
+const route = useRoute();
+
+const headerTitle = ref<string>(route.name as string);
+const nickname = ref<string>();
+
+watch(
+  () => route.name,
+  (newName) => {
+    headerTitle.value = newName as string;
   }
 );
 
-const nickname = ref<string>();
+const getHeaderTitle = (): string => {
+  const pageName = String(route.name);
+  if (isNavigatePage() && pageName.includes("프로필 설정")) {
+    if (localStorage.getItem(IS_NEW_MEMBER) === "true") {
+      return "회원가입";
+    }
+    return "프로필 수정";
+  } else if (pageName.includes("님의 서재")) {
+    return `${nickname.value}${pageName}`;
+  }
+  return headerTitle.value;
+};
+
+const isNavigatePage = (): boolean => {
+  const pageName = String(route.name);
+  if (pageName) {
+    return (
+      pageName.includes("피드") ||
+      pageName.includes("고구마서재") ||
+      pageName.includes("나의 서재") ||
+      pageName.includes("도서 검색") ||
+      pageName.includes("마이페이지") ||
+      pageName.includes("프로필 설정")
+    );
+  }
+  return false;
+};
+
+const moveToAlarmListPage = (): void => {
+  router.push("/members/my/alarms");
+};
 
 const goBack = () => window.history.back();
 
@@ -26,14 +62,22 @@ eventBus.on("update:Nickname", (newNickname) => {
   <header class="header-view-container">
     <div class="header-container">
       <img
-        src="@/assets/icon/direction/left_icon.png"
+        v-if="!isNavigatePage()"
         alt="뒤로가기"
-        @click="goBack"
         class="back-button"
+        src="@/assets/icon/direction/left_icon.png"
+        @click="goBack"
       />
-      <p class="header-title">
-        {{ nickname ? nickname : "" }}{{ props.headerTitle }}
-      </p>
+      <div class="header-title">
+        {{ getHeaderTitle() }}
+      </div>
+      <img
+        v-if="isNavigatePage()"
+        alt="alarm-icon"
+        class="main-page-header-alarm"
+        src="../../assets/icon/alarm/alarm-icon.png"
+        @click="moveToAlarmListPage"
+      />
     </div>
     <div class="header-division"></div>
   </header>
@@ -44,6 +88,7 @@ eventBus.on("update:Nickname", (newNickname) => {
   position: fixed;
   top: 0;
   left: 0;
+  background-color: var(--background-primary);
   height: 50px;
   width: 100%;
   z-index: 10;
@@ -53,6 +98,7 @@ eventBus.on("update:Nickname", (newNickname) => {
   display: flex;
   align-items: center;
   height: 50px;
+  position: relative;
 }
 
 .header-division {
@@ -64,12 +110,18 @@ eventBus.on("update:Nickname", (newNickname) => {
 .header-title {
   flex-grow: 1;
   font-size: 20px;
+  font-family: var(--font-family-bold), sans-serif;
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
 .back-button {
-  background-color: var(--background-primary);
   position: absolute;
-  transition: background-color 0.3s ease;
+  height: 100%;
+  left: 0;
+  background-color: var(--background-primary);
+  transition: background-color 0.6s ease;
   border-radius: 0 50% 50% 0;
 }
 
@@ -78,6 +130,24 @@ eventBus.on("update:Nickname", (newNickname) => {
 }
 
 .back-button:active {
+  background-color: var(--surface-sixth);
+}
+
+.main-page-header-alarm {
+  position: absolute;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 50% 0 50% 50%;
+  transition: background-color 0.6s ease;
+}
+
+.main-page-header-alarm:hover {
+  background-color: var(--surface-fourth);
+}
+
+.main-page-header-alarm:active {
   background-color: var(--surface-sixth);
 }
 </style>

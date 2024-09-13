@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import { Page } from "@/types/Page";
@@ -50,11 +50,11 @@ fetchMyReviews();
     <div class="review-preview-list-container">
       <WarningPage v-if="reviewBookMap.size === 0" :is-visible-button="false" />
       <ReviewPreviewCard
-        :review="review"
-        :book="book"
         v-for="([review, book], index) in reviewBookMap.entries()"
-        :key="index"
         v-else
+        :key="index"
+        :book="book"
+        :review="review"
       />
     </div>
     <ShowMoreButton
