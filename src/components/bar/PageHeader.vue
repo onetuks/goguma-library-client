@@ -30,12 +30,16 @@ const getHeaderTitle = (): string => {
   return headerTitle.value;
 };
 
+const isHomePage = (): boolean => {
+  return String(route.name).includes("고구마서재");
+};
+
 const isNavigatePage = (): boolean => {
   const pageName = String(route.name);
   if (pageName) {
     return (
-      pageName.includes("피드") ||
       pageName.includes("고구마서재") ||
+      pageName.includes("피드") ||
       pageName.includes("나의 서재") ||
       pageName.includes("도서 검색") ||
       pageName.includes("마이페이지") ||
@@ -59,7 +63,7 @@ eventBus.on("update:Nickname", (newNickname) => {
 </script>
 
 <template>
-  <header class="header-view-container">
+  <div class="header-view-container">
     <div class="header-container">
       <img
         v-if="!isNavigatePage()"
@@ -68,19 +72,25 @@ eventBus.on("update:Nickname", (newNickname) => {
         src="@/assets/icon/direction/left_icon.png"
         @click="goBack"
       />
-      <div class="header-title">
+      <div class="header-title" v-if="!isHomePage()">
         {{ getHeaderTitle() }}
       </div>
       <img
-        v-if="isNavigatePage()"
-        alt="alarm-icon"
-        class="main-page-header-alarm"
-        src="../../assets/icon/alarm/alarm-icon.png"
-        @click="moveToAlarmListPage"
+        v-else
+        alt="banner"
+        src="@/assets/logo/banner.png"
+        class="banner-image"
       />
+      <!--      <img-->
+      <!--        v-if="isNavigatePage()"-->
+      <!--        alt="alarm-icon"-->
+      <!--        class="main-page-header-alarm"-->
+      <!--        src="../../assets/icon/alarm/alarm-icon.png"-->
+      <!--        @click="moveToAlarmListPage"-->
+      <!--      />-->
     </div>
     <div class="header-division"></div>
-  </header>
+  </div>
 </template>
 
 <style scoped>
@@ -108,12 +118,17 @@ eventBus.on("update:Nickname", (newNickname) => {
 }
 
 .header-title {
-  flex-grow: 1;
   font-size: 20px;
   font-family: var(--font-family-bold), sans-serif;
   position: absolute;
   left: 0;
   right: 0;
+}
+
+.banner-image {
+  position: absolute;
+  left: calc(50% - 45px);
+  height: 25px;
 }
 
 .back-button {
@@ -123,6 +138,7 @@ eventBus.on("update:Nickname", (newNickname) => {
   background-color: var(--background-primary);
   transition: background-color 0.6s ease;
   border-radius: 0 50% 50% 0;
+  z-index: 20;
 }
 
 .back-button:hover {
@@ -141,6 +157,7 @@ eventBus.on("update:Nickname", (newNickname) => {
   object-fit: contain;
   border-radius: 50% 0 50% 50%;
   transition: background-color 0.6s ease;
+  z-index: 20;
 }
 
 .main-page-header-alarm:hover {

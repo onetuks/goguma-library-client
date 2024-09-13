@@ -2,7 +2,7 @@
 
 <template>
   <div class="logo-placeholder">
-    <p>로고가 들어갑니다</p>
+    <img src="@/assets/logo/logo.png" alt="logo" />
   </div>
 </template>
 
@@ -10,7 +10,6 @@
 .logo-placeholder {
   width: 260px;
   height: 330px;
-  border: 1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
