@@ -42,7 +42,7 @@ const fetchRecommendedReviews = (pageNumber: number): void => {
         class="review-recommend-page-number"
         style="color: var(--text-fourth)"
       >
-        {{ reviews.number }}
+        {{ reviews.number + 1 }}
       </div>
       <div class="review-recommend-page-number">/</div>
       <div class="review-recommend-page-number">{{ reviews.totalPages }}</div>

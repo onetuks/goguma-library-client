@@ -77,13 +77,13 @@ fetchRecommendedReviews(reviews.value.number);
   width: 100%;
   border-radius: 20px;
   border: 1px solid var(--border-primary);
-  padding: 11px 11px;
+  padding: 10px 10px;
   box-sizing: border-box;
 }
 
 .review-recommend-notice-text {
   color: var(--text-primary);
   font-size: 12px;
-  margin-left: 10px;
+  margin-left: 8px;
 }
 </style>

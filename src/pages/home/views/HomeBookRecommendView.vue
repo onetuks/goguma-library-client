@@ -14,7 +14,7 @@ const selectedBook = ref<Book>();
 const clickCount = ref<number>(0);
 
 const selectBook = (book: Book): void => {
-  if (clickCount.value >= 1) {
+  if (clickCount.value >= 1 && isMobile) {
     clickCount.value = 0;
     moveToBookInfoPage(book);
   }
@@ -49,7 +49,7 @@ fetchRecommendedBooks();
         :key="index"
         :book="book"
         @click="isMobile ? selectBook(book) : moveToBookInfoPage(book)"
-        @mouseover="!isMobile ? selectBook(book) : null"
+        @mouseover="isMobile ? null : selectBook(book)"
       />
     </div>
     <HomeSelectedBookDetailView v-if="selectedBook" :book="selectedBook" />
