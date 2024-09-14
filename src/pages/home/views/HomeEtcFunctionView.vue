@@ -43,7 +43,7 @@ const moveToBookStoreMap = (): void => {
 <style scoped>
 .function-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-direction: row;
   align-items: center;
   padding: 25px 15px;

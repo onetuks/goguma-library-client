@@ -60,6 +60,7 @@ getGradeType(props.member.points);
     <div
       :style="{
         backgroundImage: `url(${props.member.profileBackgroundImageUrl})`,
+        objectFit: 'contain',
       }"
       class="profile-background-image-wrapper"
     >

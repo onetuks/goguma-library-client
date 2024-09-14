@@ -91,6 +91,7 @@ const changeProfileBackgroundImage = (event: Event) => {
     <div
       :style="{
         backgroundImage: `url(${localMember.profileBackgroundImageUrl})`,
+        objectFit: 'contain',
       }"
       class="profile-background-image-wrapper"
     >

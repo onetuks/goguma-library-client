@@ -74,7 +74,7 @@ fetchWeeklyFeaturedBooks();
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 10px;
   padding: 0 15px;
   scroll-padding-right: 15px;
