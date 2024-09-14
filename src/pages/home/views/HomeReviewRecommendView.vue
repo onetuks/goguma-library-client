@@ -77,7 +77,7 @@ fetchRecommendedReviews(reviews.value.number);
   width: 100%;
   border-radius: 20px;
   border: 1px solid var(--border-primary);
-  padding: 11px 15px;
+  padding: 11px 11px;
   box-sizing: border-box;
 }
 

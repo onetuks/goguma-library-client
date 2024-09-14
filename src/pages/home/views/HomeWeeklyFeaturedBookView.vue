@@ -7,11 +7,19 @@ import HomePageTitle from "@/pages/home/views/HomePageTitle.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 import HomeSelectedBookDetailView from "@/pages/home/views/HomeSelectedBookDetailView.vue";
 
-const books = ref<Book[]>();
+const isMobile: boolean = /Mobi/i.test(window.navigator.userAgent);
+
 const selectedBook = ref<Book>();
+const books = ref<Book[]>();
+const clickCount = ref<number>(0);
 
 const selectBook = (book: Book): void => {
+  if (clickCount.value >= 1) {
+    clickCount.value = 0;
+    moveToBookInfoPage(book);
+  }
   selectedBook.value = { ...book };
+  clickCount.value += 1;
 };
 
 const moveToBookInfoPage = (book: Book): void => {
@@ -46,8 +54,8 @@ fetchWeeklyFeaturedBooks();
         v-for="(book, index) in books"
         :key="index"
         :book="book"
-        @click="moveToBookInfoPage(book)"
-        @mouseover="selectBook(book)"
+        @click="isMobile ? selectBook(book) : moveToBookInfoPage(book)"
+        @mouseover="!isMobile ? selectBook(book) : null"
       />
     </div>
     <HomeSelectedBookDetailView v-if="selectedBook" :book="selectedBook" />
