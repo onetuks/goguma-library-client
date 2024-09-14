@@ -88,13 +88,12 @@ const changeProfileBackgroundImage = (event: Event) => {
 
 <template>
   <div class="profile-image-card-wrapper">
-    <div
-      :style="{
-        backgroundImage: `url(${localMember.profileBackgroundImageUrl})`,
-        objectFit: 'contain',
-      }"
-      class="profile-background-image-wrapper"
-    >
+    <div class="profile-background-image-wrapper">
+      <img
+        :src="localMember.profileBackgroundImageUrl"
+        :alt="localMember.nickname"
+        class="profile-background-image"
+      />
       <div class="init-button-wrapper">
         <div class="init-button" @click="initProfileImage">프로필 초기화</div>
         <div class="init-button" @click="initProfileBackgroundImage">
@@ -153,8 +152,17 @@ const changeProfileBackgroundImage = (event: Event) => {
   justify-content: center;
   width: 100%;
   height: 300px;
-  background-color: var(--gray-800);
   position: relative;
+}
+
+.profile-background-image {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--gray-800);
+  object-fit: cover;
+  object-position: center;
 }
 
 .init-button-wrapper {

@@ -57,13 +57,12 @@ getGradeType(props.member.points);
 
 <template>
   <div class="profile-image-card-wrapper">
-    <div
-      :style="{
-        backgroundImage: `url(${props.member.profileBackgroundImageUrl})`,
-        objectFit: 'contain',
-      }"
-      class="profile-background-image-wrapper"
-    >
+    <div class="profile-background-image-wrapper">
+      <img
+        :src="member.profileBackgroundImageUrl"
+        :alt="member.nickname"
+        class="profile-background-image"
+      />
       <div v-if="isEditable()" class="setting-button-wrapper">
         <div class="setting-button" @click="goToSettingPage">프로필 수정</div>
       </div>
@@ -116,8 +115,17 @@ getGradeType(props.member.points);
   justify-content: center;
   width: 100%;
   height: 300px;
-  background-color: var(--gray-800);
   position: relative;
+}
+
+.profile-background-image {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--gray-800);
+  object-fit: cover;
+  object-position: center;
 }
 
 .setting-button-wrapper {
