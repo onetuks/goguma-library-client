@@ -2,7 +2,6 @@
 import { eventBus } from "@/util/EventBus";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import router from "@/router";
 import { IS_NEW_MEMBER } from "@/types/AuthWords";
 
 const route = useRoute();
@@ -49,9 +48,9 @@ const isNavigatePage = (): boolean => {
   return false;
 };
 
-const moveToAlarmListPage = (): void => {
-  router.push("/members/my/alarms");
-};
+// const moveToAlarmListPage = (): void => {
+//   router.push("/members/my/alarms");
+// };
 
 const goBack = () => window.history.back();
 
