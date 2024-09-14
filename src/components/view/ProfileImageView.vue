@@ -57,13 +57,13 @@ getGradeType(props.member.points);
 
 <template>
   <div class="profile-image-card-wrapper">
-    <div
-      class="profile-background-image-wrapper"
-      :style="{
-        backgroundImage: `url(${props.member.profileBackgroundImageUrl})`,
-      }"
-    >
-      <div class="setting-button-wrapper" v-if="isEditable()">
+    <div class="profile-background-image-wrapper">
+      <img
+        :src="member.profileBackgroundImageUrl"
+        :alt="member.nickname"
+        class="profile-background-image"
+      />
+      <div v-if="isEditable()" class="setting-button-wrapper">
         <div class="setting-button" @click="goToSettingPage">프로필 수정</div>
       </div>
     </div>
@@ -87,9 +87,9 @@ getGradeType(props.member.points);
           </p>
         </div>
         <img
-          src="../../assets/icon/point/query-icon.png"
           alt="query icon"
           class="profile-point-query"
+          src="../../assets/icon/point/query-icon.png"
           @click="goToPointReceiptsPage"
         />
       </div>
@@ -115,8 +115,17 @@ getGradeType(props.member.points);
   justify-content: center;
   width: 100%;
   height: 300px;
-  background-color: var(--gray-800);
   position: relative;
+}
+
+.profile-background-image {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--gray-800);
+  object-fit: cover;
+  object-position: center;
 }
 
 .setting-button-wrapper {
@@ -151,7 +160,7 @@ getGradeType(props.member.points);
   width: 125px;
   height: 125px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   border: 3px solid transparent;
   z-index: 2;
 }
@@ -163,7 +172,7 @@ getGradeType(props.member.points);
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   z-index: 2;
 }
 
@@ -206,7 +215,7 @@ getGradeType(props.member.points);
   height: 20px;
   margin-left: 15px;
   border-radius: 40%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .profile-point-query:hover {

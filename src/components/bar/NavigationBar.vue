@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from "vue";
 import router from "@/router";
 import { LOGIN_ID } from "@/types/AuthWords";
@@ -97,12 +97,12 @@ const getNavigationButtonIcon = (
         class="nav-item-wrapper"
       >
         <button
-          @click="selectButton(index)"
           :class="{ selected: selectedIndex === index }"
+          @click="selectButton(index)"
         >
           <img
-            :src="getNavigationButtonIcon(button, index)"
             :alt="button.label"
+            :src="getNavigationButtonIcon(button, index)"
             :style="{
               width: button.width + 'px',
               height: button.height + 'px',

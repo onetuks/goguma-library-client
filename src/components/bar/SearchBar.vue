@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 
 const emits = defineEmits<{
@@ -15,15 +15,15 @@ const searchWithKeyword = (): void => {
 <template>
   <div class="search-container">
     <input
-      type="text"
-      placeholder="도서제목/작가명/출판사"
-      class="search-input"
       v-model="searchKeyword"
+      class="search-input"
+      placeholder="도서제목/작가명/출판사"
+      type="text"
     />
     <img
-      src="../../assets/icon/search/search_icon.png"
       alt="Search Icon"
       class="search-icon"
+      src="../../assets/icon/search/search_icon.png"
       @click="searchWithKeyword"
     />
   </div>
@@ -54,7 +54,7 @@ const searchWithKeyword = (): void => {
   height: 36px;
   cursor: pointer;
   border-radius: 50%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .search-icon:hover {

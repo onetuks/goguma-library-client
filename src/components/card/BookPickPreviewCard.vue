@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book } from "@/api/BookApis";
 import router from "@/router";
 
@@ -20,8 +20,8 @@ const handleError = (event: Event) => {
   <div class="book-pick-preview-card-container" @click="moveToBookInfoPage">
     <div class="book-pick-preview-image-container">
       <img
-        :src="book.coverImageUrl"
         :alt="book.title"
+        :src="book.coverImageUrl"
         class="book-pick-preview-image"
         @error="handleError"
       />
@@ -44,7 +44,7 @@ const handleError = (event: Event) => {
   gap: 7px;
   text-align: left;
   color: var(--text-fourth);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
   padding-bottom: 8px;
 }
 

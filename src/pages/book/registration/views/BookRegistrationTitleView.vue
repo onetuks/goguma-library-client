@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from "vue";
 import { BookPostRequest } from "@/api/BookApis";
 
@@ -36,10 +36,10 @@ watch(
   <div class="form-container">
     <label class="form-label">제목<span class="required">*</span> </label>
     <input
-      type="text"
       v-model="localBookPostRequest.title"
-      placeholder="도서 제목을 입력해주세요"
       class="form-input"
+      placeholder="도서 제목을 입력해주세요"
+      type="text"
     />
   </div>
 </template>

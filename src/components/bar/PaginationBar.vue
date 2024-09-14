@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from "vue";
 import { Page, PAGE_LIMIT } from "@/types/Page";
 
@@ -42,21 +42,21 @@ selectPage(page.value.number);
 </script>
 
 <template>
-  <div class="pagination-container" v-if="pageNumbers.length > 0">
-    <img src="@/assets/icon/direction/left_icon.png" alt="prev-page" />
+  <div v-if="pageNumbers.length > 0" class="pagination-container">
+    <img alt="prev-page" src="@/assets/icon/direction/left_icon.png" />
     <div class="pagination-numbers-container">
-      <button
-        class="pagination"
+      <div
         v-for="index in pageNumbers"
         :key="index"
+        class="pagination"
         @click="selectPage(index)"
       >
         <span :class="['page', { active: index === page.number + 1 }]">
           {{ index }}
         </span>
-      </button>
+      </div>
     </div>
-    <img src="@/assets/icon/direction/right_icon.png" alt="prev-page" />
+    <img alt="prev-page" src="@/assets/icon/direction/right_icon.png" />
   </div>
 </template>
 

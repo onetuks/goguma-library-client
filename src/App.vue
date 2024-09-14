@@ -1,11 +1,11 @@
 <template>
-  <PageHeader v-if="!isBasicPages()" :header-title="getPageTitle()" />
+  <PageHeader />
   <nav>
     <router-link to="/" />
   </nav>
 
-  <router-view v-slot="{ Component }">
-    <transition name="fade" mode="out-in">
+  <router-view v-slot="{ Component }" style="margin-top: 50px">
+    <transition mode="out-in" name="fade">
       <component :is="Component" :key="route.fullPath" />
     </transition>
   </router-view>
@@ -25,7 +25,7 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
 }
 
 .fade-enter {
@@ -54,7 +54,7 @@ html,
 }
 </style>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 import { onBeforeUpdate, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -90,24 +90,5 @@ const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 const moveToLoginPage = (): void => {
   confirmModalInfo.value = initConfirmModalInfo();
   router.push("/login");
-};
-
-const getPageTitle = (): string => {
-  return route.name as string;
-};
-
-const isBasicPages = (): boolean => {
-  const pageName = String(route.name);
-  if (pageName) {
-    return (
-      pageName.includes("피드") ||
-      pageName.includes("고구마서재") ||
-      pageName.includes("나의 서재") ||
-      pageName.includes("도서 검색") ||
-      pageName.includes("마이페이지") ||
-      pageName.includes("프로필 설정")
-    );
-  }
-  return false;
 };
 </script>

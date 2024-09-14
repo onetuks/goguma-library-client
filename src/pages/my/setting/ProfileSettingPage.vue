@@ -1,18 +1,17 @@
 <script lang="ts" setup>
-import ProfileImageSettingView from "@/pages/my/setting/views/ProfileImageSettingView.vue";
 import { ref } from "vue";
+import router from "@/router";
 import {
   Member,
   MemberApis,
   MemberPatchRequest,
   MemberResponse,
 } from "@/api/MemberApis";
-import router from "@/router";
-import ProfileInfoSettingView from "@/pages/my/setting/views/ProfileInfoSettingView.vue";
-import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import { IS_NEW_MEMBER, LOGIN_ID } from "@/types/AuthWords";
-import MainPageHeader from "@/components/bar/MainPageHeader.vue";
+import ProfileImageSettingView from "@/pages/my/setting/views/ProfileImageSettingView.vue";
+import ProfileInfoSettingView from "@/pages/my/setting/views/ProfileInfoSettingView.vue";
+import ConfirmModal from "@/components/modal/ConfirmModal.vue";
 
 const memberIdParam = Number(localStorage.getItem(LOGIN_ID));
 
@@ -74,21 +73,54 @@ const notEnoughInfo = () => {
   return (
     !localMember.value ||
     !localMember.value?.nickname ||
+    !localMember.value?.interestedCategories
+  );
+};
+
+const outOfLengthNickname = (): boolean => {
+  return (
+    !localMember.value?.nickname ||
     localMember.value?.nickname.length > 10 ||
-    localMember.value?.nickname.length < 2 ||
+    localMember.value?.nickname.length < 2
+  );
+};
+
+const outOfLengthInterestedCategories = (): boolean => {
+  return (
     !localMember.value?.interestedCategories ||
     localMember.value?.interestedCategories.length < 1 ||
     localMember.value?.interestedCategories.length > 3
   );
 };
 
-const submitForm = async () => {
+const validateSubmitForm = (): boolean => {
   if (notEnoughInfo()) {
     confirmModalInfo.value = {
       visible: true,
       message: "정보를 모두 입력해주세요",
       buttonText: "확인",
     };
+    return true;
+  } else if (outOfLengthNickname()) {
+    confirmModalInfo.value = {
+      visible: true,
+      message: "닉네임은 2자 이상 10자 이하로 입력해주세요",
+      buttonText: "확인",
+    };
+    return true;
+  } else if (outOfLengthInterestedCategories()) {
+    confirmModalInfo.value = {
+      visible: true,
+      message: "관심 카테고리는 1개 이상 3개 이하로 선택해주세요",
+      buttonText: "확인",
+    };
+    return true;
+  }
+  return false;
+};
+
+const submitForm = async () => {
+  if (validateSubmitForm()) {
     return;
   }
 
@@ -107,10 +139,23 @@ const submitForm = async () => {
     memberPatchRequest,
     profileImageFile.value,
     profileBackgroundImageFile.value
-  ).then(() => {
-    localStorage.setItem(IS_NEW_MEMBER, "false");
-    router.push("/");
-  });
+  )
+    .then(() => {
+      localStorage.setItem(IS_NEW_MEMBER, "false");
+      router.push("/");
+    })
+    .catch((error) => {
+      if (
+        error.code === "G010" &&
+        error.message.includes("이미 존재하는 값으로 설정할 수 없습니다")
+      ) {
+        confirmModalInfo.value = {
+          visible: true,
+          message: "이미 존재하는 닉네임입니다",
+          buttonText: "확인",
+        };
+      }
+    });
 };
 
 fetchMemberProfile();
@@ -118,7 +163,6 @@ fetchMemberProfile();
 
 <template>
   <div v-if="localMember" class="profile-setting-page-wrapper">
-    <MainPageHeader :page-title="isNewMember ? '회원가입' : '프로필 수정'" />
     <ProfileImageSettingView
       :member="localMember"
       @update:ProfileImageFile="updateProfileImage"
@@ -132,7 +176,7 @@ fetchMemberProfile();
       :member="localMember"
       @update:Member="updateMember"
     />
-    <button @click="submitForm" class="submit-button">
+    <button class="submit-button" @click="submitForm">
       {{ isNewMember ? "가입하기" : "수정하기" }}
     </button>
     <ConfirmModal

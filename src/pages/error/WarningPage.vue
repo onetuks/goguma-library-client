@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 
 defineProps<{
@@ -13,9 +13,9 @@ const goBack = () => {
 <template>
   <div class="error-page-wrapper">
     <img
-      src="@/assets/icon/error/warning-icon.png"
       alt="warning-icon"
       class="error-image"
+      src="@/assets/icon/error/warning-icon.png"
     />
     <p>내역이 없습니다</p>
     <div v-if="isVisibleButton" class="error-button" @click="goBack">
@@ -49,7 +49,7 @@ const goBack = () => {
   border-radius: 10px;
   margin-top: 30px;
   font-family: var(--font-family-bold), sans-serif;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .error-button:hover {

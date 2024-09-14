@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 defineProps<{
   title: string;
 }>();
@@ -6,9 +6,9 @@ defineProps<{
 
 <template>
   <div class="my-study-review-list-title-container">
-    <img src="@/assets/icon/clover/clover-icon.png" alt="clover-icon" />
+    <img alt="clover-icon" src="@/assets/icon/clover/clover-icon.png" />
     <div class="my-study-review-list-title">{{ title }}</div>
-    <img src="@/assets/icon/clover/clover-icon.png" alt="clover-icon" />
+    <img alt="clover-icon" src="@/assets/icon/clover/clover-icon.png" />
   </div>
 </template>
 

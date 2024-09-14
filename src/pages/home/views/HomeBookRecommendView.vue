@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Page } from "@/types/Page";
@@ -7,11 +7,19 @@ import HomePageTitle from "@/pages/home/views/HomePageTitle.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
 import HomeSelectedBookDetailView from "@/pages/home/views/HomeSelectedBookDetailView.vue";
 
+const isMobile: boolean = /Mobi/i.test(window.navigator.userAgent);
+
 const books = ref<Book[]>();
 const selectedBook = ref<Book>();
+const clickCount = ref<number>(0);
 
 const selectBook = (book: Book): void => {
+  if (clickCount.value >= 1) {
+    clickCount.value = 0;
+    moveToBookInfoPage(book);
+  }
   selectedBook.value = { ...book };
+  clickCount.value += 1;
 };
 
 const moveToBookInfoPage = (book: Book): void => {
@@ -32,19 +40,19 @@ fetchRecommendedBooks();
 <template>
   <div class="book-recommend-container">
     <HomePageTitle
-      title="관심추천"
       :info="'회원님의 관심카테고리를 기반으로\n추천드리는 독립서적입니다'"
+      title="관심추천"
     />
     <div class="book-recommend-list-container">
       <BookRecommendCard
-        :book="book"
         v-for="(book, index) in books"
         :key="index"
-        @mouseover="selectBook(book)"
-        @click="moveToBookInfoPage(book)"
+        :book="book"
+        @click="isMobile ? selectBook(book) : moveToBookInfoPage(book)"
+        @mouseover="!isMobile ? selectBook(book) : null"
       />
     </div>
-    <HomeSelectedBookDetailView :book="selectedBook" v-if="selectedBook" />
+    <HomeSelectedBookDetailView v-if="selectedBook" :book="selectedBook" />
   </div>
 </template>
 
@@ -69,7 +77,7 @@ fetchRecommendedBooks();
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 10px;
   padding: 0 15px;
   box-sizing: border-box;

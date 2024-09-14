@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Review } from "@/api/ReviewApis";
 import { Page } from "@/types/Page";
 
@@ -26,10 +26,10 @@ const fetchRecommendedReviews = (pageNumber: number): void => {
         @click="fetchRecommendedReviews(reviews.number - 1)"
       >
         <svg
-          width="10"
+          fill="none"
           height="17"
           viewBox="0 0 10 17"
-          fill="none"
+          width="10"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -51,10 +51,10 @@ const fetchRecommendedReviews = (pageNumber: number): void => {
         @click="fetchRecommendedReviews(reviews.number + 1)"
       >
         <svg
-          width="10"
+          fill="none"
           height="17"
           viewBox="0 0 10 17"
-          fill="none"
+          width="10"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path

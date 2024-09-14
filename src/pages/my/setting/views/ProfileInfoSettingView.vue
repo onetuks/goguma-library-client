@@ -75,31 +75,31 @@ const toggleCategorySelection = (category: CategoryType) => {
     <div class="form-item">
       <div class="form-title">닉네임</div>
       <input
-        type="text"
         v-model="localMember.nickname"
-        placeholder="닉네임은 최소2자 최대10자로 입력해 주세요"
         class="input-field"
         maxlength="10"
+        placeholder="닉네임은 최소2자 최대10자로 입력해 주세요"
+        type="text"
       />
     </div>
     <div class="form-item">
       <div class="form-title">한줄소개</div>
       <input
-        type="text"
         v-model="localMember.introduction"
-        placeholder="한줄소개를 입력해 주세요 (최대 30자)"
         class="input-field"
         maxlength="30"
+        placeholder="한줄소개를 입력해 주세요 (최대 30자)"
+        type="text"
       />
     </div>
     <div class="form-item">
       <div class="form-title">인스타그램(선택)</div>
       <input
-        type="url"
         v-model="localMember.instagramUrl"
-        @input="ensureInstagramPrefix"
-        placeholder="www.instagram.com/계정입력"
         class="input-field"
+        placeholder="www.instagram.com/계정입력"
+        type="url"
+        @input="ensureInstagramPrefix"
       />
     </div>
     <div class="form-item" style="margin-top: 26px">
@@ -114,10 +114,10 @@ const toggleCategorySelection = (category: CategoryType) => {
           class="checkbox-label"
         >
           <input
-            type="checkbox"
-            :value="categoryType"
             :checked="localMember.interestedCategories.includes(categoryType)"
             :disabled="!isSelectable(categoryType)"
+            :value="categoryType"
+            type="checkbox"
             @click="toggleCategorySelection(categoryType)"
           />
           <span class="custom-checkbox" />

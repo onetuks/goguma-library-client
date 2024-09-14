@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useRoute } from "vue-router";
 import { ref } from "vue";
 import { Member, MemberApis, MemberResponse } from "@/api/MemberApis";
@@ -12,7 +12,6 @@ import {
 import router from "@/router";
 import { AuthApis } from "@/api/AuthApis";
 import ConfirmCancelModal from "@/components/modal/ConfirmCancelModal.vue";
-import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 
 const route = useRoute();
 
@@ -61,17 +60,14 @@ fetchMemberProfile();
 
 <template>
   <div v-if="member" class="my-profile-page-wrapper">
-    <MainPageHeader page-title="마이페이지" />
     <ProfileView :member="member" />
     <div class="divider" />
     <ProfileAttendanceView :member-id="memberIdParam" />
     <BadgeView :member="member" />
 
     <div class="logout-container">
-      <button class="logout-button" @click="showLogoutModal">로그아웃</button>
-      <button class="logout-button" @click="moveToWithdrawPage">
-        회원탈퇴
-      </button>
+      <div class="logout-button" @click="showLogoutModal">로그아웃</div>
+      <div class="logout-button" @click="moveToWithdrawPage">회원탈퇴</div>
     </div>
 
     <ConfirmCancelModal
@@ -110,9 +106,11 @@ fetchMemberProfile();
 .logout-button {
   font-size: 11px;
   border: none;
-  border-bottom: 1px solid var(--text-primary);
+  padding: 3px 5px;
+  color: var(--text-fifth);
+  border-bottom: 1px solid var(--text-fifth);
   margin-left: 4px;
-  transition: font-size 0.3s ease, color 0.3s ease, border-bottom 0.3s ease;
+  transition: font-size 0.5s ease, color 0.5s ease, border-bottom 0.5s ease;
   background-color: transparent;
 }
 

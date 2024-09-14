@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from "vue";
 import { BookPostRequest } from "@/api/BookApis";
 import {
@@ -59,29 +59,29 @@ const removeCover = (): void => {
 <template>
   <div class="book-cover-container">
     <label class="form-label">표지이미지</label>
-    <div class="book-cover-uploader" :class="{ 'has-cover': coverImageUrl }">
+    <div :class="{ 'has-cover': coverImageUrl }" class="book-cover-uploader">
       <input
-        type="file"
-        accept="image/*"
-        @change="changeCoverImageFile"
         ref="coverImageInput"
+        accept="image/*"
         style="display: none"
+        type="file"
+        @change="changeCoverImageFile"
       />
 
       <div v-if="coverImageUrl" class="cover-preview">
         <img :src="coverImageUrl" alt="Book Cover" class="book-cover" />
         <img
-          src="@/assets/icon/upload/trashcan_icon.png"
           alt="Remove Cover"
           class="remove-button"
+          src="@/assets/icon/upload/trashcan_icon.png"
           @click="removeCover"
         />
       </div>
       <div v-else class="upload-placeholder" @click="triggerChangeFileClick">
         <img
-          src="@/assets/icon/upload/camera_icon.png"
           alt="Camera Icon"
           class="camera-icon"
+          src="@/assets/icon/upload/camera_icon.png"
         />
         <p>도서 표지를 첨부해주세요</p>
       </div>
@@ -104,7 +104,7 @@ const removeCover = (): void => {
   border: 2px dashed #b4b4b4; /* 피그마의 gray/800 */
   border-radius: 5px;
   cursor: pointer;
-  transition: border 0.3s ease;
+  transition: border 0.6s ease;
   width: auto;
   height: 240px;
   display: flex;

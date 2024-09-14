@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { emptyPage, Page } from "@/types/Page";
 import { Review, ReviewApis } from "@/api/ReviewApis";
@@ -7,15 +7,15 @@ import HomeReviewRecommendCard from "@/pages/home/views/HomeReviewRecommendCard.
 
 const reviews = ref<Page<Review>>(emptyPage());
 
-const fetchRecommendedReviews = async (): Promise<void> => {
-  await ReviewApis.getRecommendedReviews(reviews.value.number)
+const fetchRecommendedReviews = async (pageNumber: number): Promise<void> => {
+  await ReviewApis.getRecommendedReviews(pageNumber)
     .then((response) => (reviews.value = response as Page<Review>))
     .catch((error) =>
       console.error("HomeReviewRecommendView.fetchRecommendedReviews", error)
     );
 };
 
-fetchRecommendedReviews();
+fetchRecommendedReviews(reviews.value.number);
 </script>
 
 <template>
@@ -26,24 +26,24 @@ fetchRecommendedReviews();
     />
     <div class="review-recommend-list-container">
       <HomeReviewRecommendCard
-        :review="review"
         v-for="(review, index) in reviews.content"
         :key="index"
+        :review="review"
       />
     </div>
     <div class="review-recommend-notice">
       <svg
-        width="20"
+        fill="none"
         height="20"
         viewBox="0 0 20 20"
-        fill="none"
+        width="20"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
           clip-rule="evenodd"
           d="M10 18.5C14.6944 18.5 18.5 14.6944 18.5 10C18.5 5.30558 14.6944 1.5 10 1.5C5.30558 1.5 1.5 5.30558 1.5 10C1.5 14.6944 5.30558 18.5 10 18.5ZM10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM9 12V4H11V12H9ZM9 14V16H11V14H9Z"
           fill="#756357"
+          fill-rule="evenodd"
         />
       </svg>
       <div class="review-recommend-notice-text">
@@ -77,7 +77,7 @@ fetchRecommendedReviews();
   width: 100%;
   border-radius: 20px;
   border: 1px solid var(--border-primary);
-  padding: 11px 15px;
+  padding: 11px 11px;
   box-sizing: border-box;
 }
 

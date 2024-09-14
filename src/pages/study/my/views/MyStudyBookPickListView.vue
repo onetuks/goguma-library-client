@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import MyStudyTitleView from "@/pages/study/views/StudyTitleView.vue";
 import { ref } from "vue";
 import { Book } from "@/api/BookApis";
@@ -33,7 +33,7 @@ fetchPickedBooks();
   <div class="my-study-book-pick-list-container">
     <MyStudyTitleView title="북 Pick" />
     <WarningPage v-if="books.length === 0" :is-visible-button="false" />
-    <div class="book-pick-list-container" v-else>
+    <div v-else class="book-pick-list-container">
       <BookPickPreviewCard
         v-for="(book, index) in books"
         :key="index"
@@ -72,7 +72,7 @@ fetchPickedBooks();
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 10px;
 }
 </style>

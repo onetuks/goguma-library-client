@@ -1,11 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Review, ReviewApis } from "@/api/ReviewApis";
 import ReviewFeedCard from "@/pages/review/feed/views/ReviewFeedCard.vue";
 import ReviewFeedSortButton from "@/pages/review/feed/views/ReviewFeedSortButton.vue";
 import { onMounted, ref } from "vue";
 import { emptyPage } from "@/types/Page";
 import { SortType } from "@/types/SortType";
-import MainPageHeader from "@/components/bar/MainPageHeader.vue";
 import { Slice } from "@/types/Slice";
 import WarningPage from "@/pages/error/WarningPage.vue";
 
@@ -62,19 +61,18 @@ fetchReviews();
 
 <template>
   <div class="feed-page">
-    <MainPageHeader page-title="피드" />
     <ReviewFeedSortButton
       :sortType="sortType"
       @update:SortType="changeSortType"
     />
     <div class="feed-cards">
       <WarningPage
-        :is-visible-button="false"
         v-if="reviewPage.totalElements < 1"
+        :is-visible-button="false"
       />
       <ReviewFeedCard
-        v-else
         v-for="(review, index) in reviewPage.content"
+        v-else
         :key="index"
         :review="review"
       />

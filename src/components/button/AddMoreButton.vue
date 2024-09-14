@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 defineProps<{
   action: string;
 }>();
@@ -16,10 +16,10 @@ const moveToAddMorePage = (): void => {
   <button class="show-more-button-container" @click="moveToAddMorePage">
     <span style="margin-right: 6px">{{ action }}</span>
     <svg
-      width="11"
+      fill="none"
       height="18"
       viewBox="0 0 11 18"
-      fill="none"
+      width="11"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -45,7 +45,7 @@ const moveToAddMorePage = (): void => {
   color: var(--text-fourth);
   font-size: 14px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.6s ease;
 }
 
 .show-more-button-container:hover {

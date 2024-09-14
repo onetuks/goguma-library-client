@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import router from "@/router";
 import { AuthApis } from "@/api/AuthApis";
@@ -32,11 +32,11 @@ const withdrawMember = async (): Promise<void> => {
   <div class="withdraw-page-container">
     <textarea
       ref="textArea"
-      class="withdraw-reason"
       v-model="reason"
+      class="withdraw-reason"
+      maxlength="1000"
       placeholder="고구마 서재를 떠나는 이유를 알려주세요"
       @input="autoResize"
-      maxlength="1000"
     />
     <div class="withdraw-notice-container">
       <div class="withdraw-notice-title">유의사항</div>
@@ -45,22 +45,21 @@ const withdrawMember = async (): Promise<void> => {
       </div>
     </div>
     <div class="withdraw-button-container">
-      <button class="withdraw-button" @click="cancelWithdraw">
-        탈퇴 그만두기
-      </button>
-      <button
+      <div class="withdraw-button" @click="cancelWithdraw">탈퇴 그만두기</div>
+      <div
         class="withdraw-button"
-        style="border-color: var(--button-primary)"
+        style="border-color: var(--button-primary); color: var(--text-fifth)"
         @click="withdrawMember"
       >
         탈퇴하기
-      </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .withdraw-page-container {
+  margin-top: 50px;
   width: 100%;
   padding: 25px 15px;
   box-sizing: border-box;
@@ -112,7 +111,7 @@ const withdrawMember = async (): Promise<void> => {
   padding: 16px 0;
   font-size: 16px;
   font-family: var(--font-family-bold), sans-serif;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .withdraw-button:hover {

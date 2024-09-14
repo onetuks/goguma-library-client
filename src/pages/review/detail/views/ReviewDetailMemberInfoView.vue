@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import FollowButton from "@/components/button/FollowButton.vue";
 import { Member, MemberApis } from "@/api/MemberApis";
 import { ref } from "vue";
@@ -29,13 +29,13 @@ fetchMember();
 </script>
 
 <template>
-  <div class="review-detail-member-info" v-if="member">
+  <div v-if="member" class="review-detail-member-info">
     <img
-      :src="member.profileImageUrl"
       :alt="member.nickname"
+      :src="member.profileImageUrl"
       class="review-detail-member-profile-image"
-      @error="handleProfileImageError"
       @click="moveToOtherMemberStudy"
+      @error="handleProfileImageError"
     />
     <div class="review-detail-member-nickname" @click="moveToOtherMemberStudy">
       {{ member.nickname }}
@@ -63,7 +63,7 @@ fetchMember();
   color: var(--text-secondary);
   font-size: 14px;
   font-family: var(--font-family-bold), sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.6s ease, color 0.6s ease;
   border-radius: 10px;
   padding: 0 3px;
   height: 30px;

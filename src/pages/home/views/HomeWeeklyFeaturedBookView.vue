@@ -1,16 +1,25 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 import { ref } from "vue";
 import { Page } from "@/types/Page";
 import { Book, BookApis } from "@/api/BookApis";
 import HomePageTitle from "@/pages/home/views/HomePageTitle.vue";
 import BookRecommendCard from "@/components/card/BookRecommendCard.vue";
+import HomeSelectedBookDetailView from "@/pages/home/views/HomeSelectedBookDetailView.vue";
 
-const books = ref<Book[]>();
+const isMobile: boolean = /Mobi/i.test(window.navigator.userAgent);
+
 const selectedBook = ref<Book>();
+const books = ref<Book[]>();
+const clickCount = ref<number>(0);
 
 const selectBook = (book: Book): void => {
+  if (clickCount.value >= 1) {
+    clickCount.value = 0;
+    moveToBookInfoPage(book);
+  }
   selectedBook.value = { ...book };
+  clickCount.value += 1;
 };
 
 const moveToBookInfoPage = (book: Book): void => {
@@ -37,19 +46,19 @@ fetchWeeklyFeaturedBooks();
 <template>
   <div class="weekly-featured-books-container">
     <HomePageTitle
-      title="금주추천"
       :info="'이번주 추천 도서로 서평을 작성하면\n30 포인트를 더 받을 수 있어요'"
+      title="금주추천"
     />
     <div class="weekly-featured-books-list-container">
       <BookRecommendCard
-        :book="book"
         v-for="(book, index) in books"
         :key="index"
-        @mouseover="selectBook(book)"
-        @click="moveToBookInfoPage(book)"
+        :book="book"
+        @click="isMobile ? selectBook(book) : moveToBookInfoPage(book)"
+        @mouseover="!isMobile ? selectBook(book) : null"
       />
     </div>
-    <HomeWeeklyFeaturedBookView :book="selectedBook" v-if="selectedBook" />
+    <HomeSelectedBookDetailView v-if="selectedBook" :book="selectedBook" />
   </div>
 </template>
 
@@ -70,13 +79,13 @@ fetchWeeklyFeaturedBooks();
 .weekly-featured-books-list-container {
   width: 100%;
   overflow-x: auto;
-  white-space: nowrap;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   padding: 0 15px;
+  scroll-padding-right: 15px;
   box-sizing: border-box;
 }
 </style>

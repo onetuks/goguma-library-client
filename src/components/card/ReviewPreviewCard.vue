@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Review } from "@/api/ReviewApis";
 import { Book } from "@/api/BookApis";
 import router from "@/router";
@@ -52,7 +52,7 @@ const handleError = (event: Event): void => {
   border-radius: 5px;
   padding: 10px;
   box-sizing: border-box;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .review-preview:hover {

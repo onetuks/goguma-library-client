@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ConfirmCancelModalInfo } from "@/types/Modal";
 
 defineProps<{
@@ -80,7 +80,7 @@ const cancel = (): void => emits("modal:Close");
   border-radius: 15px;
   padding: 7px 50px;
   font-family: var(--font-family-bold), sans-serif;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .checkout-modal-button:hover {

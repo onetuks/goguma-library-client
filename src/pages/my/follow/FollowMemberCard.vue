@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Member } from "@/api/MemberApis";
 import FollowButton from "@/components/button/FollowButton.vue";
 
@@ -11,9 +11,9 @@ const props = defineProps<{
   <div class="follow-member-card-container">
     <div class="follow-member-card-wrapper">
       <img
-        class="follow-member-image"
         :src="props.member.profileImageUrl"
         alt="profile image"
+        class="follow-member-image"
       />
       <div class="follow-member-info-container">
         <div class="follow-member-nickname">{{ props.member.nickname }}</div>

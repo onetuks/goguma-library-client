@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import ReviewPickButton from "@/components/button/ReviewPickButton.vue";
 import { Book, BookApis } from "@/api/BookApis";
 import { Review } from "@/api/ReviewApis";
@@ -28,13 +28,13 @@ fetchBook();
 
 <template>
   <div
-    class="review-detail-page-container"
     v-if="book && review"
+    class="review-detail-page-container"
     @click="moveToReviewDetailPage"
   >
     <img
-      :src="book.coverImageUrl"
       :alt="book.title"
+      :src="book.coverImageUrl"
       class="review-detail-cover-image"
     />
     <div class="review-detail-container">
@@ -59,7 +59,7 @@ fetchBook();
   border-radius: 5px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  transition: width 0.3s ease, height 0.3s ease;
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
 .review-detail-page-container:hover {

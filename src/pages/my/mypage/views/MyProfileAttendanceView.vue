@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -139,7 +139,7 @@ const getTargetDay = (attendance: AttendanceResponse): Day | undefined => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .attendance-button:hover {

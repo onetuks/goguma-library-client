@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from "vue";
 import { emptyPage, Page } from "@/types/Page";
 import { Book } from "@/api/BookApis";

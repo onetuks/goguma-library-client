@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import BookCategoryBar from "@/components/bar/BookCategoryBar.vue";
 import { Book } from "@/api/BookApis";
 import BookPickButton from "@/components/button/BookPickButton.vue";
@@ -25,8 +25,8 @@ const toggleIntroductionSpread = () => {
     <div class="book-detail-container-background" />
     <BookCategoryBar :categories="props.book.categories" />
     <img
-      :src="props.book.coverImageUrl"
       :alt="props.book.title"
+      :src="props.book.coverImageUrl"
       class="book-detail-cover-image"
       @error="handleCoverImageError"
     />
@@ -35,17 +35,17 @@ const toggleIntroductionSpread = () => {
     <div class="book-detail-author-name">{{ props.book.authorName }}</div>
     <div class="book-detail-publisher">{{ props.book.publisher }}</div>
     <div
-      class="book-detail-introduction"
       :class="{ expanded: isIntroductionExpanded }"
+      class="book-detail-introduction"
     >
       {{ props.book.introduction }}
     </div>
-    <button
+    <div
       class="book-detail-introduction-button"
       @click="toggleIntroductionSpread"
     >
       {{ isIntroductionExpanded ? "접기" : "더보기" }}
-    </button>
+    </div>
   </div>
 </template>
 
@@ -142,6 +142,9 @@ const toggleIntroductionSpread = () => {
 }
 
 .book-detail-introduction-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 130px;
   height: 30px;
   background-color: white;

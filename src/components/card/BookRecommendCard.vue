@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Book } from "@/api/BookApis";
 
 const props = defineProps<{
@@ -8,8 +8,8 @@ const props = defineProps<{
 
 <template>
   <div
-    class="book-recommend-card-container"
     :style="{ backgroundImage: `url(${props.book.coverImageUrl})` }"
+    class="book-recommend-card-container"
   >
     <div class="book-recommend-card-title">
       {{ book.title }}
@@ -25,10 +25,10 @@ const props = defineProps<{
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   opacity: 0.9;
-  transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+  transition: opacity 0.6s ease, width 0.6s ease, height 0.6s ease;
 }
 
 .book-recommend-card-container:hover {
@@ -45,12 +45,12 @@ const props = defineProps<{
 
 .book-recommend-card-container:hover .book-recommend-card-title {
   width: 220px;
-  transition: width 0.3s ease;
+  transition: width 0.6s ease;
 }
 
 .book-recommend-card-container:active .book-recommend-card-title {
   width: 225px;
-  transition: width 0.3s ease;
+  transition: width 0.6s ease;
 }
 
 .book-recommend-card-title {

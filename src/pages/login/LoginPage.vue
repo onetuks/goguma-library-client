@@ -1,10 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import LogoView from "@/pages/login/LogoView.vue";
 
 const REDIRECT_URI = `${window.location.origin}/login/oauth2/callback`;
 const KAKAO_CLIENT_ID = process.env.VUE_APP_KAKAO_CLIENT_ID;
 const GOOGLE_CLIENT_ID = process.env.VUE_APP_GOOGLE_CLIENT_ID;
-const NAVER_CLIENT_ID = process.env.VUE_APP_NAVER_CLIENT_ID;
+// const NAVER_CLIENT_ID = process.env.VUE_APP_NAVER_CLIENT_ID;
 
 const KAKAO_AUTH_CODE_URL = encodeURI(
   `https://kauth.kakao.com/oauth/authorize` +
@@ -22,13 +22,13 @@ const GOOGLE_AUTH_CODE_URL = encodeURI(
     `&scope=profile` +
     `&state=google`
 );
-const NAVER_AUTH_CODE_URL = encodeURI(
-  `https://nid.naver.com/oauth2.0/authorize` +
-    `?client_id=${NAVER_CLIENT_ID}` +
-    `&response_type=code` +
-    `&redirect_uri=${REDIRECT_URI}/naver` +
-    `&state=RANDOM_STATE`
-);
+// const NAVER_AUTH_CODE_URL = encodeURI(
+//   `https://nid.naver.com/oauth2.0/authorize` +
+//     `?client_id=${NAVER_CLIENT_ID}` +
+//     `&response_type=code` +
+//     `&redirect_uri=${REDIRECT_URI}/naver` +
+//     `&state=RANDOM_STATE`
+// );
 </script>
 
 <template>
@@ -36,14 +36,14 @@ const NAVER_AUTH_CODE_URL = encodeURI(
     <LogoView />
     <div class="login-buttons">
       <a :href="KAKAO_AUTH_CODE_URL">
-        <img src="@/assets/login/kakao_login_button.png" alt="Kakao Logo" />
+        <img alt="Kakao Logo" src="@/assets/login/kakao_login_button.png" />
       </a>
       <a :href="GOOGLE_AUTH_CODE_URL">
-        <img src="@/assets/login/google_login_button.png" alt="Google Logo" />
+        <img alt="Google Logo" src="@/assets/login/google_login_button.png" />
       </a>
-      <a :href="NAVER_AUTH_CODE_URL">
-        <img src="@/assets/login/naver_login_button.png" alt="Naver Logo" />
-      </a>
+      <!--      <a :href="NAVER_AUTH_CODE_URL">-->
+      <!--        <img src="@/assets/login/naver_login_button.png" alt="Naver Logo" />-->
+      <!--      </a>-->
     </div>
   </div>
 </template>
@@ -65,5 +65,21 @@ const NAVER_AUTH_CODE_URL = encodeURI(
   flex-direction: column;
   width: 100%;
   gap: 12px;
+}
+
+.login-buttons a {
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.6s ease;
+}
+
+.login-buttons a:hover {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.login-buttons a:active {
+  box-shadow: none;
 }
 </style>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ConfirmModalInfo } from "@/types/Modal";
 
 defineProps<{
@@ -63,7 +63,7 @@ const confirm = () => {
   border-radius: 15px;
   padding: 16px 120px;
   font-family: var(--font-family-bold), sans-serif;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .checkout-modal-button:hover {

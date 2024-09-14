@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 defineProps<{
   label: string;
   count: number;
@@ -21,7 +21,7 @@ defineProps<{
   justify-content: space-between;
   gap: 8px;
   text-align: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
   border-radius: 5px;
 }
 

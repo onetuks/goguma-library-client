@@ -33,7 +33,7 @@ const moveToReviewRegistrationPage = () => {
   border-radius: 10px;
   color: var(--black);
   background-color: transparent;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .registration-wrapper:hover {

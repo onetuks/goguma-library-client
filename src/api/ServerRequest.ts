@@ -224,9 +224,12 @@ const handleApiError = async (error: AxiosError): Promise<void> => {
   if (error.response) {
     if (error.response.status === 403) {
       await AuthApis.refresh().catch(() => {
-        router.push("/login");
-        alert("세션이 만료되었습니다\n다시 로그인해주세요");
+        if (!router.currentRoute.value.path.includes("login")) {
+          alert("세션이 만료되었습니다\n다시 로그인해주세요");
+          router.push("/login");
+        }
       });
+      return;
     }
     throw error.response.data as ApiError;
   }

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from "vue";
 import { BookApis, BookPostRequest } from "@/api/BookApis";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
@@ -52,7 +52,7 @@ const regulateIsbn = (isbn: string): string => {
 };
 
 const searchBookWithIsbn = async (): Promise<void> => {
-  if (!localBookPostRequest.value.isbn) {
+  if (!localBookPostRequest.value.isbn || !props.hasIsbn) {
     return;
   }
 
@@ -123,19 +123,19 @@ const closeModal = (): void => {
     </div>
     <div class="isbn-input-container">
       <input
-        type="text"
         v-model="localBookPostRequest.isbn"
         :disabled="!hasIsbn"
-        placeholder="ISBN 번호를 적어주세요"
         class="isbn-input"
+        placeholder="ISBN 번호를 적어주세요"
+        type="text"
       />
-      <button
+      <div
+        :class="{ forbidden: !hasIsbn }"
         class="isbn-input-button"
-        :disabled="!hasIsbn"
         @click="searchBookWithIsbn"
       >
         조회
-      </button>
+      </div>
     </div>
     <div class="form-info-container">
       <div class="form-info-title">*ISBN이란?</div>
@@ -147,9 +147,9 @@ const closeModal = (): void => {
           각 도서에 부여된 고유번호입니다
         </div>
         <img
-          src="@/assets/isbn/ISBN.png"
           alt="isbn"
           class="form-info-content-image"
+          src="@/assets/isbn/ISBN.png"
         />
       </div>
     </div>
@@ -222,12 +222,40 @@ const closeModal = (): void => {
 }
 
 .isbn-input-button {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
   background-color: transparent;
   width: 30%;
   padding: 7px 30px;
   border: 1px solid var(--button-primary);
   border-radius: 10px;
   font-size: 14px;
+  transition: background-color 0.6s ease;
+}
+
+.isbn-input-button:hover {
+  background-color: var(--surface-fourth);
+}
+
+.isbn-input-button:active {
+  background-color: var(--surface-sixth);
+}
+
+.forbidden {
+  background-color: var(--gray-900);
+  color: var(--gray-800);
+}
+
+.forbidden:hover {
+  background-color: var(--gray-900);
+  color: var(--gray-800);
+}
+
+.forbidden:active {
+  background-color: var(--gray-900);
+  color: var(--gray-800);
 }
 
 .form-info-container {

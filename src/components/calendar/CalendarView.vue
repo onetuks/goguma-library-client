@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { isSameMonth, isToday } from "date-fns";
 import CalendarIcon, {
   CalendarIconType,
@@ -37,8 +37,8 @@ function getGridRows() {
 
 <template>
   <div
-    class="calendar"
     :style="{ gridTemplateRows: `46px repeat(${getGridRows}, 46px)` }"
+    class="calendar"
   >
     <!-- 요일 헤더 -->
     <div class="weekdays">

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import router from "@/router";
 
 const moveToBookRegistrationPage = () => {
@@ -12,12 +12,9 @@ const moveToBookRegistrationPage = () => {
       찾으시는 책이 없으신가요?<br />
       책을 직접 등록하신 후 서평을 작성해보세요!
     </p>
-    <button
-      class="book-registration-button"
-      @click="moveToBookRegistrationPage"
-    >
+    <div class="book-registration-button" @click="moveToBookRegistrationPage">
       도서등록하기
-    </button>
+    </div>
   </div>
 </template>
 
@@ -42,7 +39,7 @@ const moveToBookRegistrationPage = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.6s ease;
 }
 
 .book-registration-button:hover {
