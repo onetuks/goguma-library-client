@@ -77,7 +77,7 @@ fetchReviewPicks();
       />
       <WarningPage v-if="emptyReviewPicks()" :is-visible-button="true" />
     </div>
-    <PaginationBar :page-info="reviews" />
+    <PaginationBar :page-info="reviews" @request:Page="fetchReviewPicks" />
   </div>
 </template>
 

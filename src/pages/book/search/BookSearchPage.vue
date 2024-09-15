@@ -9,14 +9,23 @@ import BookSearchResultCard from "@/pages/book/search/views/BookSearchResultCard
 import WarningPage from "@/pages/error/WarningPage.vue";
 import PaginationBar from "@/components/bar/PaginationBar.vue";
 
+const currentSearchKeyword = ref<string | null>(null);
 const books = ref<Page<Book>>(emptyPage());
 
 const loading = ref<boolean>(false);
 
-const searchBooks = async (searchKeyword: string | null): Promise<void> => {
+const requestBookSearch = (page: number): void => {
+  searchBooks(currentSearchKeyword.value, page);
+};
+
+const searchBooks = async (
+  searchKeyword: string | null,
+  page: number
+): Promise<void> => {
+  currentSearchKeyword.value = searchKeyword;
   loading.value = true;
   await sleep(200);
-  await BookApis.getBooksWithKeyword(searchKeyword, books.value.number)
+  await BookApis.getBooksWithKeyword(searchKeyword, page)
     .then((response) => {
       books.value = response as Page<Book>;
     })
@@ -28,12 +37,15 @@ const searchBooks = async (searchKeyword: string | null): Promise<void> => {
     });
 };
 
-searchBooks(null);
+searchBooks(null, books.value.number);
 </script>
 
 <template>
   <div class="search-page">
-    <SearchBar @search:Books="searchBooks" />
+    <SearchBar
+      :search-keyword="currentSearchKeyword"
+      @search:Books="searchBooks"
+    />
     <div v-if="loading" class="loading-wrapper">
       <div class="loading-spinner" />
     </div>
@@ -47,7 +59,7 @@ searchBooks(null);
       </div>
       <WarningPage v-else :is-visible-button="false" />
       <BookRegistrationButton />
-      <PaginationBar :page-info="books" />
+      <PaginationBar :page-info="books" @request:Page="requestBookSearch" />
     </div>
   </div>
 </template>

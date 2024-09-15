@@ -20,19 +20,19 @@ const emptyReviews = (): boolean => {
 
 const selectSortType = (type: SortType): void => {
   sortType.value = type;
-  fetchReviews();
+  fetchReviews(1);
 };
 
 const fetchBook = async (bookId: number): Promise<Book> => {
   return await BookApis.getBook(bookId).then((response) => response as Book);
 };
 
-const fetchReviews = async (): Promise<void> => {
+const fetchReviews = async (page: number): Promise<void> => {
   const memberId = Number(localStorage.getItem(LOGIN_ID));
   await ReviewApis.getReviewsOfMember(
     memberId,
     sortType.value,
-    reviews.value.number,
+    page,
     reviews.value.size
   ).then((response) => {
     reviewBookMap.value.clear();
@@ -44,7 +44,7 @@ const fetchReviews = async (): Promise<void> => {
   });
 };
 
-fetchReviews();
+fetchReviews(reviews.value.number);
 </script>
 
 <template>
@@ -59,7 +59,7 @@ fetchReviews();
       />
       <WarningPage v-if="emptyReviews()" :is-visible-button="true" />
     </div>
-    <PaginationBar :page-info="reviews" />
+    <PaginationBar :page-info="reviews" @request:Page="fetchReviews" />
   </div>
 </template>
 

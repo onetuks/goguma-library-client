@@ -8,16 +8,16 @@ import PaginationBar from "@/components/bar/PaginationBar.vue";
 
 const books = ref<Page<Book>>(emptyPage());
 
-const fetchMyPickedBooks = async (): Promise<void> => {
+const fetchMyPickedBooks = async (page: number): Promise<void> => {
   const pageSize = 6;
-  await BookPickApis.getMyBookPicks(books.value.number, pageSize)
+  await BookPickApis.getMyBookPicks(page, pageSize)
     .then((response) => (books.value = response as Page<Book>))
     .catch((error) => {
       console.error("BookPickListPage.fetchMyPickedBooks", error);
     });
 };
 
-fetchMyPickedBooks();
+fetchMyPickedBooks(books.value.number);
 </script>
 
 <template>
@@ -29,7 +29,7 @@ fetchMyPickedBooks();
         :book="book"
       />
     </div>
-    <PaginationBar :page-info="books" />
+    <PaginationBar :page-info="books" @request:Page="fetchMyPickedBooks" />
   </div>
 </template>
 

@@ -38,7 +38,7 @@ fetchBook();
       class="review-detail-cover-image"
     />
     <div class="review-detail-container">
-      <div class="review-detail-sub-info-container">
+      <div class="review-detail-sub-info-container" @click.stop>
         <ReviewDetailMemberInfoView :member-id="review.memberId" />
         <ReviewPickButton :review-id="review.reviewId" />
       </div>
