@@ -24,6 +24,10 @@ import WithdrawPage from "@/pages/login/WithdrawPage.vue";
 import AlarmListPage from "@/pages/my/alarm/AlarmListPage.vue";
 import HomePage from "@/pages/home/HomePage.vue";
 import ReviewFeedPage from "@/pages/review/feed/ReviewFeedPage.vue";
+import AdminHomePage from "@/pages/admin/home/AdminHomePage.vue";
+import AdminBookListPage from "@/pages/admin/book/list/AdminBookListPage.vue";
+import AdminBookModificationPage from "@/pages/admin/book/modification/AdminBookModificationPage.vue";
+import AdminBookRegistrationPage from "@/pages/admin/book/modification/AdminBookRegistrationPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   // 기본 페이지
@@ -122,7 +126,7 @@ const routes: Array<RouteRecordRaw> = [
     props: (route) => ({ bookId: route.query["book-id"] }),
   },
   {
-    path: "/reviews/:reviewId/edit",
+    path: "/reviews/:reviewId/modification",
     name: "서평 수정",
     component: ReviewEditPage,
   },
@@ -146,6 +150,28 @@ const routes: Array<RouteRecordRaw> = [
     path: "/reviews/:reviewId",
     name: "서평",
     component: ReviewDetailPage,
+  },
+
+  // 관리자
+  {
+    path: "/admin/home",
+    name: "관리자 홈",
+    component: AdminHomePage,
+  },
+  {
+    path: "/admin/books",
+    name: "미검수 도서 조회",
+    component: AdminBookListPage,
+  },
+  {
+    path: "/admin/books/:bookId/modification",
+    name: "도서 수정",
+    component: AdminBookModificationPage,
+  },
+  {
+    path: "/admin/books/registration",
+    name: "도서 등록",
+    component: AdminBookRegistrationPage,
   },
 ];
 

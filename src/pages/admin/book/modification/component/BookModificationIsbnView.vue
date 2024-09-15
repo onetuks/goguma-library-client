@@ -1,37 +1,40 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import { BookApis, BookPostRequest } from "@/api/BookApis";
+import { BookApis } from "@/api/BookApis";
 import { ConfirmModalInfo, initConfirmModalInfo } from "@/types/Modal";
 import ConfirmModal from "@/components/modal/ConfirmModal.vue";
+import { BookPatchRequest } from "@/api/AdminBookApis";
 
 const ISBN_LENGTH = 13;
 const NON_DIGIT_REGEX = /[^0-9]/;
 
 const props = defineProps<{
-  bookPostRequest: BookPostRequest;
+  bookPatchRequest: BookPatchRequest;
   hasIsbn: boolean;
 }>();
 
 const emits = defineEmits<{
-  (event: "update:BookPostRequest", bookPostRequest: BookPostRequest): void;
+  (event: "update:BookPatchRequest", bookPatchRequest: BookPatchRequest): void;
   (event: "update:HasIsbn"): void;
 }>();
 
-const localBookPostRequest = ref<BookPostRequest>({ ...props.bookPostRequest });
+const localBookPatchRequest = ref<BookPatchRequest>({
+  ...props.bookPatchRequest,
+});
 
 const confirmModalInfo = ref<ConfirmModalInfo>(initConfirmModalInfo());
 
-watch(localBookPostRequest, (newBookPostRequest) => {
-  emits("update:BookPostRequest", { ...newBookPostRequest });
+watch(localBookPatchRequest, (newBookPatchRequest) => {
+  emits("update:BookPatchRequest", { ...newBookPatchRequest });
 });
 
 watch(
-  () => localBookPostRequest.value.isbn,
+  () => localBookPatchRequest.value.isbn,
   (newIsbn) => {
-    console.log(localBookPostRequest.value);
-    emits("update:BookPostRequest", {
-      ...localBookPostRequest.value,
-      isIndie: props.bookPostRequest.isIndie,
+    console.log(localBookPatchRequest.value);
+    emits("update:BookPatchRequest", {
+      ...localBookPatchRequest.value,
+      isIndie: props.bookPatchRequest.isIndie,
       isbn: newIsbn,
     });
   }
@@ -52,20 +55,21 @@ const regulateIsbn = (isbn: string): string => {
 };
 
 const searchBookWithIsbn = async (): Promise<void> => {
-  if (!localBookPostRequest.value.isbn || !props.hasIsbn) {
+  if (!localBookPatchRequest.value.isbn || !props.hasIsbn) {
     return;
   }
 
   try {
-    localBookPostRequest.value.isbn = regulateIsbn(
-      localBookPostRequest.value.isbn
+    localBookPatchRequest.value.isbn = regulateIsbn(
+      localBookPatchRequest.value.isbn
     );
 
-    await BookApis.getBookWithIsbn(localBookPostRequest.value.isbn)
+    await BookApis.getBookWithIsbn(localBookPatchRequest.value.isbn)
       .then((response) => {
-        localBookPostRequest.value = {
+        localBookPatchRequest.value = {
           ...response,
-          isIndie: localBookPostRequest.value.isIndie,
+          isIndie: true,
+          isPermitted: true,
           coverImageFilename: response.coverImageUrl,
         };
       })
@@ -83,7 +87,7 @@ const searchBookWithIsbn = async (): Promise<void> => {
 
 const toggleHasIsbn = (): void => {
   if (!props.hasIsbn) {
-    localBookPostRequest.value.isbn = null;
+    localBookPatchRequest.value.isbn = null;
   }
 
   emits("update:HasIsbn");
@@ -123,7 +127,7 @@ const closeModal = (): void => {
     </div>
     <div class="isbn-input-container">
       <input
-        v-model="localBookPostRequest.isbn"
+        v-model="localBookPatchRequest.isbn"
         :disabled="!hasIsbn"
         class="isbn-input"
         placeholder="ISBN 번호를 적어주세요"

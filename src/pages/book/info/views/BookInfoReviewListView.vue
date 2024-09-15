@@ -31,7 +31,7 @@ const moveToReviewListPage = (): void => {
   router.push({
     path: "/reviews",
     query: {
-      bookId: props.book.bookId,
+      "book-id": String(props.book.bookId),
     },
   });
 };

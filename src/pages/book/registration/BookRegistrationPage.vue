@@ -203,6 +203,10 @@ const closeModal = () => {
   background-color: transparent;
 }
 
+.book-registration-button:hover {
+  background-color: var(--surface-fourth);
+}
+
 .book-registration-button:active {
   background-color: var(--surface-sixth);
 }
