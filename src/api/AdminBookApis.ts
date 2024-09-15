@@ -1,11 +1,7 @@
-import { Book, BookResponse, BookResponses } from "@/api/BookApis";
+import { BookResponse, BookResponses } from "@/api/BookApis";
 import { CategoryType } from "@/types/Category";
 import { get, patchFormData, remove } from "@/api/ServerRequest";
-import {
-  buildPageQuery,
-  buildPageQueryWithOutQuestionMark,
-  Page,
-} from "@/types/Page";
+import { buildPageQueryWithOutQuestionMark, Page } from "@/types/Page";
 
 export interface BookPatchRequest {
   title: string;

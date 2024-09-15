@@ -28,6 +28,8 @@ const fetchBooksForInspection = async (page: number): Promise<void> => {
       console.error("AdminHomePage.fetchBooksForInspection", error)
     );
 };
+
+fetchBooksForInspection(1);
 </script>
 
 <template>

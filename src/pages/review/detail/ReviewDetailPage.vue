@@ -53,7 +53,7 @@ const closeModal = (): void => {
 
 const confirmModal = (): void => {
   if (confirmCancelModalInfo.value.message === REVIEW_EDIT_MESSAGE) {
-    router.push(`/reviews/${review.value?.reviewId}/edit`);
+    router.push(`/reviews/${review.value?.reviewId}/modification`);
   } else {
     removeReview();
   }

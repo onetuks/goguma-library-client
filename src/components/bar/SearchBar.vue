@@ -1,21 +1,25 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const emits = defineEmits<{
-  (event: "search:Books", searchKeyword: string | null): void;
+const props = defineProps<{
+  searchKeyword: string | null;
 }>();
 
-const searchKeyword = ref<string | null>(null);
+const emits = defineEmits<{
+  (event: "search:Books", searchKeyword: string | null, page: number): void;
+}>();
+
+const currentSearchKeyword = ref<string | null>(props.searchKeyword);
 
 const searchWithKeyword = (): void => {
-  emits("search:Books", searchKeyword.value);
+  emits("search:Books", currentSearchKeyword.value, 1);
 };
 </script>
 
 <template>
   <div class="search-container">
     <input
-      v-model="searchKeyword"
+      v-model="currentSearchKeyword"
       class="search-input"
       placeholder="도서제목/작가명/출판사"
       type="text"

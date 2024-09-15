@@ -18,22 +18,6 @@ watch(
   }
 );
 
-const page = ref<Page<object>>({ ...props.pageInfo });
-const pageNumbers = ref<number[]>([]);
-
-const selectPage = (pageNumber: number): void => {
-  if (
-    pageNumber < pageNumbers.value[0] ||
-    pageNumber > pageNumbers.value[pageNumbers.value.length - 1]
-  ) {
-    return;
-  }
-
-  page.value.number = pageNumber - 1;
-  pageNumbers.value = getPageNumbers(pageNumber);
-  emits("request:Page", pageNumber);
-};
-
 const getPageNumbers = (pageNumber: number): number[] => {
   const numbers = [];
   const start = Math.max(
@@ -50,7 +34,21 @@ const getPageNumbers = (pageNumber: number): number[] => {
   return numbers;
 };
 
-selectPage(page.value.number);
+const page = ref<Page<object>>({ ...props.pageInfo });
+const pageNumbers = ref<number[]>(getPageNumbers(props.pageInfo.number));
+
+const selectPage = (pageNumber: number): void => {
+  if (
+    pageNumber < pageNumbers.value[0] ||
+    pageNumber > pageNumbers.value[pageNumbers.value.length - 1]
+  ) {
+    return;
+  }
+
+  page.value.number = pageNumber - 1;
+  pageNumbers.value = getPageNumbers(pageNumber);
+  emits("request:Page", pageNumber);
+};
 </script>
 
 <template>

@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useRoute } from "vue-router";
 import router from "@/router";
-import { Book, BookApis, BookPostRequest } from "@/api/BookApis";
+import { BookApis, BookPostRequest } from "@/api/BookApis";
 import { ApiError } from "@/api/ServerRequest";
 import { CategoryType } from "@/types/Category";
 import {
@@ -22,8 +21,6 @@ import BookModificationTitleView from "@/pages/admin/book/modification/component
 import BookModificationAuthorNameView from "@/pages/admin/book/modification/component/BookModificationAuthorNameView.vue";
 import BookModificationPublisherView from "@/pages/admin/book/modification/component/BookModificationPublisherView.vue";
 import BookModificationIntroductionView from "@/pages/admin/book/modification/component/BookModificationIntroductionView.vue";
-
-const route = useRoute();
 
 const BOOK_REGISTRATION_SUCCESS_MESSAGE = "도서가 등록됐습니다";
 

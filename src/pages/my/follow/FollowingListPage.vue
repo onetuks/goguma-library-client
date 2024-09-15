@@ -11,16 +11,16 @@ const route = useRoute();
 
 const followings = ref<Page<Member>>(emptyPage());
 
-const fetchFollowings = async (): Promise<void> => {
+const fetchFollowings = async (page: number): Promise<void> => {
   const memberId = Number(route.params.memberId);
-  await FollowApis.getFollowings(memberId, followings.value.number)
+  await FollowApis.getFollowings(memberId, page)
     .then((response) => {
       followings.value = response as Page<Member>;
     })
     .catch((error) => console.error("FollowListPage.fetchFollowings", error));
 };
 
-fetchFollowings();
+fetchFollowings(followings.value.number);
 </script>
 
 <template>
@@ -30,7 +30,7 @@ fetchFollowings();
       :key="index"
       :member="member"
     />
-    <PaginationBar :page-info="followings" />
+    <PaginationBar :page-info="followings" @request:Page="fetchFollowings" />
   </div>
 </template>
 

@@ -23,17 +23,21 @@ const emptyReviews = (): boolean => {
 const selectSortType = (type: SortType): void => {
   sortType.value = type;
   if (book.value?.bookId) {
-    fetchReviewsOfBook(book.value.bookId);
+    fetchReviewsOfBook(book.value.bookId, 1);
   }
 };
 
-const fetchReviewsOfBook = async (bookId: number): Promise<void> => {
-  await ReviewApis.getReviewsOfBook(
-    bookId,
-    sortType.value,
-    reviews.value.number,
-    reviews.value.size
-  )
+const requestPage = (page: number): void => {
+  if (book.value.bookId) {
+    fetchReviewsOfBook(book.value.bookId, page);
+  }
+};
+
+const fetchReviewsOfBook = async (
+  bookId: number,
+  page: number
+): Promise<void> => {
+  await ReviewApis.getReviewsOfBook(bookId, sortType.value, page)
     .then((response) => {
       reviews.value = response as Page<Review>;
     })
@@ -48,7 +52,7 @@ const fetchBook = async (): Promise<void> => {
     .then((response) => {
       book.value = { ...response } as Book;
       if (book.value?.bookId) {
-        fetchReviewsOfBook(book.value.bookId);
+        fetchReviewsOfBook(book.value.bookId, reviews.value.number);
       }
     })
     .catch((error) => {
@@ -71,7 +75,7 @@ fetchBook();
       />
       <WarningPage v-if="emptyReviews()" :is-visible-button="true" />
     </div>
-    <PaginationBar :page-info="reviews" />
+    <PaginationBar :page-info="reviews" @request:Page="requestPage" />
   </div>
 </template>
 

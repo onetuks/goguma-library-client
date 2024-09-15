@@ -8,22 +8,23 @@ import { emptyPage, Page } from "@/types/Page";
 
 const pointHistories = ref<Page<PointHistory>>(emptyPage());
 
-const fetchPointHistories = async () => {
-  await PointApis.getPointHistories(pointHistories.value.number).then(
-    (response) => {
-      pointHistories.value = response as Page<PointHistory>;
-    }
-  );
+const fetchPointHistories = async (page: number) => {
+  await PointApis.getPointHistories(page).then((response) => {
+    pointHistories.value = response as Page<PointHistory>;
+  });
 };
 
-fetchPointHistories();
+fetchPointHistories(pointHistories.value.number);
 </script>
 
 <template>
   <div class="point-history-container">
     <PointInfoView />
     <PointHistoryView :point-history="pointHistories.content" />
-    <PaginationBar :page-info="pointHistories" />
+    <PaginationBar
+      :page-info="pointHistories"
+      @request:Page="fetchPointHistories"
+    />
   </div>
 </template>
 
