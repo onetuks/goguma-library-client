@@ -17,7 +17,6 @@ const book = ref<Book>(initBook());
 const reviews = ref<Page<Review>>(emptyPage());
 
 const emptyReviews = (): boolean => {
-  console.log(sortType.value, book.value, reviews.value);
   return reviews.value.content.length === 0;
 };
 

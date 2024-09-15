@@ -6,31 +6,43 @@ const props = defineProps<{
   pageInfo: Page<object>;
 }>();
 
-const page = ref<Page<object>>({ ...props.pageInfo });
-const pageNumbers = ref<number[]>([]);
+const emits = defineEmits<{
+  (event: "request:Page", pageNumber: number): void;
+}>();
 
 watch(
   () => props.pageInfo,
-  (newPage) => {
-    page.value = newPage;
-    selectPage(page.value.number);
+  (newPageInfo) => {
+    page.value = { ...newPageInfo };
+    pageNumbers.value = getPageNumbers(page.value.number);
   }
 );
 
-const selectPage = (index: number): void => {
-  page.value.number = index;
-  pageNumbers.value = getPageNumbers(index);
+const page = ref<Page<object>>({ ...props.pageInfo });
+const pageNumbers = ref<number[]>([]);
+
+const selectPage = (pageNumber: number): void => {
+  if (
+    pageNumber < pageNumbers.value[0] ||
+    pageNumber > pageNumbers.value[pageNumbers.value.length - 1]
+  ) {
+    return;
+  }
+
+  page.value.number = pageNumber - 1;
+  pageNumbers.value = getPageNumbers(pageNumber);
+  emits("request:Page", pageNumber);
 };
 
-const getPageNumbers = (index: number): number[] => {
+const getPageNumbers = (pageNumber: number): number[] => {
   const numbers = [];
   const start = Math.max(
     1,
-    Math.min(index - 2, page.value.totalPages - PAGE_LIMIT + 1)
+    Math.min(pageNumber - 2, page.value.totalPages - PAGE_LIMIT + 1)
   );
   const end = Math.min(
     page.value.totalPages,
-    Math.max(index + 2, start + PAGE_LIMIT - 1)
+    Math.max(pageNumber + 2, start + PAGE_LIMIT - 1)
   );
   for (let i = start; i <= end; i++) {
     numbers.push(i);
@@ -43,20 +55,28 @@ selectPage(page.value.number);
 
 <template>
   <div v-if="pageNumbers.length > 0" class="pagination-container">
-    <img alt="prev-page" src="@/assets/icon/direction/left_icon.png" />
+    <img
+      alt="prev-page"
+      src="@/assets/icon/direction/left_icon.png"
+      @click="selectPage(page.number - 1)"
+    />
     <div class="pagination-numbers-container">
       <div
-        v-for="index in pageNumbers"
-        :key="index"
+        v-for="pageNumber in pageNumbers"
+        :key="pageNumber"
         class="pagination"
-        @click="selectPage(index)"
+        @click="selectPage(pageNumber)"
       >
-        <span :class="['page', { active: index === page.number + 1 }]">
-          {{ index }}
+        <span :class="['page', { active: pageNumber === page.number + 1 }]">
+          {{ pageNumber }}
         </span>
       </div>
     </div>
-    <img alt="prev-page" src="@/assets/icon/direction/right_icon.png" />
+    <img
+      alt="prev-page"
+      src="@/assets/icon/direction/right_icon.png"
+      @click="selectPage(page.number + 1)"
+    />
   </div>
 </template>
 

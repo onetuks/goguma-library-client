@@ -9,6 +9,11 @@ const moveToOtherStudyPage = (member: Member): void => {
   router.push(`/study?member-id=${member.memberId}`);
 };
 
+const handleError = (event: Event): void => {
+  const target = event.target as HTMLImageElement;
+  target.src = require("@/assets/icon/profile/default-profile.png");
+};
+
 const fetchRecommendedMembers = async (): Promise<void> => {
   await MemberApis.getRecommendedMemberProfiles()
     .then((responses) => {
@@ -34,6 +39,7 @@ fetchRecommendedMembers();
         :alt="member.nickname"
         :src="member.profileImageUrl"
         class="home-member-recommend-image"
+        @error="handleError"
       />
     </div>
   </div>
