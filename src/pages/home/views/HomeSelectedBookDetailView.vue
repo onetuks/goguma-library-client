@@ -59,6 +59,7 @@ const visible = ref<boolean>(false);
 }
 
 .weekly-featured-books-detail-introduction {
+  white-space: pre-wrap;
   font-size: 14px;
   font-family: var(--font-family-regular), sans-serif;
   padding-bottom: 20px;

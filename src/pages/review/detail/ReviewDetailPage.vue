@@ -69,9 +69,11 @@ const removeReview = async (): Promise<void> => {
 
 const fetchReview = async (): Promise<Review> => {
   const reviewId = Number(route.params.reviewId);
-  return await ReviewApis.getReview(reviewId).then(
-    (response) => response as Review
-  );
+  return await ReviewApis.getReview(reviewId).then((response) => {
+    const data = response as Review;
+    console.log(data);
+    return data;
+  });
 };
 
 const fetchBook = async (bookId: number): Promise<Book> => {
@@ -174,6 +176,7 @@ fetchData();
 
 .review-detail-content {
   margin-bottom: 80px;
+  white-space: pre-wrap;
 }
 
 .review-detail-edit-container {

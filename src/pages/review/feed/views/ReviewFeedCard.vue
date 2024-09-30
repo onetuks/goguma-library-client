@@ -122,5 +122,6 @@ fetchBook();
 
 .review-detail-content {
   margin-bottom: 80px;
+  white-space: pre-wrap;
 }
 </style>
