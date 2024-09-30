@@ -106,6 +106,7 @@ const toggleIntroductionSpread = () => {
 }
 
 .book-detail-introduction {
+  white-space: pre-wrap;
   font-size: 14px;
   font-family: var(--font-family-regular), sans-serif;
   color: var(--text-fourth);
